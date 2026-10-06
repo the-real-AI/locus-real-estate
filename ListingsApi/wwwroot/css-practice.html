@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Урок 2: Практика CSS — Оформление страницы объявления</title>
+  <link rel="stylesheet" href="css-practice.css">
+</head>
+<body>
+
+  <!-- Шапка сайта (Шаг 2 + Липкая шапка со звёздочкой ⭐) -->
+  <header>
+    <p>
+      <span>🏢</span>
+      <strong>Locus · Практика CSS (Урок 2)</strong>
+    </p>
+    <nav>
+      <a href="index.html">← Главная</a>
+      <a href="catalog.html">Каталог</a>
+      <a href="efcore-practice.html">EF Core (Урок 3)</a>
+      <a href="angular-practice.html">Angular Signals (Урок 4)</a>
+      <a href="solid-practice.html">SOLID</a>
+      <a href="hub.html">Хаб</a>
+      <button id="theme" class="theme-toggle-btn" type="button" onclick="toggleTheme()" title="Переключить тему">
+        <span id="theme-icon">🌙</span> <span id="theme-text">Тёмная тема</span>
+      </button>
+      <button class="theme-toggle-btn btn-print" type="button" onclick="window.print()" title="Тест режима печати">
+        🖨️ Печать (Ctrl+P)
+      </button>
+    </nav>
+  </header>
+
+  <!-- Основной контейнер страницы (Шаг 3) -->
+  <main class="container">
+
+    <!-- Информационная панель выполнения задания практики -->
+    <div class="assignment-panel">
+      <h2>📋 Выполнение задания: «Урок 2. CSS с нуля»</h2>
+      <p>Эта страница полностью оформлена с использованием чистого CSS по требованиям пошаговой инструкции (без сторонних CSS-фреймворков):</p>
+      <div class="checklist">
+        <div class="checklist-item"><span class="check-icon">✓</span> <span>Шаг 1: box-sizing, сброс отступов body, типографика</span></div>
+        <div class="checklist-item"><span class="check-icon">✓</span> <span>Шаг 2: Flexbox шапка с выравниванием и :hover</span></div>
+        <div class="checklist-item"><span class="check-icon">✓</span> <span>Шаг 3: .container 960px, карточки .card, CSS Grid</span></div>
+        <div class="checklist-item"><span class="check-icon">✓</span> <span>Шаг 4: Таблица цен, border-collapse, :nth-child(even)</span></div>
+        <div class="checklist-item"><span class="check-icon">✓</span> <span>Шаг 5: Форма, :focus, :invalid, :has(), кнопка .btn</span></div>
+        <div class="checklist-item"><span class="check-icon">✓</span> <span>Шаг 6: Адаптивность (@media 640px и 400px)</span></div>
+        <div class="checklist-item"><span class="check-icon">✓</span> <span>⭐ Обязательное: бейдж «Без посредников»</span></div>
+        <div class="checklist-item"><span class="check-icon">✓</span> <span>⭐ Со звёздочкой: липкая шапка position: sticky</span></div>
+        <div class="checklist-item"><span class="check-icon">✓</span> <span>⭐ Со звёздочкой: бейдж «Срочно» поверх фото</span></div>
+        <div class="checklist-item"><span class="check-icon">✓</span> <span>⭐ Со звёздочкой: подъём карточки :hover translateY</span></div>
+        <div class="checklist-item"><span class="check-icon">✓</span> <span>⭐ Со звёздочкой: тёмная тема через CSS-переменные</span></div>
+        <div class="checklist-item"><span class="check-icon">✓</span> <span>⭐ Со звёздочкой: стили для печати @media print</span></div>
+      </div>
+    </div>
+
+    <article>
+      <!-- Заголовок и обязательный бейдж -->
+      <h1>2-комнатная квартира, Чиланзар</h1>
+      <span class="badge">Без посредников</span>
+      <p><span class="price">48 000 у.е.</span> · торг уместен</p>
+
+      <!-- Карточка 1: Описание -->
+      <section class="card">
+        <h2>Описание</h2>
+        <p>Светлая квартира на 4 этаже 9-этажного дома, 54 м². Свежий ремонт, окна во двор. В шаговой доступности метро, супермаркеты и парк для прогулок.</p>
+      </section>
+
+      <!-- Карточка 2: Фотографии (с бейджем со звёздочкой ⭐) -->
+      <section class="card">
+        <h2 id="photos">Фотографии</h2>
+        <div class="photos">
+          <div class="photo">
+            <span class="tag">Срочно</span>
+            <img src="images/kitchen.jpg" alt="Кухня">
+          </div>
+          <div class="photo">
+            <img src="images/room.jpg" alt="Гостиная">
+          </div>
+          <div class="photo">
+            <img src="images/view.jpg" alt="Вид с балкона">
+          </div>
+        </div>
+      </section>
+
+      <!-- Карточка 3: Характеристики (Сетка в 3 колонки) -->
+      <section class="card features">
+        <h2>Характеристики</h2>
+        <div class="grid">
+          <div class="feature"><strong>54 м²</strong><span>площадь</span></div>
+          <div class="feature"><strong>2</strong><span>комнаты</span></div>
+          <div class="feature"><strong>4 / 9</strong><span>этаж</span></div>
+          <div class="feature"><strong>9 м²</strong><span>кухня</span></div>
+          <div class="feature"><strong>есть</strong><span>балкон</span></div>
+          <div class="feature"><strong>2024</strong><span>ремонт</span></div>
+        </div>
+
+        <h3>Рядом с домом</h3>
+        <ul>
+          <li>Школа №110 — 5 минут пешком</li>
+          <li>Городская поликлиника — 10 минут</li>
+          <li>Станция метро «Чиланзар» — 7 минут</li>
+        </ul>
+      </section>
+    </article>
+
+    <!-- Карточка 4: Таблица средних цен по районам -->
+    <aside class="card">
+      <h2 id="prices">Средние цены по районам</h2>
+      <table>
+        <caption>Цены в у.е., сентябрь 2026</caption>
+        <thead>
+          <tr>
+            <th>Район</th>
+            <th>1 комн.</th>
+            <th>2 комн.</th>
+            <th>3 комн.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Чиланзар</td>
+            <td>32 000</td>
+            <td>48 000</td>
+            <td>65 000</td>
+          </tr>
+          <tr>
+            <td>Юнусабад</td>
+            <td>36 000</td>
+            <td>55 000</td>
+            <td>71 000</td>
+          </tr>
+          <tr>
+            <td>Мирзо-Улугбек</td>
+            <td>38 000</td>
+            <td>57 000</td>
+            <td>74 000</td>
+          </tr>
+        </tbody>
+      </table>
+    </aside>
+
+    <!-- Карточка 5: Форма связи с продавцом -->
+    <section class="card">
+      <h2 id="form">Связаться с продавцом</h2>
+      <form action="/send" method="post" onsubmit="event.preventDefault(); alert('Спасибо! Ваша заявка успешно отправлена продавцу.');">
+        <p>
+          <label for="name">Ваше имя</label>
+          <input id="name" name="name" type="text" placeholder="Иван Иванов" required>
+        </p>
+
+        <p>
+          <label for="phone">Телефон</label>
+          <input id="phone" name="phone" type="tel" placeholder="+998 90 123 45 67" required>
+        </p>
+
+        <p>
+          <label for="email">Почта</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com">
+        </p>
+
+        <p>
+          <label for="when">Когда удобно?</label>
+          <select id="when" name="when">
+            <option>Утром (09:00 - 12:00)</option>
+            <option selected>Днём (12:00 - 18:00)</option>
+            <option>Вечером (18:00 - 21:00)</option>
+          </select>
+        </p>
+
+        <p>
+          <label><input type="radio" name="contact" value="call" checked> Позвонить мне</label>
+        </p>
+        <p>
+          <label><input type="radio" name="contact" value="tg"> Написать в Telegram</label>
+        </p>
+
+        <p>
+          <label for="msg">Сообщение</label>
+          <textarea id="msg" name="msg" rows="4" placeholder="Укажите ваши пожелания или удобное время для звонка..."></textarea>
+        </p>
+
+        <p>
+          <label><input type="checkbox" name="agree" required> Согласен на обработку персональных данных</label>
+        </p>
+
+        <button class="btn" type="submit">Отправить заявку</button>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- Подвал сайта (Шаг 6) -->
+  <footer>
+    <p>
+      Телефон: <a href="tel:+998901234567">+998 90 123-45-67</a> · © 2026 Locus · Практическая работа «Урок 2: CSS с нуля»
+    </p>
+  </footer>
+
+  <script>
+    // Переключение темной/светлой темы (Задание со звёздочкой ⭐)
+    function toggleTheme() {
+      const isDark = document.body.classList.toggle('dark');
+      const icon = document.getElementById('theme-icon');
+      const text = document.getElementById('theme-text');
+      if (isDark) {
+        icon.textContent = '☀️';
+        text.textContent = 'Светлая тема';
+        localStorage.setItem('css_practice_theme', 'dark');
+      } else {
+        icon.textContent = '🌙';
+        text.textContent = 'Тёмная тема';
+        localStorage.setItem('css_practice_theme', 'light');
+      }
+    }
+
+    // Инициализация темы из localStorage
+    (function initTheme() {
+      if (localStorage.getItem('css_practice_theme') === 'dark') {
+        document.body.classList.add('dark');
+        const icon = document.getElementById('theme-icon');
+        const text = document.getElementById('theme-text');
+        if (icon && text) {
+          icon.textContent = '☀️';
+          text.textContent = 'Светлая тема';
+        }
+      }
+    })();
+  </script>
+
+</body>
+</html>

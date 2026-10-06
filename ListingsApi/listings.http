@@ -1,0 +1,72 @@
+@host = http://localhost:5000
+
+### 1. Список всех объявлений
+GET {{host}}/api/listings
+
+### 2. Фильтр по району и цене
+GET {{host}}/api/listings?district=Чиланзар&maxPrice=50000
+
+### 3. Сортировка по цене по убыванию (Задание со звездочкой)
+GET {{host}}/api/listings?sort=-price
+
+### 4. Пагинация (Задание со звездочкой)
+GET {{host}}/api/listings?page=1&pageSize=2
+
+### 5. Количество объявлений (Задание со звездочкой)
+GET {{host}}/api/listings/count
+
+### 6. Одно объявление по ID
+GET {{host}}/api/listings/1
+
+### 7. Несуществующее — ожидаем 404
+GET {{host}}/api/listings/999
+
+### 8. Создать объявление с полем address — ожидаем 201 и заголовок Location
+POST {{host}}/api/listings
+Content-Type: application/json
+
+{
+  "title": "3-комн. в Юнусабаде",
+  "price": 62000,
+  "district": "Юнусабад",
+  "address": "ул. Амира Темура, д. 45",
+  "rooms": 3
+}
+
+### 9. Ошибка валидации при создании — ожидаем 400
+POST {{host}}/api/listings
+Content-Type: application/json
+
+{
+  "title": "",
+  "price": -5,
+  "district": "Чиланзар",
+  "address": "Тестовый адрес",
+  "rooms": 2
+}
+
+### 10. Заменить объявление целиком (PUT) — ожидаем 204
+PUT {{host}}/api/listings/1
+Content-Type: application/json
+
+{
+  "title": "2-комн. рядом с метро (цена снижена)",
+  "price": 45000,
+  "district": "Чиланзар",
+  "address": "ул. Катартал, д. 12 (кв. 14)",
+  "rooms": 2
+}
+
+### 11. Частичное обновление цены (PATCH - Задание со звездочкой)
+PATCH {{host}}/api/listings/1/price
+Content-Type: application/json
+
+{
+  "price": 43500
+}
+
+### 12. Удалить объявление — ожидаем 204, повторно — 404
+DELETE {{host}}/api/listings/3
+
+### 13. Проверка V2 Controller-style (Задание со звездочкой)
+GET {{host}}/api/v2/listings

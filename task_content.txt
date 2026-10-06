@@ -1,0 +1,521 @@
+ВЕБ-РАЗРАБОТКА · C# + ANGULAR · УРОК 2 · ПРАКТИКА (4 ч)
+CRUD-API объявлений: маршруты, DTO, коды ответов, Swagger
+Пошаговая инструкция. Продолжаем проект урока 1: к концу занятия сервер умеет создавать, читать, изменять и удалять объявления о квартирах, документирует себя через OpenAPI, а Angular показывает список из настоящего API. Данные живут в памяти сервера — база данных появится на уроке 3.
+Что должно быть до начала
+Проект урока 1 запускается: 
+dotnet run
+ в папке API, 
+ng serve
+ в папке Angular, страница показывает строку с сервера.
+dotnet --version
+ показывает 10.x. 
+ng version
+ показывает Angular CLI 22.x.
+Вы знаете свой порт сервера: файл 
+Properties/launchSettings.json
+, ключ 
+applicationUrl
+. Ниже везде 
+http://localhost:5000
+ — подставьте свой.
+Создайте ветку: 
+git checkout -b lesson-2
+.
+Названия папок и проектов ниже условные (ListingsApi, listings-web). Если у вас проект назван иначе — используйте своё имя, суть не меняется.
+Структура, к которой придём
+ListingsApi/
+  Program.cs                      — конфигурация: DI, CORS, OpenAPI, подключение endpoint'ов
+  Models/Listing.cs               — сущность (внутренняя модель)
+  Contracts/ListingContracts.cs   — DTO: что принимаем и что отдаём
+  Services/ListingStore.cs        — хранилище в памяти
+  Endpoints/ListingEndpoints.cs   — пять endpoint'ов
+  listings.http                   — запросы для проверки
+Шаг 1. Модель и DTO (0:00–0:30)
+Сущность — то, что сервер хранит. DTO (Data Transfer Object) — то, что ходит по сети. Разделяем сразу, чтобы клиент не мог задать Id и дату создания, а лишние поля не утекали наружу.
+Models/Listing.cs
+namespace ListingsApi.Models;
+ 
+public class Listing
+{
+    public int Id { get; set; }
+    public string Title { get; set; } = "";
+    public decimal Price { get; set; }        // в условных единицах
+    public string District { get; set; } = "";
+    public int Rooms { get; set; }
+    public DateTime CreatedAt { get; set; }
+}
+Contracts/ListingContracts.cs
+namespace ListingsApi.Contracts;
+ 
+// то, что клиент присылает при создании
+public record CreateListingRequest(string Title, decimal Price, string District, int Rooms);
+ 
+// то, что клиент присылает при полной замене (PUT)
+public record UpdateListingRequest(string Title, decimal Price, string District, int Rooms);
+ 
+// то, что клиент получает
+public record ListingResponse(int Id, string Title, decimal Price, string District, int Rooms, DateTime CreatedAt);
+record — тип «только данные»: конструктор, свойства, сравнение и ToString C# генерирует сам. Для DTO это идеальный выбор. Create и Update сейчас одинаковые — оставляем два record'а намеренно: на уроке 6 у них появятся разные правила валидации.
+Шаг 2. Хранилище в памяти и DI (0:30–0:50)
+Хранилище — обычный класс со списком. Регистрируем его в контейнере DI как Singleton (один экземпляр на всё приложение), и любой endpoint получит его, просто указав в параметрах.
+Services/ListingStore.cs
+using ListingsApi.Contracts;
+using ListingsApi.Models;
+ 
+namespace ListingsApi.Services;
+ 
+public class ListingStore
+{
+    private readonly List<Listing> _items = new();
+    private readonly object _lock = new();
+    private int _nextId = 1;
+ 
+    public ListingStore()
+    {
+        // стартовые данные, чтобы список не был пустым
+        Add(new CreateListingRequest("2-комн. рядом с метро Чиланзар", 48000, "Чиланзар", 2));
+        Add(new CreateListingRequest("3-комн. с ремонтом", 71000, "Юнусабад", 3));
+        Add(new CreateListingRequest("1-комн. студия", 32000, "Мирзо-Улугбек", 1));
+    }
+ 
+    public IReadOnlyList<Listing> GetAll()
+    {
+        lock (_lock) return _items.ToList();
+    }
+ 
+    public Listing? Get(int id)
+    {
+        lock (_lock) return _items.Find(l => l.Id == id);
+    }
+ 
+    public Listing Add(CreateListingRequest r)
+    {
+        lock (_lock)
+        {
+            var listing = new Listing
+            {
+                Id = _nextId++, Title = r.Title, Price = r.Price,
+                District = r.District, Rooms = r.Rooms, CreatedAt = DateTime.UtcNow
+            };
+            _items.Add(listing);
+            return listing;
+        }
+    }
+ 
+    public bool Update(int id, UpdateListingRequest r)
+    {
+        lock (_lock)
+        {
+            var listing = _items.Find(l => l.Id == id);
+            if (listing is null) return false;
+            listing.Title = r.Title; listing.Price = r.Price;
+            listing.District = r.District; listing.Rooms = r.Rooms;
+            return true;
+        }
+    }
+ 
+    public bool Delete(int id)
+    {
+        lock (_lock) return _items.RemoveAll(l => l.Id == id) > 0;
+    }
+}
+Регистрация в 
+Program.cs
+ — одна строка до 
+builder.Build()
+:
+builder.Services.AddSingleton<ListingStore>();
+Зачем lock: сервер обрабатывает запросы параллельно. Два одновременных POST без блокировки могут получить один и тот же Id. Глубже в многопоточность сегодня не идём.
+Шаг 3. Чтение: GET списка и GET по id (0:50–1:15)
+Все endpoint'ы кладём в отдельный файл как метод-расширение: Program.cs останется коротким. Начинаем с двух GET.
+Endpoints/ListingEndpoints.cs
+using ListingsApi.Contracts;
+using ListingsApi.Models;
+using ListingsApi.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
+ 
+namespace ListingsApi.Endpoints;
+ 
+public static class ListingEndpoints
+{
+    public static void MapListingEndpoints(this WebApplication app)
+    {
+        var group = app.MapGroup("/api/listings").WithTags("Listings");
+ 
+        // GET /api/listings?district=Чиланзар&maxPrice=50000
+        group.MapGet("/", (ListingStore store, string? district, decimal? maxPrice) =>
+        {
+            var items = store.GetAll().AsEnumerable();
+            if (district is not null) items = items.Where(l => l.District == district);
+            if (maxPrice is not null) items = items.Where(l => l.Price <= maxPrice);
+            return TypedResults.Ok(items.Select(ToResponse));
+        })
+        .WithName("GetListings")
+        .WithSummary("Список объявлений с фильтром по району и максимальной цене");
+ 
+        // GET /api/listings/7
+        group.MapGet("/{id:int}", Results<Ok<ListingResponse>, NotFound> (int id, ListingStore store) =>
+            store.Get(id) is { } listing
+                ? TypedResults.Ok(ToResponse(listing))
+                : TypedResults.NotFound())
+        .WithName("GetListing")
+        .WithSummary("Одно объявление по id");
+    }
+ 
+    private static ListingResponse ToResponse(Listing l) =>
+        new(l.Id, l.Title, l.Price, l.District, l.Rooms, l.CreatedAt);
+}
+В 
+Program.cs
+ подключите файл — после 
+var app = builder.Build();
+ и после 
+app.UseCors();
+:
+app.MapListingEndpoints();
+Проверка: 
+запустите 
+dotnet run
+ и откройте в браузере 
+http://localhost:5000/api/listings
+ — три объявления в JSON. Затем 
+/api/listings/2
+ — одно, 
+/api/listings/99
+ — пустой ответ с кодом 404 (код виден в DevTools → Network), 
+/api/listings/abc
+ — тоже 404, но уже от маршрутизатора: ограничение 
+{id:int}
+ не пропустило строку.
+Обратите внимание на имена полей в JSON: title, price, createdAt. ASP.NET Core автоматически переводит PascalCase в camelCase — так принято в JavaScript-мире. Менять это не нужно.
+Шаг 4. Создание: POST → 201 Created (1:15–1:45)
+Добавьте в MapListingEndpoints после второго GET:
+        // POST /api/listings
+        group.MapPost("/", Results<Created<ListingResponse>, BadRequest<string>>
+            (CreateListingRequest request, ListingStore store) =>
+        {
+            if (string.IsNullOrWhiteSpace(request.Title))
+                return TypedResults.BadRequest("Поле title обязательно");
+            if (request.Price <= 0)
+                return TypedResults.BadRequest("Поле price должно быть больше 0");
+            if (request.Rooms is < 1 or > 10)
+                return TypedResults.BadRequest("Поле rooms — от 1 до 10");
+ 
+            var created = store.Add(request);
+            return TypedResults.Created($"/api/listings/{created.Id}", ToResponse(created));
+        })
+        .WithName("CreateListing")
+        .WithSummary("Создать объявление");
+Что здесь важно: 
+CreateListingRequest request
+ — сложный тип, значит ASP.NET возьмёт его из JSON-тела запроса (привязка модели). 
+TypedResults.Created(url, dto)
+ вернёт код 201, тело с созданным объектом и заголовок 
+Location
+ с адресом нового ресурса — клиент знает, куда идти за ним.
+Проверки «руками» — временные. На уроке 6 их заменит настоящая валидация с ошибками по каждому полю в формате ProblemDetails. Сейчас важно понять сам принцип: неверный ввод → 400, а не 500.
+Проверка через браузер невозможна
+ — адресная строка умеет только GET. Переходите к шагу 6 (Swagger) или сразу создайте файл из шага 7 и отправьте POST оттуда.
+Шаг 5. Изменение и удаление: PUT и DELETE → 204 (1:45–2:15)
+        // PUT /api/listings/7 — полная замена
+        group.MapPut("/{id:int}", Results<NoContent, NotFound, BadRequest<string>>
+            (int id, UpdateListingRequest request, ListingStore store) =>
+        {
+            if (string.IsNullOrWhiteSpace(request.Title) || request.Price <= 0)
+                return TypedResults.BadRequest("title обязателен, price > 0");
+            return store.Update(id, request)
+                ? TypedResults.NoContent()
+                : TypedResults.NotFound();
+        })
+        .WithName("UpdateListing")
+        .WithSummary("Заменить объявление целиком");
+ 
+        // DELETE /api/listings/7
+        group.MapDelete("/{id:int}", Results<NoContent, NotFound> (int id, ListingStore store) =>
+            store.Delete(id) ? TypedResults.NoContent() : TypedResults.NotFound())
+        .WithName("DeleteListing")
+        .WithSummary("Удалить объявление");
+Здесь два параметра из разных мест: 
+int id
+ — из пути, 
+UpdateListingRequest request
+ — из тела. Ответ 204 No Content означает «получилось, возвращать нечего». Обратите внимание, что 
+Results<…>
+ перечисляет все три возможных исхода — Swagger покажет их автоматически.
+Итого 
+в Program.cs сейчас должно быть примерно так:
+Program.cs (целиком)
+using ListingsApi.Endpoints;
+using ListingsApi.Services;
+ 
+var builder = WebApplication.CreateBuilder(args);
+ 
+builder.Services.AddOpenApi();
+builder.Services.AddSingleton<ListingStore>();
+builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
+    policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod()));
+ 
+var app = builder.Build();
+ 
+app.UseCors();
+app.MapOpenApi();          // документ: /openapi/v1.json
+app.MapListingEndpoints();
+ 
+app.Run();
+Если в проекте урока 1 остались тестовые endpoint'ы (например, /api/hello) — можно оставить, они не мешают. AddOpenApi/MapOpenApi уже есть в шаблоне .NET 10 — проверьте, что не добавили их дважды.
+Шаг 6. OpenAPI и Swagger UI (2:15–2:45)
+Документ OpenAPI ASP.NET Core уже генерирует: откройте 
+http://localhost:5000/openapi/v1.json
+ и найдите там 
+/api/listings/{id}
+ — увидите параметры и коды 200 и 404, взятые из типа 
+Results<…>
+. Это «чертёж» вашего API. Осталось поставить страницу, которая его рисует.
+Остановите сервер (Ctrl+C) и в папке API выполните: 
+dotnet add package Swashbuckle.AspNetCore.SwaggerUI
+В 
+Program.cs
+ сразу после 
+app.MapOpenApi();
+ добавьте:
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/openapi/v1.json", "Listings API v1");
+    options.RoutePrefix = "swagger";      // страница будет по адресу /swagger
+});
+Запустите 
+dotnet run
+ и откройте 
+http://localhost:5000/swagger
+. Должны быть видны пять методов в группе Listings с вашими описаниями из 
+WithSummary
+.
+Проверьте все пять: раскройте метод → 
+Try it out
+ → заполните → 
+Execute
+. Для POST используйте тело:
+{
+  "title": "4-комн. с видом на парк",
+  "price": 95000,
+  "district": "Яккасарай",
+  "rooms": 4
+}
+В ответе на POST найдите код 201 и в блоке Response headers — строку 
+location: /api/listings/4
+. Затем сделайте GET по этому id, PUT с изменённой ценой, DELETE и снова GET — должен быть 404.
+Альтернатива Swagger UI — Scalar: dotnet add package Scalar.AspNetCore, в Program.cs app.MapScalarApiReference(), адрес /scalar. Читает тот же документ, выглядит современнее. Выбор на ваш вкус, в отчёте укажите, что использовали.
+В старых уроках и на YouTube встречается AddSwaggerGen() / UseSwagger(). В .NET 10 они не нужны: документ делает встроенный AddOpenApi, а Swashbuckle используется только для страницы.
+Шаг 7. Запросы как файл: listings.http (2:45–3:10)
+Swagger удобен, но запросы в нём не сохраняются. Кладём их в файл в корень проекта — это одновременно тесты и документация, которые лежат в git.
+VS Code: установите расширение 
+REST Client
+ (автор Huachao Mao). В Visual Studio 2022 поддержка .http-файлов встроена.
+Создайте файл 
+listings.http
+ рядом с Program.cs:
+@host = http://localhost:5000
+ 
+### Список
+GET {{host}}/api/listings
+ 
+### Фильтр по району и цене
+GET {{host}}/api/listings?district=Чиланзар&maxPrice=50000
+ 
+### Одно объявление
+GET {{host}}/api/listings/1
+ 
+### Несуществующее — ожидаем 404
+GET {{host}}/api/listings/999
+ 
+### Создать — ожидаем 201 и заголовок Location
+POST {{host}}/api/listings
+Content-Type: application/json
+ 
+{
+  "title": "3-комн. в Юнусабаде",
+  "price": 62000,
+  "district": "Юнусабад",
+  "rooms": 3
+}
+ 
+### Ошибка валидации — ожидаем 400
+POST {{host}}/api/listings
+Content-Type: application/json
+ 
+{ "title": "", "price": -5, "district": "Чиланзар", "rooms": 2 }
+ 
+### Заменить — ожидаем 204
+PUT {{host}}/api/listings/1
+Content-Type: application/json
+ 
+{ "title": "2-комн. рядом с метро (цена снижена)", "price": 45000, "district": "Чиланзар", "rooms": 2 }
+ 
+### Удалить — ожидаем 204, повторно — 404
+DELETE {{host}}/api/listings/3
+Над каждым запросом появится ссылка 
+Send Request
+ — нажмите и сравните код ответа с ожидаемым в комментарии. Пройдите файл сверху вниз.
+Разделитель ### обязателен между запросами. Пустая строка между заголовками и телом — тоже обязательна: без неё REST Client отправит тело как заголовок, и сервер ответит 400 или 415.
+Postman (по желанию). 
+Создайте коллекцию Listings, переменную 
+host
+, добавьте те же восемь запросов. Экспортируйте коллекцию в JSON и положите в папку 
+postman/
+ проекта.
+Шаг 8. Angular: список из настоящего API (3:10–3:35)
+Небольшой шаг — заменяем строку из урока 1 на список объявлений. Полноценная работа с сервисами, маршрутизацией и состояниями загрузки — урок 5.
+src/app/listing.ts
+// поля в camelCase — ровно так, как сервер отдаёт JSON
+export interface Listing {
+  id: number;
+  title: string;
+  price: number;
+  district: string;
+  rooms: number;
+  createdAt: string;
+}
+src/app/app.ts
+import { Component, inject, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Listing } from './listing';
+ 
+@Component({
+  selector: 'app-root',
+  template: `
+    <h1>Объявления</h1>
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+    <ul>
+      @for (item of listings(); track item.id) {
+        <li>{{ item.title }} — {{ item.district }}, {{ item.rooms }} комн., {{ item.price }} у.е.</li>
+      } @empty {
+        <li>Пока пусто</li>
+      }
+    </ul>
+  `,
+})
+export class App {
+  private http = inject(HttpClient);
+  listings = signal<Listing[]>([]);
+  error = signal<string | null>(null);
+ 
+  constructor() {
+    this.http.get<Listing[]>('http://localhost:5000/api/listings').subscribe({
+      next: (data) => this.listings.set(data),
+      error: (err) => this.error.set('Сервер недоступен: ' + err.message),
+    });
+  }
+}
+Проверка: два терминала — 
+dotnet run
+ и 
+ng serve
+, страница 
+http://localhost:4200
+ показывает три объявления. Добавьте объявление через Swagger, обновите страницу — четыре. 
+provideHttpClient()
+ в 
+app.config.ts
+ уже должен быть с урока 1.
+Шаг 9. Коммит и сдача (3:35–4:00)
+git add .
+ → 
+git commit -m "Lesson 2: listings CRUD, OpenAPI, http tests"
+ → 
+git push -u origin lesson-2
+.
+В 
+README.md
+ добавьте раздел «Урок 2»: порт сервера, адрес Swagger, как запустить, список эндпоинтов.
+Отправьте преподавателю ссылку на репозиторий и ветку lesson-2.
+Чек-лист сдачи
+GET /api/listings отдаёт список; фильтры district и maxPrice работают.
+GET /api/listings/{id} — 200 для существующего, 404 для несуществующего.
+POST — 201 с заголовком Location; пустой title или отрицательная price — 400.
+PUT и DELETE — 204; для несуществующего id — 404.
+/swagger открывается, у всех пяти методов есть описания.
+listings.http со всеми восемью запросами лежит в репозитории.
+Angular показывает список из API.
+Задания
+Обязательное
+Добавьте поле address (строка) во все три слоя: сущность, оба Request-record'а, Response. Проверьте, что оно проходит через POST, видно в GET и в Swagger.
+Со звёздочкой (бонус к оценке за лабораторную)
+Сортировка. 
+Query-параметр 
+?sort=price
+ или 
+?sort=-price
+ (минус — по убыванию). Неизвестное значение — 400.
+Счётчик. 
+GET /api/listings/count
+ возвращает 
+{ "count": 3 }
+. Подсказка: объявите его 
+до
+ 
+/{id:int}
+ и подумайте, почему ограничение :int здесь спасает.
+Частичное обновление. 
+PATCH /api/listings/{id}/price
+ с телом 
+{ "price": 40000 }
+ меняет только цену. Нужен новый record и метод в хранилище.
+Пагинация. 
+?page=1&pageSize=10
+ — ответ вида 
+{ "items": [...], "total": 42, "page": 1, "pageSize": 10 }
+. Это понадобится на уроке 8.
+Контроллер. 
+Перепишите один любой endpoint в стиле контроллера (класс 
+ListingsController : ControllerBase
+, 
+builder.Services.AddControllers()
+, 
+app.MapControllers()
+) и убедитесь, что Swagger показывает оба варианта одинаково.
+Типичные проблемы и решения
+Симптом
+Причина
+Решение
+415 Unsupported Media Type на POST/PUT
+Нет заголовка Content-Type: application/json
+Добавить заголовок; в .http — плюс пустая строка перед телом
+400 и текст про JSON deserialization / «The JSON value could not be converted»
+Тип поля не совпадает: "price": "дорого" или "rooms": "3"
+Числа без кавычек; сверить имена и типы с record'ом
+400 «Failed to read parameter … from the request body»
+Тело пустое или это не JSON (лишняя запятая, одинарные кавычки)
+Проверить JSON в любом онлайн-валидаторе
+404 на URL, который «точно правильный»
+Опечатка в MapGroup, лишний или недостающий слэш, {id:int} получил не число
+Открыть /openapi/v1.json и скопировать путь оттуда
+405 Method Not Allowed
+Путь есть, но для другого метода (например, PUT на /api/listings без id)
+Сверить метод и путь с таблицей эндпоинтов
+Swagger: 404 на /swagger
+Не добавлен UseSwaggerUI, или RoutePrefix другой, или пакет не установлен
+dotnet add package …SwaggerUI; проверить Program.cs; перезапустить
+Swagger открывается, но список методов пуст / «Failed to load API definition»
+MapOpenApi() не вызван или SwaggerEndpoint указывает не на /openapi/v1.json
+Открыть /openapi/v1.json напрямую; исправить адрес
+Ошибка компиляции: Results<…> не найден
+Нет using Microsoft.AspNetCore.Http.HttpResults
+Добавить using в начало файла
+Ошибка компиляции: «not all code paths return a value» в лямбде
+В одной ветке return забыт или возвращён тип, которого нет в Results<…>
+Проверить, что каждый return соответствует одному из типов в списке
+В Angular: CORS error / blocked by CORS policy
+UseCors() стоит после MapListingEndpoints(), или origin не http://localhost:4200
+Переставить UseCors() выше; origin без завершающего слэша
+В Angular поля undefined
+Интерфейс в PascalCase (Title), а JSON в camelCase (title)
+Интерфейс — camelCase
+После перезапуска сервера созданные объявления пропали
+Хранилище в памяти
+Так и должно быть. База данных — урок 3
+Два одинаковых Id после быстрых POST
+Убрали lock из хранилища
+Вернуть lock
+Следующее занятие: урок 3 — база данных и EF Core. ListingStore превратится в репозиторий над PostgreSQL, endpoint'ы останутся без изменений.

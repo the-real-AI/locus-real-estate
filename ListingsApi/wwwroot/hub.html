@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Учебный Хаб · Полный курс веб-разработки и архитектуры | Locus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#004ac6",
+            "secondary": "#006c49",
+            "surface": "#faf8ff",
+            "on-surface": "#171b26"
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"],
+            "body": ["Inter", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-[#faf8ff] text-[#171b26] antialiased font-body pb-20">
+
+  <!-- ШАПКА НАВИГАЦИИ -->
+  <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center space-x-2 text-decoration-none">
+        <span class="material-symbols-outlined text-primary text-3xl">school</span>
+        <div class="flex flex-col">
+          <span class="text-xl font-extrabold tracking-tight text-primary font-display leading-tight">Locus</span>
+          <span class="text-[11px] font-bold text-slate-500 leading-none">Education Hub</span>
+        </div>
+      </a>
+
+      <nav class="hidden lg:flex items-center space-x-6 text-sm font-display font-medium">
+        <a href="index.html" class="text-slate-600 hover:text-primary transition-colors">Главная</a>
+        <a href="catalog.html" class="text-slate-600 hover:text-primary transition-colors">Каталог</a>
+        <a href="efcore-practice.html" class="text-slate-600 hover:text-primary transition-colors">База EF Core (Урок 3)</a>
+        <a href="angular-practice.html" class="text-slate-600 hover:text-primary transition-colors">Angular Signals (Урок 4)</a>
+        <a href="solid-practice.html" class="text-slate-600 hover:text-primary transition-colors">SOLID Практикум</a>
+        <a href="css-practice.html" class="text-slate-600 hover:text-primary transition-colors">CSS Практика</a>
+        <a href="hub.html" class="text-primary font-bold border-b-2 border-primary py-1">Учебный Хаб</a>
+      </nav>
+
+      <div class="flex items-center space-x-3">
+        <a href="/swagger" target="_blank" class="bg-primary text-white text-xs sm:text-sm font-bold px-3.5 py-2 rounded-xl flex items-center space-x-1.5 shadow-xs hover:bg-blue-700 transition">
+          <span class="material-symbols-outlined text-base">api</span>
+          <span>OpenAPI / Swagger</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- КОНТЕНТ ХАБА -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 mt-8 space-y-12">
+
+    <!-- HERO БАННЕР ХАБА -->
+    <section class="bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-950 text-white rounded-3xl p-6 sm:p-10 shadow-lg relative overflow-hidden">
+      <div class="relative z-10 max-w-3xl space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-xs font-semibold text-blue-200">
+          <span class="material-symbols-outlined text-sm">hub</span>
+          Единая образовательная экосистема Locus Real Estate
+        </div>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display leading-tight tracking-tight">
+          Полная программа веб-разработки и чистой архитектуры
+        </h1>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+          Все уроки практического курса — от верстки страницы квартиры на HTML/CSS/JS до REST API на .NET 10, базы данных SQLite через EF Core, фронтенда на Angular Signals и проектирования по принципам SOLID.
+        </p>
+      </div>
+    </section>
+
+    <!-- КАРТОЧКИ МОДУЛЕЙ И СТРАНИЦ -->
+    <section class="space-y-6">
+      <div class="border-b border-slate-200 pb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-primary">Учебные модули и практические страницы</span>
+        <h2 class="text-2xl sm:text-3xl font-bold font-display text-slate-900">Интерактивные страницы заданий</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- КАРТОЧКА 1: SOLID -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs hover:border-primary/50 transition-all flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-blue-100 text-primary flex items-center justify-center">
+              <span class="material-symbols-outlined text-2xl">verified</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800">
+              5 новых файлов · Практикум
+            </div>
+            <h3 class="text-lg font-bold font-display text-slate-900">SOLID: Пять принципов проектирования</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Интерактивный тренажер по материалам <code class="text-primary">SOLIDnew.pptx</code> и <code class="text-primary">SOLID_Задания.docx</code>. Рефакторинг S1–D2, разбор 5 нарушений в OrderProcessor (T1) и калькулятор ипотеки с нуля (T2).
+            </p>
+          </div>
+          <a href="solid-practice.html" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+            <span>Открыть тренажер SOLID</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </a>
+        </div>
+
+        <!-- КАРТОЧКА 2: EF Core (Урок 3) -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs hover:border-emerald-500/50 transition-all flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center">
+              <span class="material-symbols-outlined text-2xl">database</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800">
+              Урок 3 EF Core · Новый файл
+            </div>
+            <h3 class="text-lg font-bold font-display text-slate-900">EF Core 10, База SQLite & LINQ</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Интерактивная панель по <code class="text-emerald-700">Урок_3_Практика_EF_Core.docx</code>. Две связанные таблицы Districts и Listings, LINQ-построитель, трансляция в SQL, миграции и CRUD районов.
+            </p>
+          </div>
+          <a href="efcore-practice.html" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+            <span>Открыть панель EF Core</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </a>
+        </div>
+
+        <!-- КАРТОЧКА 3: Angular Signals (Урок 4) -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs hover:border-rose-500/50 transition-all flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-rose-100 text-rose-700 flex items-center justify-center">
+              <span class="material-symbols-outlined text-2xl">deployed_code</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-100 text-rose-800">
+              Урок 4 Angular · Реактивность
+            </div>
+            <h3 class="text-lg font-bold font-display text-slate-900">Angular 22 & Реактивные Сигналы</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Интерактивный стенд компонентов по <code class="text-rose-700">Урок_4_Практика_Angular.docx</code>. Архитектура ListingCard, ListingList, ListingFilter, ListingDetails с реактивным графом Сигналов.
+            </p>
+          </div>
+          <a href="angular-practice.html" class="w-full bg-rose-700 hover:bg-rose-800 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+            <span>Открыть витрину Angular</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </a>
+        </div>
+
+        <!-- КАРТОЧКА 4: CSS Практика (Урок 2) -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs hover:border-indigo-500/50 transition-all flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center">
+              <span class="material-symbols-outlined text-2xl">palette</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-100 text-indigo-800">
+              Урок CSS · Базовый дизайн
+            </div>
+            <h3 class="text-lg font-bold font-display text-slate-900">CSS с нуля: Оформление объявления</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Практика по верстке карточки квартиры: блочная модель <code class="text-indigo-600">border-box</code>, flex-меню, сетка характеристик, таблица цен и адаптивная форма связи.
+            </p>
+          </div>
+          <a href="css-practice.html" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+            <span>Открыть практику CSS</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </a>
+        </div>
+
+        <!-- КАРТОЧКА 5: Каталог платформы Locus -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs hover:border-slate-400 transition-all flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center">
+              <span class="material-symbols-outlined text-2xl">storefront</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800">
+              Основной портал
+            </div>
+            <h3 class="text-lg font-bold font-display text-slate-900">Каталог недвижимости Locus</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Полноценная витрина объявлений о недвижимости в Ташкенте с живым поиском, фильтрацией по районам и ценам, модальным окном создания и карточками объектов.
+            </p>
+          </div>
+          <a href="catalog.html" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+            <span>Перейти в каталог</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </a>
+        </div>
+
+        <!-- КАРТОЧКА 6: Документация API -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs hover:border-teal-500/50 transition-all flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-teal-100 text-teal-800 flex items-center justify-center">
+              <span class="material-symbols-outlined text-2xl">integration_instructions</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-teal-100 text-teal-800">
+              Бэкенд C# .NET 10
+            </div>
+            <h3 class="text-lg font-bold font-display text-slate-900">Swagger UI & OpenAPI Спецификация</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Русифицированная интерактивная документация REST API с поддержкой GET, POST, PUT, PATCH цены, DELETE, пагинации, сортировки и эндпоинтов районов.
+            </p>
+          </div>
+          <a href="/swagger" target="_blank" class="w-full bg-teal-700 hover:bg-teal-800 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+            <span>Открыть Swagger API</span>
+            <span class="material-symbols-outlined text-sm">open_in_new</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

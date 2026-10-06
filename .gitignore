@@ -1,0 +1,37 @@
+# .NET build artifacts
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+.vscode/
+
+# SQLite Databases
+*.db
+*.db-shm
+*.db-wal
+listings.db
+
+# Node.js
+node_modules/
+dist/
+.angular/
+
+# Logs & temp
+logs/
+*.log
+
+# Third-party driver installer files
+drivers/
+indexes/
+tools/
+sdi.cfg
+SDI_auto.bat
+*.exe
+
+# Antigravity artifacts
+.gemini/
+
+Antigravity-skill-selection/

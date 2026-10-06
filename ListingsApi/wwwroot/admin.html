@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Административная панель — Управление недвижимостью (Port 5001)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #070a12;
+      --card-bg: rgba(18, 26, 43, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --primary-glow: rgba(99, 102, 241, 0.35);
+      --accent: #10b981;
+      --danger: #f43f5e;
+      --warning: #f59e0b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --radius-sm: 6px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at 50% 0%, #17153a 0%, var(--bg-dark) 75%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ЭКРАН ВХОДА (LOGIN SCREEN) */
+    .login-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 420px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(20px);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .login-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--danger), var(--primary));
+      border-radius: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      box-shadow: 0 8px 25px rgba(244, 63, 94, 0.3);
+      margin-bottom: 1rem;
+    }
+
+    .login-header h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: white;
+    }
+
+    .login-header p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .port-badge {
+      display: inline-block;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #fbbf24;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-top: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: rgba(8, 13, 25, 0.8);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      color: white;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus {
+      border-color: var(--primary);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 0.85rem;
+      background: linear-gradient(135deg, var(--primary), #4f46e5);
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 20px var(--primary-glow);
+      transition: transform 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+    }
+
+    .login-hint {
+      margin-top: 1.5rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .login-hint strong {
+      color: #818cf8;
+    }
+
+    /* ДАШБОРД (DASHBOARD SCREEN) */
+    .dashboard-container {
+      display: none;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--card-border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .nav-brand h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+
+    .admin-pill {
+      background: rgba(244, 63, 94, 0.15);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      color: #fb7185;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+
+    .btn-logout {
+      background: rgba(244, 63, 94, 0.15);
+      color: #fb7185;
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .btn-logout:hover {
+      background: var(--danger);
+      color: white;
+    }
+
+    main {
+      max-width: 1300px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      width: 100%;
+    }
+
+    /* Карточки метрик */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+    }
+
+    .stat-val {
+      font-size: 1.4rem;
+      font-weight: 800;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .stat-lbl {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Таблица данных */
+    .table-container {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .table-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .table-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      text-align: left;
+    }
+
+    th {
+      background: rgba(15, 23, 42, 0.6);
+      padding: 1rem 1.25rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .btn-sm {
+      padding: 0.35rem 0.65rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      margin-right: 4px;
+    }
+
+    .btn-edit { background: rgba(99,102,241,0.2); color: #a5b4fc; }
+    .btn-edit:hover { background: var(--primary); color: white; }
+
+    .btn-del { background: rgba(244,63,94,0.2); color: #fb7185; }
+    .btn-del:hover { background: var(--danger); color: white; }
+
+    /* Уведомления Toast */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 10000;
+    }
+
+    .toast {
+      background: #1e293b;
+      border-left: 4px solid var(--accent);
+      color: white;
+      padding: 0.85rem 1.25rem;
+      border-radius: var(--radius-md);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. ЭКРАН ВХОДА (LOGIN) -->
+  <div class="login-container" id="loginScreen">
+    <div class="login-box">
+      <div class="login-header">
+        <div class="login-icon">🔐</div>
+        <h1>Вход в панель админа</h1>
+        <p>Административная консоль управления</p>
+        <div class="port-badge">🔒 Выделенный порт: 5001</div>
+      </div>
+
+      <form onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label>Логин администратора</label>
+          <input type="text" id="loginUser" value="admin" required placeholder="admin">
+        </div>
+        <div class="form-group">
+          <label>Пароль</label>
+          <input type="password" id="loginPass" value="admin123" required placeholder="••••••••">
+        </div>
+
+        <button type="submit" class="btn-submit">Войти в консоль</button>
+      </form>
+
+      <div class="login-hint" style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.25); text-align: left; padding: 1rem; border-radius: var(--radius-md); margin-top: 1.5rem;">
+        <div style="font-weight: 700; color: #a5b4fc; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+          🔑 <span>Данные учетной записи для входа:</span>
+        </div>
+        <div style="font-size: 0.85rem; color: #e2e8f0; line-height: 1.6;">
+          • Логин: <strong style="color: #38bdf8; font-family: monospace; font-size: 0.95rem;">admin</strong><br>
+          • Пароль: <strong style="color: #38bdf8; font-family: monospace; font-size: 0.95rem;">admin123</strong>
+        </div>
+        <div style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-muted);">
+          * Доступ открыт только через порт <strong>5001</strong>. На основном клиентском сайте (порт 5000) ссылки на админку скрыты.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. ДАШБОРД АДМИНИСТРАТОРА (DASHBOARD) -->
+  <div class="dashboard-container" id="dashScreen">
+    <header>
+      <div class="nav-brand">
+        <span style="font-size: 1.5rem;">🛡️</span>
+        <div>
+          <h2>Администратор Недвижимости</h2>
+          <div style="font-size: 0.75rem; color: var(--text-muted);">Порт 5001 &bull; Пользователь: <strong style="color: #38bdf8;">admin</strong></div>
+        </div>
+        <span class="admin-pill">Админ-доступ</span>
+      </div>
+
+      <div style="display: flex; gap: 1rem; align-items: center;">
+        <a href="http://localhost:5000" target="_blank" style="color: #a5b4fc; font-size: 0.85rem; text-decoration: none;">🌐 Публичный сайт (5000)</a>
+        <button class="btn-logout" onclick="handleLogout()" title="Завершить сессию администратора">🚪 Выйти (admin)</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- Сводные метрики -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(99,102,241,0.15); color: #818cf8;">🏠</div>
+          <div>
+            <div class="stat-val" id="statTotal">0</div>
+            <div class="stat-lbl">Всего объектов</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(16,185,129,0.15); color: #34d399;">💰</div>
+          <div>
+            <div class="stat-val" id="statTotalVal">0 у.е.</div>
+            <div class="stat-lbl">Общая суммарная стоимость</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(245,158,11,0.15); color: #fbbf24;">📊</div>
+          <div>
+            <div class="stat-val" id="statAvg">0 у.е.</div>
+            <div class="stat-lbl">Средняя цена за квартиру</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="background: rgba(168,85,247,0.15); color: #c084fc;">🗄️</div>
+          <div>
+            <div class="stat-val" style="font-size: 1rem; color: #34d399;" id="statDb">🟢 SQLite Active</div>
+            <div class="stat-lbl">База данных СУБД</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Таблица объявлений -->
+      <div class="table-container">
+        <div class="table-header">
+          <div class="table-title">📋 Управление объявлениями базы данных</div>
+          <button class="btn-submit" style="width: auto; padding: 0.5rem 1rem; margin: 0; font-size: 0.85rem;" onclick="openAddModal()">
+            ➕ Добавить объявление
+          </button>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Фото</th>
+              <th>Название</th>
+              <th>Район</th>
+              <th>Адрес</th>
+              <th>Комнат</th>
+              <th>Цена (у.е.)</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <!-- Динамически заполняется -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <!-- Модальное окно добавления объявления с фото в админке -->
+  <div id="adminAddModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; padding: 1rem;">
+    <div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-lg); width: 100%; max-width: 500px; padding: 1.75rem; box-shadow: 0 20px 50px rgba(0,0,0,0.6);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; margin: 0;">➕ Добавить объявление</h3>
+        <button onclick="closeAddModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer;">&times;</button>
+      </div>
+      <form onsubmit="handleAdminCreate(event)">
+        <div class="form-group">
+          <label>Заголовок объявления</label>
+          <input type="text" id="adminTitle" required placeholder="Например: 3-комн. квартира в центре">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <div class="form-group">
+            <label>Цена (у.е.)</label>
+            <input type="number" id="adminPrice" required min="1" placeholder="60000">
+          </div>
+          <div class="form-group">
+            <label>Комнат (1-10)</label>
+            <input type="number" id="adminRooms" required min="1" max="10" value="2">
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <div class="form-group">
+            <label>Район</label>
+            <input type="text" id="adminDistrict" required placeholder="Юнусабад">
+          </div>
+          <div class="form-group">
+            <label>Точный адрес</label>
+            <input type="text" id="adminAddress" required placeholder="ул. Амира Темура, 5">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Фотография объекта</label>
+          <div style="border: 1px dashed rgba(99,102,241,0.5); border-radius: 8px; padding: 0.75rem; text-align: center; cursor: pointer; background: rgba(8,13,25,0.6);" onclick="document.getElementById('adminPhotoFile').click()">
+            <div id="adminPhotoPreviewWrap" style="display: none; margin-bottom: 0.5rem;">
+              <img id="adminPhotoPreview" src="" alt="Предпросмотр" style="max-height: 120px; max-width: 100%; border-radius: 6px; object-fit: cover;">
+            </div>
+            <div id="adminPhotoHint" style="color: var(--text-muted); font-size: 0.82rem;">📷 Нажмите для выбора фото с диска</div>
+            <input type="file" id="adminPhotoFile" accept="image/*" style="display: none;" onchange="handleAdminPhotoSelect(event)">
+          </div>
+          <input type="url" id="adminImageUrl" placeholder="Или ссылка: https://images.unsplash.com/..." style="margin-top: 0.5rem; width: 100%; padding: 0.65rem 0.9rem; border-radius: var(--radius-sm); border: 1px solid var(--card-border); background: rgba(8,13,25,0.8); color: white; font-size: 0.88rem; outline: none;" oninput="handleAdminUrlInput(event)">
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+          <button type="button" class="btn-logout" style="border-radius: var(--radius-md);" onclick="closeAddModal()">Отмена</button>
+          <button type="submit" class="btn-submit" style="width: auto; margin: 0; padding: 0.6rem 1.25rem;">Создать объявление</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    let authToken = localStorage.getItem('adminToken') || '';
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (authToken) {
+        showDashboard();
+      }
+    });
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById('loginUser').value;
+      const pass = document.getElementById('loginPass').value;
+
+      try {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: user, password: pass })
+        });
+
+        const data = await res.json();
+        if (res.ok && data.success) {
+          authToken = data.token;
+          localStorage.setItem('adminToken', authToken);
+          showToast('Авторизация успешна!', 'success');
+          showDashboard();
+        } else {
+          showToast(data.message || 'Неверный логин или пароль', 'error');
+        }
+      } catch (err) {
+        showToast('Ошибка подключения к серверу', 'error');
+      }
+    }
+
+    function handleLogout() {
+      localStorage.removeItem('adminToken');
+      authToken = '';
+      document.getElementById('dashScreen').style.display = 'none';
+      document.getElementById('loginScreen').style.display = 'flex';
+      showToast('Вы вышли из системы');
+    }
+
+    async function showDashboard() {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashScreen').style.display = 'flex';
+      loadStats();
+      loadListings();
+    }
+
+    async function loadStats() {
+      try {
+        const res = await fetch('/api/admin/stats', {
+          headers: { 'Authorization': 'Bearer ' + authToken }
+        });
+        if (res.status === 401) {
+          handleLogout();
+          return;
+        }
+        if (res.ok) {
+          const stats = await res.json();
+          document.getElementById('statTotal').innerText = stats.totalListings;
+          document.getElementById('statTotalVal').innerText = stats.totalValue.toLocaleString() + ' у.е.';
+          document.getElementById('statAvg').innerText = stats.avgPrice.toLocaleString() + ' у.е.';
+          document.getElementById('statDb').innerText = stats.databaseStatus;
+        }
+      } catch (e) {}
+    }
+
+    async function loadListings() {
+      try {
+        const res = await fetch('/api/listings');
+        const items = await res.json();
+        const tbody = document.getElementById('tableBody');
+
+        tbody.innerHTML = items.map(i => {
+          const imgHtml = i.imageUrl
+            ? `<img src="${escapeHtml(i.imageUrl)}" alt="Фото" style="width: 44px; height: 34px; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border);" onerror="this.src='https://placehold.co/44x34/1e293b/a5b4fc?text=Дом'">`
+            : `<span style="font-size: 1.25rem;">🏠</span>`;
+
+          return `
+          <tr>
+            <td><strong>#${i.id}</strong></td>
+            <td>${imgHtml}</td>
+            <td style="font-weight: 600;">${escapeHtml(i.title)}</td>
+            <td>📍 ${escapeHtml(i.district)}</td>
+            <td style="color: var(--text-muted);">${escapeHtml(i.address)}</td>
+            <td>🚪 ${i.rooms}</td>
+            <td style="color: var(--accent); font-weight: 700;">${i.price.toLocaleString()} у.е.</td>
+            <td>
+              <button class="btn-sm btn-edit" onclick="editPricePrompt(${i.id}, ${i.price})">💰 Изменить цену</button>
+              <button class="btn-sm btn-del" onclick="deleteListing(${i.id})">🗑️ Удалить</button>
+            </td>
+          </tr>
+        `;
+        }).join('');
+      } catch (e) {}
+    }
+
+    async function editPricePrompt(id, oldPrice) {
+      const newPrice = prompt(`Укажите новую цену для объявления #${id}:`, oldPrice);
+      if (!newPrice) return;
+
+      try {
+        const res = await fetch(`/api/listings/${id}/price`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + authToken
+          },
+          body: JSON.stringify({ price: parseFloat(newPrice) })
+        });
+        if (res.ok) {
+          showToast(`Цена объявления #${id} обновлена!`);
+          loadStats();
+          loadListings();
+        }
+      } catch (e) {}
+    }
+
+    async function deleteListing(id) {
+      if (!confirm(`Удалить объявление #${id}?`)) return;
+
+      try {
+        const res = await fetch(`/api/listings/${id}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': 'Bearer ' + authToken }
+        });
+        if (res.ok) {
+          showToast(`Объявление #${id} удалено!`);
+          loadStats();
+          loadListings();
+        }
+      } catch (e) {}
+    }
+
+    // Модальное окно добавления в админке
+    function openAddModal() {
+      document.getElementById('adminTitle').value = '';
+      document.getElementById('adminPrice').value = '';
+      document.getElementById('adminDistrict').value = '';
+      document.getElementById('adminAddress').value = '';
+      document.getElementById('adminRooms').value = 2;
+      document.getElementById('adminImageUrl').value = '';
+      document.getElementById('adminPhotoFile').value = '';
+      document.getElementById('adminPhotoPreview').src = '';
+      document.getElementById('adminPhotoPreviewWrap').style.display = 'none';
+      document.getElementById('adminPhotoHint').innerText = '📷 Нажмите для выбора фото с диска';
+      document.getElementById('adminAddModal').style.display = 'flex';
+    }
+
+    function closeAddModal() {
+      document.getElementById('adminAddModal').style.display = 'none';
+    }
+
+    function handleAdminPhotoSelect(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        document.getElementById('adminPhotoPreview').src = e.target.result;
+        document.getElementById('adminPhotoPreviewWrap').style.display = 'block';
+        document.getElementById('adminPhotoHint').innerText = '✅ Фото выбрано (нажмите для замены)';
+        document.getElementById('adminImageUrl').value = '';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleAdminUrlInput(event) {
+      const url = event.target.value.trim();
+      if (url) {
+        document.getElementById('adminPhotoPreview').src = url;
+        document.getElementById('adminPhotoPreviewWrap').style.display = 'block';
+        document.getElementById('adminPhotoFile').value = '';
+      } else {
+        document.getElementById('adminPhotoPreviewWrap').style.display = 'none';
+      }
+    }
+
+    async function handleAdminCreate(e) {
+      e.preventDefault();
+      let imageUrl = document.getElementById('adminImageUrl').value.trim();
+      const fileInput = document.getElementById('adminPhotoFile');
+
+      if (fileInput.files.length > 0) {
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+        try {
+          const upRes = await fetch('/api/listings/upload', {
+            method: 'POST',
+            body: formData
+          });
+          if (upRes.ok) {
+            const upData = await upRes.json();
+            imageUrl = upData.url;
+          }
+        } catch (err) {}
+      }
+
+      const body = {
+        title: document.getElementById('adminTitle').value,
+        price: parseFloat(document.getElementById('adminPrice').value),
+        district: document.getElementById('adminDistrict').value,
+        address: document.getElementById('adminAddress').value,
+        rooms: parseInt(document.getElementById('adminRooms').value),
+        imageUrl: imageUrl || null
+      };
+
+      try {
+        const res = await fetch('/api/listings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+
+        if (res.ok) {
+          closeAddModal();
+          showToast('Объявление с фото успешно создано!');
+          loadStats();
+          loadListings();
+        } else {
+          showToast('Ошибка при создании объявления', 'error');
+        }
+      } catch (err) {
+        showToast('Ошибка подключения к серверу', 'error');
+      }
+    }
+
+    function showToast(msg, type = 'success') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerText = msg;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+  </script>
+</body>
+</html>

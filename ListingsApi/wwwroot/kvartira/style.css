@@ -1,0 +1,472 @@
+/* ===== 1. Основа ===== */
+* {
+  box-sizing: border-box;   /* width включает padding и border */
+}
+
+body {
+  margin: 0;                /* у body есть отступ 8px по умолчанию */
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #1f2937;
+  background-color: #f9fafb;
+  transition: background-color 0.25s, color 0.25s;
+}
+
+h1, h2, h3 {
+  line-height: 1.2;
+  color: #111827;
+}
+
+h1 { font-size: 2rem; margin: 0 0 8px; }
+h2 { font-size: 1.375rem; margin: 32px 0 12px; }
+h3 { font-size: 1.125rem; margin: 20px 0 8px; }
+
+p { margin: 0 0 12px; }
+
+a { color: #1d4ed8; }
+a:hover { text-decoration: none; }
+
+img {
+  max-width: 100%;          /* картинка никогда не шире контейнера */
+  height: auto;
+}
+
+/* ===== 2. Шапка (Липкая шапка со звездочкой) ===== */
+header {
+  background: #111827;
+  color: white;
+  padding: 12px 24px;
+  display: flex;                    /* дети в ряд */
+  justify-content: space-between;   /* логотип слева, меню справа */
+  align-items: center;              /* по вертикали по центру */
+  flex-wrap: wrap;
+  gap: 12px;
+  position: sticky;                 /* Липкая шапка */
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+header p { margin: 0; font-weight: 700; }
+
+nav {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+nav a:hover {
+  background: #374151;
+}
+
+/* Кнопка переключения темы */
+#theme {
+  background: #374151;
+  color: white;
+  border: 1px solid #4b5563;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+#theme:hover {
+  background: #4b5563;
+}
+
+/* ===== 3. Контейнер и карточки ===== */
+.container {
+  max-width: 960px;         /* не шире 960, но может быть уже */
+  margin: 24px auto;        /* auto слева и справа = по центру */
+  padding: 0 16px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  transition: transform 0.2s, box-shadow 0.2s; /* Подъём карточки со звёздочкой */
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 { margin-top: 0; }
+
+/* Бейдж «Без посредников» (Обязательное задание Урока 2) */
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #10b981;
+  color: white;
+  border-radius: 12px;
+  padding: 2px 10px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+/* Цена в первом абзаце */
+.price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #b45309;
+}
+
+/* Сетка характеристик: три колонки */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.feature {
+  background: #f3f4f6;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  transition: background 0.2s;
+}
+
+.feature strong {
+  display: block;           /* число на своей строке */
+  font-size: 1.5rem;
+  color: #1d4ed8;
+}
+
+.feature span {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+/* Фотографии */
+.photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.photos figure {
+  margin: 0;
+  position: relative;       /* Для абсолютного позиционирования бейджа */
+}
+
+.photos img {
+  width: 100%;
+  aspect-ratio: 4 / 3;      /* одинаковые пропорции */
+  object-fit: cover;        /* обрезать, не сплющивать */
+  border-radius: 8px;
+  display: block;
+}
+
+.photos figcaption {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-top: 6px;
+  text-align: center;
+}
+
+/* Бейдж «Срочно» на фото (Задание со звёздочкой) */
+.tag {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #ef4444;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+/* ===== 4. Таблица ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;  /* одна общая рамка вместо двойных */
+  font-size: 0.9375rem;
+}
+
+caption {
+  caption-side: bottom;
+  color: #6b7280;
+  font-size: 0.875rem;
+  padding-top: 8px;
+  text-align: left;
+}
+
+th, td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+th {
+  background: #f3f4f6;
+  font-weight: 600;
+  cursor: pointer;          /* Для сортировки */
+  user-select: none;
+}
+
+th:hover {
+  background: #e5e7eb;
+}
+
+td:not(:first-child), th:not(:first-child) {
+  text-align: right;         /* числа — вправо */
+}
+
+tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+tbody tr:hover {
+  background: #eff6ff;
+}
+
+/* Раскрывающийся блок <details> (Урок 1 со звёздочкой) */
+details {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 16px;
+  background: #f9fafb;
+}
+
+details summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #1d4ed8;
+}
+
+details p {
+  margin: 8px 0 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* ===== 5. Калькулятор за м² (Урок 3) ===== */
+.calc {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 12px;
+  align-items: center;
+  max-width: 360px;
+  margin-top: 12px;
+  padding: 12px;
+  background: #f3f4f6;
+  border-radius: 8px;
+}
+
+.calc p {
+  grid-column: 1 / -1;
+  margin: 4px 0 0;
+  font-weight: 600;
+}
+
+.calc strong {
+  color: #1d4ed8;
+  font-size: 1.15rem;
+}
+
+/* ===== 6. Фильтр похожих объявлений (Урок 3) ===== */
+.filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.filters button {
+  padding: 6px 14px;
+  font-size: 0.875rem;
+}
+
+.listings {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.listings li {
+  padding: 10px 14px;
+  background: #f3f4f6;
+  border-radius: 6px;
+  border-left: 4px solid #1d4ed8;
+}
+
+/* ===== 7. Форма ===== */
+form {
+  max-width: 480px;
+}
+
+form label {
+  display: block;           /* подпись на своей строке */
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+/* подписи-обёртки у radio и checkbox — в строку */
+form label:has(input[type="radio"]),
+form label:has(input[type="checkbox"]) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 400;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font: inherit;            /* тот же шрифт, что у страницы */
+  background: white;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid #1d4ed8;
+  outline-offset: 1px;
+  border-color: #1d4ed8;
+}
+
+input:invalid:not(:placeholder-shown) {
+  border-color: #dc2626;    /* красная рамка, если ввод неверный */
+}
+
+.error {
+  color: #dc2626;
+  font-weight: 600;
+  min-height: 1.5em;
+  margin: 8px 0;
+}
+
+.btn {
+  display: inline-block;
+  background: #1d4ed8;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn:hover  { background: #1e40af; }
+.btn:active { transform: translateY(1px); }
+
+/* ===== 8. Подвал ===== */
+footer {
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.875rem;
+  padding: 24px 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Кнопка «Наверх» (Урок 3 со звёздочкой) */
+#scroll-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #1d4ed8;
+  color: white;
+  border: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+  transition: transform 0.2s, background 0.2s;
+  z-index: 99;
+}
+
+#scroll-top:hover {
+  transform: translateY(-3px);
+  background: #1e40af;
+}
+
+/* ===== 9. Тёмная тема ===== */
+body.dark {
+  background-color: #111827;
+  color: #e5e7eb;
+}
+
+body.dark h1, body.dark h2, body.dark h3 { color: #f9fafb; }
+body.dark .card { background: #1f2937; border-color: #374151; }
+body.dark .feature { background: #374151; }
+body.dark .feature strong { color: #60a5fa; }
+body.dark th { background: #374151; color: #f9fafb; }
+body.dark tbody tr:nth-child(even) { background: #1f2937; }
+body.dark tbody tr:hover { background: #374151; }
+body.dark input, body.dark select, body.dark textarea {
+  background: #1f2937; color: #e5e7eb; border-color: #4b5563;
+}
+body.dark a { color: #93c5fd; }
+body.dark footer { border-color: #374151; }
+body.dark details { background: #1f2937; border-color: #374151; }
+body.dark .calc { background: #374151; }
+body.dark .listings li { background: #374151; color: #e5e7eb; }
+
+/* ===== 10. Телефон и узкие окна ===== */
+@media (max-width: 640px) {
+  header {
+    flex-direction: column;   /* логотип над меню */
+    align-items: flex-start;
+  }
+
+  nav { flex-wrap: wrap; }
+  h1 { font-size: 1.5rem; }
+  .card { padding: 16px; }
+
+  .grid, .photos {
+    grid-template-columns: repeat(2, 1fr);   /* две колонки вместо трёх */
+  }
+
+  table { font-size: 0.875rem; }
+  th, td { padding: 8px 6px; }
+}
+
+@media (max-width: 400px) {
+  .grid, .photos { grid-template-columns: 1fr; }   /* совсем узко — одна */
+}
+
+/* ===== 11. Печать (Задание со звёздочкой) ===== */
+@media print {
+  header, nav, form, .photos, #scroll-top, .filters, #theme, #show-phone {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .card {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin-bottom: 16px !important;
+  }
+}

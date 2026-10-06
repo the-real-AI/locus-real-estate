@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Урок 3: База данных EF Core 10, Миграции и LINQ | Locus Education</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#004ac6",
+            "secondary": "#006c49",
+            "surface": "#faf8ff",
+            "on-surface": "#171b26"
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"],
+            "body": ["Inter", "sans-serif"],
+            "code": ["Fira Code", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    .code-block {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body class="bg-[#faf8ff] text-[#171b26] antialiased font-body pb-20">
+
+  <!-- ШАПКА НАВИГАЦИИ -->
+  <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center space-x-2 text-decoration-none">
+        <span class="material-symbols-outlined text-primary text-3xl">real_estate_agent</span>
+        <div class="flex flex-col">
+          <span class="text-xl font-extrabold tracking-tight text-primary font-display leading-tight">Locus</span>
+          <span class="text-[11px] font-bold text-slate-500 leading-none">Урок 3 · EF Core 10 & LINQ</span>
+        </div>
+      </a>
+
+      <nav class="hidden lg:flex items-center space-x-6 text-sm font-display font-medium">
+        <a href="index.html" class="text-slate-600 hover:text-primary transition-colors">Главная</a>
+        <a href="catalog.html" class="text-slate-600 hover:text-primary transition-colors">Каталог</a>
+        <a href="efcore-practice.html" class="text-primary font-bold border-b-2 border-primary py-1">База EF Core (Урок 3)</a>
+        <a href="angular-practice.html" class="text-slate-600 hover:text-primary transition-colors">Angular Signals (Урок 4)</a>
+        <a href="solid-practice.html" class="text-slate-600 hover:text-primary transition-colors">SOLID Практикум</a>
+        <a href="css-practice.html" class="text-slate-600 hover:text-primary transition-colors">CSS Практика</a>
+        <a href="hub.html" class="text-slate-600 hover:text-primary transition-colors">Учебный Хаб</a>
+      </nav>
+
+      <div class="flex items-center space-x-3">
+        <a href="/swagger" target="_blank" class="bg-slate-100 text-slate-700 hover:bg-slate-200 text-xs sm:text-sm font-bold px-3.5 py-2 rounded-xl flex items-center space-x-1.5 transition">
+          <span class="material-symbols-outlined text-base">api</span>
+          <span>Swagger UI</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- КОНТЕНТ УРОКА 3 -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 mt-8 space-y-12">
+
+    <!-- HERO БАННЕР УРОКА 3 -->
+    <section class="bg-gradient-to-r from-emerald-900 via-teal-900 to-slate-900 text-white rounded-3xl p-6 sm:p-10 shadow-lg relative overflow-hidden">
+      <div class="relative z-10 max-w-3xl space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-xs font-semibold text-emerald-200">
+          <span class="material-symbols-outlined text-sm">database</span>
+          Entity Framework Core 10 · SQLite · Связи и LINQ
+        </div>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display leading-tight tracking-tight">
+          Переезд на базу данных: EF Core, миграции и LINQ
+        </h1>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+          Интерактивная панель по материалам методички <code class="text-emerald-300">Урок_3_Практика_EF_Core.docx</code>. Замена хранилища в памяти на полноценную реляционную базу данных SQLite (<code class="text-yellow-300">listings.db</code>), две связанные таблицы (<code class="text-emerald-300">Districts</code> 1 &rarr; &infin; <code class="text-emerald-300">Listings</code>), асинхронные сервисы на LINQ и миграции.
+        </p>
+        <div class="flex flex-wrap gap-3 pt-2">
+          <a href="#er-model" class="bg-white text-slate-900 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shadow-md hover:bg-slate-100 transition">
+            ER-Схема базы данных
+          </a>
+          <a href="#linq-builder" class="bg-emerald-600/80 hover:bg-emerald-600 text-white border border-emerald-400/40 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition">
+            LINQ Конструктор & SQL
+          </a>
+          <a href="#districts-api" class="bg-slate-800/80 hover:bg-slate-800 text-slate-300 px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition">
+            Управление Районами (/api/districts)
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 1: ER-МОДЕЛЬ И СВЯЗИ ТАБЛИЦ -->
+    <section id="er-model" class="space-y-6">
+      <div class="border-b border-slate-200 pb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Реляционная структура данных</span>
+        <h2 class="text-2xl sm:text-3xl font-bold font-display text-slate-900">Модель данных SQLite и AppDbContext</h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Таблица Districts -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-sm">D</span>
+              <div>
+                <h3 class="font-bold text-slate-900 font-display text-base">Таблица Districts</h3>
+                <span class="text-[11px] text-slate-400">DbSet&lt;District&gt; Districts</span>
+              </div>
+            </div>
+            <span class="text-xs bg-emerald-50 text-emerald-700 font-bold px-2.5 py-1 rounded-full border border-emerald-200">
+              1 (Родитель)
+            </span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-slate-600">
+              <thead class="bg-slate-50 text-[11px] text-slate-400 uppercase border-b border-slate-200">
+                <tr>
+                  <th class="py-2 px-3">Колонка</th>
+                  <th class="py-2 px-3">Тип в C# / SQL</th>
+                  <th class="py-2 px-3">Правила EF Core</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr>
+                  <td class="py-2 px-3 font-bold text-slate-800">Id</td>
+                  <td class="py-2 px-3 text-slate-600">int / INTEGER</td>
+                  <td class="py-2 px-3 text-primary font-medium">PRIMARY KEY AUTOINCREMENT</td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-3 font-bold text-slate-800">Name</td>
+                  <td class="py-2 px-3 text-slate-600">string / TEXT(100)</td>
+                  <td class="py-2 px-3 text-emerald-700 font-medium">IsRequired(), HasIndex().IsUnique()</td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-3 font-bold text-slate-800">Listings</td>
+                  <td class="py-2 px-3 text-slate-600">List&lt;Listing&gt;</td>
+                  <td class="py-2 px-3 text-purple-700 font-medium">Навигационное свойство 1:N</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs text-slate-600">
+            <strong>Правило удаления:</strong> <code class="text-rose-600">OnDelete(DeleteBehavior.Restrict)</code> — район, в котором есть хотя бы одно объявление, удалить из базы <strong>нельзя</strong>!
+          </div>
+        </div>
+
+        <!-- Таблица Listings -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-8 h-8 rounded-lg bg-blue-100 text-primary flex items-center justify-center font-bold text-sm">L</span>
+              <div>
+                <h3 class="font-bold text-slate-900 font-display text-base">Таблица Listings</h3>
+                <span class="text-[11px] text-slate-400">DbSet&lt;Listing&gt; Listings</span>
+              </div>
+            </div>
+            <span class="text-xs bg-blue-50 text-blue-700 font-bold px-2.5 py-1 rounded-full border border-blue-200">
+              &infin; (Многие)
+            </span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-slate-600">
+              <thead class="bg-slate-50 text-[11px] text-slate-400 uppercase border-b border-slate-200">
+                <tr>
+                  <th class="py-2 px-3">Колонка</th>
+                  <th class="py-2 px-3">Тип C# / SQLite</th>
+                  <th class="py-2 px-3">Специфика EF Core 10</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr>
+                  <td class="py-2 px-3 font-bold text-slate-800">Id</td>
+                  <td class="py-2 px-3">int / INTEGER</td>
+                  <td class="py-2 px-3 text-primary font-medium">PRIMARY KEY</td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-3 font-bold text-slate-800">Title</td>
+                  <td class="py-2 px-3">string / TEXT(200)</td>
+                  <td class="py-2 px-3 text-slate-600 font-medium">IsRequired()</td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-3 font-bold text-slate-800">Price</td>
+                  <td class="py-2 px-3 text-amber-700 font-semibold">decimal / REAL</td>
+                  <td class="py-2 px-3 text-amber-600 font-medium">HasConversion&lt;double&gt;() для SQLite</td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-3 font-bold text-slate-800">DistrictId</td>
+                  <td class="py-2 px-3 text-purple-700 font-semibold">int / INTEGER</td>
+                  <td class="py-2 px-3 text-purple-700 font-medium">FOREIGN KEY &rarr; Districts(Id)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs text-slate-600">
+            <strong>Особенность SQLite:</strong> SQLite не имеет нативного типа decimal. Без <code class="text-primary font-mono">HasConversion&lt;double&gt;()</code> сортировка и фильтрация по цене будут работать некорректно!
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 2: ИНТЕРАКТИВНЫЙ LINQ-КОНСТРУКТОР И SQL ТРАНСЛЯТОР -->
+    <section id="linq-builder" class="space-y-6">
+      <div class="border-b border-slate-200 pb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-primary">Практика LINQ & EF Core</span>
+        <h2 class="text-2xl sm:text-3xl font-bold font-display text-slate-900">LINQ-запросник и трансляция в SQL</h2>
+        <p class="text-xs sm:text-sm text-slate-500 mt-1">
+          Выберите условия фильтрации объявлений и посмотрите, как Entity Framework Core компилирует асинхронный C# LINQ код в нативный SQL запрос для SQLite.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Панель фильтров -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs space-y-4">
+          <h3 class="text-sm font-bold text-slate-800 font-display">Параметры LINQ запроса</h3>
+
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Район (.Where(l =&gt; l.District == ...))</label>
+            <select id="linq-district" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs" onchange="generateLinq()">
+              <option value="all">Все районы (без фильтра)</option>
+              <option value="Чиланзар">Чиланзар</option>
+              <option value="Юнусабад">Юнусабад</option>
+              <option value="Мирзо-Улугбек">Мирзо-Улугбек</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Максимальная цена ($)</label>
+            <input type="number" id="linq-price" value="80000" step="5000" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs" oninput="generateLinq()"/>
+          </div>
+
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Сортировка</label>
+            <select id="linq-sort" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs" onchange="generateLinq()">
+              <option value="none">Без сортировки</option>
+              <option value="price-asc">По возрастанию цены (.OrderBy(l =&gt; l.Price))</option>
+              <option value="price-desc">По убыванию цены (.OrderByDescending(l =&gt; l.Price))</option>
+              <option value="date-desc">Сначала новые (.OrderByDescending(l =&gt; l.CreatedAt))</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Пагинация (.Skip().Take())</label>
+            <div class="grid grid-cols-2 gap-2">
+              <input type="number" id="linq-page" value="1" min="1" placeholder="Стр." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs" oninput="generateLinq()"/>
+              <input type="number" id="linq-pagesize" value="5" min="1" max="50" placeholder="Размер" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs" oninput="generateLinq()"/>
+            </div>
+          </div>
+
+          <button onclick="executeLinqRequest()" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-xs">
+            <span class="material-symbols-outlined text-base">play_arrow</span> Выполнить LINQ запрос к API
+          </button>
+        </div>
+
+        <!-- Код LINQ и Сгенерированный SQL -->
+        <div class="lg:col-span-2 space-y-4">
+          <!-- C# LINQ -->
+          <div class="bg-slate-900 rounded-2xl p-4 text-slate-200 space-y-2">
+            <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-2">
+              <span class="flex items-center gap-1.5 font-bold text-blue-400">
+                <span class="material-symbols-outlined text-sm">code</span> Исходный C# LINQ (ListingService.cs):
+              </span>
+              <span class="text-[11px] text-slate-500">IQueryable&lt;Listing&gt; query = db.Listings...</span>
+            </div>
+            <pre id="linq-code" class="code-block text-emerald-400 overflow-x-auto whitespace-pre-wrap">// Выберите фильтры для генерации LINQ</pre>
+          </div>
+
+          <!-- Generated SQL -->
+          <div class="bg-slate-950 rounded-2xl p-4 text-slate-200 space-y-2 border border-slate-800">
+            <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-2">
+              <span class="flex items-center gap-1.5 font-bold text-amber-400">
+                <span class="material-symbols-outlined text-sm">terminal</span> Сгенерированный SQL (SQLite Provider):
+              </span>
+              <span class="text-[11px] text-slate-500">ToQueryString()</span>
+            </div>
+            <pre id="sql-code" class="code-block text-amber-300 overflow-x-auto whitespace-pre-wrap">// Скомпилированный SQL запрос появится здесь</pre>
+          </div>
+
+          <!-- Результат выполнения -->
+          <div id="linq-api-results" class="bg-white rounded-2xl p-4 border border-slate-200 space-y-3">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs font-bold text-slate-800">Результат выборки данных:</h4>
+              <span id="linq-result-count" class="text-xs font-semibold text-primary">0 объектов найдено</span>
+            </div>
+            <div id="linq-cards" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <!-- Карточки объявлений -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 3: ЖИВОЕ УПРАВЛЕНИЕ РАЙОНАМИ (/api/districts) -->
+    <section id="districts-api" class="space-y-6">
+      <div class="border-b border-slate-200 pb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-purple-700">Эндпоинты Урока 3</span>
+        <h2 class="text-2xl sm:text-3xl font-bold font-display text-slate-900">Управление справочником районов (/api/districts)</h2>
+        <p class="text-xs sm:text-sm text-slate-500 mt-1">
+          Прямое взаимодействие с эндпоинтами контроллера районов: создание нового района и проверка ограничения <code class="text-rose-600">DeleteBehavior.Restrict</code>.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Добавление района -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs space-y-4">
+          <h3 class="text-sm font-bold text-slate-800 font-display">Добавить новый район</h3>
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Название района (уникальное)</label>
+            <input type="text" id="new-district-name" placeholder="Например: Мирабад" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs"/>
+          </div>
+          <button onclick="createNewDistrict()" class="w-full bg-purple-700 hover:bg-purple-800 text-white font-bold py-2 rounded-xl text-xs transition shadow-xs flex items-center justify-center gap-1">
+            <span class="material-symbols-outlined text-base">add</span> Создать район (POST)
+          </button>
+          <div id="district-create-msg" class="text-xs hidden p-2 rounded-xl"></div>
+        </div>
+
+        <!-- Список существующих районов -->
+        <div class="lg:col-span-2 bg-white rounded-3xl p-6 border border-slate-200 shadow-xs space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-slate-800 font-display">Текущие районы в базе данных SQLite</h3>
+            <button onclick="loadDistricts()" class="text-xs text-primary font-bold hover:underline flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm">refresh</span> Обновить
+            </button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-slate-600">
+              <thead class="bg-slate-50 text-[11px] text-slate-400 uppercase border-b border-slate-200">
+                <tr>
+                  <th class="py-2 px-3">ID</th>
+                  <th class="py-2 px-3">Название района</th>
+                  <th class="py-2 px-3">Объявлений в базе</th>
+                  <th class="py-2 px-3 text-right">Действия</th>
+                </tr>
+              </thead>
+              <tbody id="districts-table-body" class="divide-y divide-slate-100">
+                <tr><td colspan="4" class="py-4 text-center text-slate-400">Загрузка данных...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // Генератор LINQ и SQL
+    function generateLinq() {
+      const district = document.getElementById('linq-district').value;
+      const maxPrice = document.getElementById('linq-price').value;
+      const sort = document.getElementById('linq-sort').value;
+      const page = document.getElementById('linq-page').value || 1;
+      const pageSize = document.getElementById('linq-pagesize').value || 5;
+
+      let linq = `IQueryable<Listing> query = _db.Listings.Include(l => l.District);\n`;
+      let sqlWhere = [];
+
+      if (district !== 'all') {
+        linq += `query = query.Where(l => l.District.Name == "${district}");\n`;
+        sqlWhere.push(`"d"."Name" = '${district}'`);
+      }
+      if (maxPrice) {
+        linq += `query = query.Where(l => l.Price <= ${maxPrice}m);\n`;
+        sqlWhere.push(`"l"."Price" <= ${maxPrice}.0`);
+      }
+
+      let sqlOrderBy = '';
+      if (sort === 'price-asc') {
+        linq += `query = query.OrderBy(l => l.Price);\n`;
+        sqlOrderBy = `ORDER BY "l"."Price" ASC\n`;
+      } else if (sort === 'price-desc') {
+        linq += `query = query.OrderByDescending(l => l.Price);\n`;
+        sqlOrderBy = `ORDER BY "l"."Price" DESC\n`;
+      } else if (sort === 'date-desc') {
+        linq += `query = query.OrderByDescending(l => l.CreatedAt);\n`;
+        sqlOrderBy = `ORDER BY "l"."CreatedAt" DESC\n`;
+      }
+
+      const offset = (page - 1) * pageSize;
+      linq += `var results = await query.Skip(${offset}).Take(${pageSize}).ToListAsync();`;
+
+      let sql = `SELECT "l"."Id", "l"."Title", "l"."Price", "l"."Rooms", "l"."CreatedAt", "d"."Name" AS "DistrictName"\nFROM "Listings" AS "l"\nLEFT JOIN "Districts" AS "d" ON "l"."District" = "d"."Name"\n`;
+      if (sqlWhere.length > 0) {
+        sql += `WHERE ` + sqlWhere.join(' AND ') + `\n`;
+      }
+      if (sqlOrderBy) {
+        sql += sqlOrderBy;
+      }
+      sql += `LIMIT ${pageSize} OFFSET ${offset};`;
+
+      document.getElementById('linq-code').innerText = linq;
+      document.getElementById('sql-code').innerText = sql;
+    }
+
+    // Выполнение запроса
+    async function executeLinqRequest() {
+      const district = document.getElementById('linq-district').value;
+      const maxPrice = document.getElementById('linq-price').value;
+      const sort = document.getElementById('linq-sort').value;
+      const page = document.getElementById('linq-page').value || 1;
+      const pageSize = document.getElementById('linq-pagesize').value || 5;
+
+      let url = `/api/listings?page=${page}&pageSize=${pageSize}`;
+      if (district !== 'all') url += `&district=${encodeURIComponent(district)}`;
+      if (maxPrice) url += `&maxPrice=${maxPrice}`;
+      if (sort === 'price-asc') url += `&sort=price`;
+      if (sort === 'price-desc') url += `&sort=-price`;
+
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Ошибка HTTP: ' + res.status);
+        const data = await res.json();
+        const items = data.items || data;
+        const total = data.total || items.length;
+
+        document.getElementById('linq-result-count').innerText = `${total} объектов найдено (показано ${items.length})`;
+        const container = document.getElementById('linq-cards');
+        container.innerHTML = '';
+
+        if (items.length === 0) {
+          container.innerHTML = '<div class="col-span-2 text-center text-slate-400 py-6 text-xs">Объявления не найдены</div>';
+          return;
+        }
+
+        items.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'bg-slate-50 border border-slate-200 rounded-xl p-3 space-y-1 hover:border-primary/50 transition';
+          card.innerHTML = `
+            <div class="flex justify-between items-start">
+              <span class="text-xs font-bold text-slate-900">${item.title}</span>
+              <span class="text-xs font-extrabold text-primary font-display">$${Number(item.price).toLocaleString()}</span>
+            </div>
+            <div class="flex items-center gap-2 text-[11px] text-slate-500">
+              <span>📍 ${item.district}</span>
+              <span>•</span>
+              <span>${item.rooms}-комн.</span>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      } catch (err) {
+        console.error(err);
+        document.getElementById('linq-result-count').innerText = 'Ошибка соединения с API';
+      }
+    }
+
+    // Загрузка районов
+    async function loadDistricts() {
+      try {
+        const res = await fetch('/api/districts');
+        if (!res.ok) throw new Error('Ошибка HTTP');
+        const list = await res.json();
+        const tbody = document.getElementById('districts-table-body');
+        tbody.innerHTML = '';
+
+        list.forEach(d => {
+          const tr = document.createElement('tr');
+          tr.className = 'hover:bg-slate-50 transition-colors';
+          tr.innerHTML = `
+            <td class="py-2.5 px-3 font-mono font-bold text-slate-700">${d.id}</td>
+            <td class="py-2.5 px-3 font-semibold text-slate-900">${d.name}</td>
+            <td class="py-2.5 px-3">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold ${d.listingsCount > 0 ? 'bg-blue-100 text-primary' : 'bg-slate-100 text-slate-500'}">
+                ${d.listingsCount} объявлений
+              </span>
+            </td>
+            <td class="py-2.5 px-3 text-right">
+              <button onclick="deleteDistrict(${d.id}, '${d.name}', ${d.listingsCount})" class="text-rose-600 hover:text-rose-800 text-xs font-bold transition">
+                Удалить
+              </button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    // Создание района
+    async function createNewDistrict() {
+      const nameInput = document.getElementById('new-district-name');
+      const name = nameInput.value.trim();
+      const msg = document.getElementById('district-create-msg');
+      if (!name) return;
+
+      try {
+        const res = await fetch('/api/districts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name })
+        });
+        if (res.status === 201) {
+          msg.className = 'text-xs block p-2 rounded-xl bg-emerald-100 text-emerald-800';
+          msg.innerText = `Район «${name}» успешно добавлен!`;
+          nameInput.value = '';
+          loadDistricts();
+        } else {
+          const data = await res.json();
+          msg.className = 'text-xs block p-2 rounded-xl bg-rose-100 text-rose-800';
+          msg.innerText = data.message || 'Ошибка создания района';
+        }
+      } catch (err) {
+        msg.className = 'text-xs block p-2 rounded-xl bg-rose-100 text-rose-800';
+        msg.innerText = 'Сетевая ошибка';
+      }
+    }
+
+    // Удаление района
+    async function deleteDistrict(id, name, count) {
+      if (!confirm(`Удалить район «${name}»?`)) return;
+
+      try {
+        const res = await fetch(`/api/districts/${id}`, { method: 'DELETE' });
+        if (res.status === 204) {
+          alert(`Район «${name}» удален!`);
+          loadDistricts();
+        } else {
+          const err = await res.json();
+          alert(`Ошибка: ${err.message}`);
+        }
+      } catch (e) {
+        alert('Ошибка при удалении района');
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      generateLinq();
+      executeLinqRequest();
+      loadDistricts();
+    });
+  </script>
+</body>
+</html>

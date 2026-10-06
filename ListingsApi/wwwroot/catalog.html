@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Каталог квартир в Ташкенте — Locus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "secondary": "#006c49",
+            "tertiary-container": "#996100",
+            "surface-container-lowest": "#ffffff",
+            "surface-tint": "#0053db",
+            "on-surface-variant": "#434655",
+            "on-surface": "#171b26",
+            "error-container": "#ffdad6",
+            "tertiary": "#784b00",
+            "tertiary-fixed-dim": "#ffb95f",
+            "on-secondary": "#ffffff",
+            "inverse-surface": "#2c303b",
+            "primary": "#004ac6",
+            "on-tertiary-container": "#ffeedd",
+            "background": "#faf8ff",
+            "on-tertiary": "#ffffff",
+            "primary-fixed-dim": "#b4c5ff",
+            "on-tertiary-fixed-variant": "#653e00",
+            "secondary-fixed-dim": "#4edea3",
+            "surface-container": "#ebedfc",
+            "surface-container-low": "#f2f3ff",
+            "secondary-container": "#6cf8bb",
+            "on-secondary-fixed-variant": "#005236",
+            "surface-variant": "#dfe2f1",
+            "tertiary-fixed": "#ffddb8",
+            "on-error": "#ffffff",
+            "on-primary-container": "#eeefff",
+            "on-primary": "#ffffff",
+            "surface-dim": "#d7d9e8",
+            "outline-variant": "#c3c6d7",
+            "on-background": "#171b26",
+            "surface-bright": "#faf8ff",
+            "primary-container": "#2563eb",
+            "on-error-container": "#93000a",
+            "secondary-fixed": "#6ffbbe",
+            "surface-container-high": "#e5e7f6",
+            "outline": "#737686",
+            "surface-container-highest": "#dfe2f1",
+            "inverse-primary": "#b4c5ff",
+            "on-primary-fixed": "#00174b",
+            "on-primary-fixed-variant": "#003ea8",
+            "error": "#ba1a1a",
+            "on-tertiary-fixed": "#2a1700",
+            "on-secondary-fixed": "#002113",
+            "inverse-on-surface": "#eef0ff",
+            "primary-fixed": "#dbe1ff",
+            "surface": "#faf8ff",
+            "on-secondary-container": "#00714d"
+          },
+          fontFamily: {
+            "body-lg": ["Inter", "sans-serif"],
+            "display": ["Plus Jakarta Sans", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "price-xl": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-sm": ["Plus Jakarta Sans", "sans-serif"],
+            "price-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .owner-card-glow {
+      box-shadow: 0 0 0 2px #f59e0b, 0 8px 24px rgba(245, 158, 11, 0.2);
+    }
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+  </style>
+  <script src="script.js" defer></script>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen pb-24 antialiased">
+
+  <!-- TOP APP BAR -->
+  <header class="docked full-width top-0 sticky z-40 bg-surface-container-lowest/90 dark:bg-inverse-surface/90 backdrop-blur-md shadow-sm border-b border-outline-variant/30">
+    <div class="flex justify-between items-center w-full px-4 sm:px-6 max-w-7xl mx-auto h-16">
+      <a href="index.html" class="flex items-center space-x-2">
+        <span class="material-symbols-outlined text-primary text-3xl">real_estate_agent</span>
+        <div class="flex flex-col">
+          <span class="text-xl font-extrabold tracking-tight text-primary font-display leading-tight">Locus</span>
+          <span class="text-[11px] font-bold text-on-surface-variant leading-none">Недвижимость Ташкента</span>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center space-x-5">
+        <a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-display py-1" href="index.html">Главная</a>
+        <a class="text-primary font-bold hover:text-primary transition-colors text-sm font-display border-b-2 border-primary py-1" href="catalog.html">Каталог</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-display py-1" href="efcore-practice.html">База EF Core (Урок 3)</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-display py-1" href="angular-practice.html">Angular Signals (Урок 4)</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-display py-1" href="solid-practice.html">SOLID Практикум</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-display py-1" href="hub.html">Хаб</a>
+      </nav>
+
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <button class="p-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors" id="theme" title="Сменить тему">
+          <span class="material-symbols-outlined text-xl">dark_mode</span>
+        </button>
+        <button onclick="openCreateModal()" class="bg-secondary text-on-secondary px-3.5 py-2 rounded-xl text-sm font-bold flex items-center space-x-1.5 shadow-sm hover:opacity-95 active:scale-95 transition-transform duration-150">
+          <span class="material-symbols-outlined text-lg">add</span>
+          <span>Подать</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- STICKY SEARCH & FILTER CLUSTER (STITCH LOCUS_2) -->
+  <div class="sticky top-16 z-30 bg-surface-container-lowest/95 backdrop-blur-md pb-3 shadow-sm border-b border-outline-variant/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-3 pt-3">
+      <!-- Поисковая строка -->
+      <div class="relative flex items-center">
+        <div class="absolute left-3.5 flex items-center pointer-events-none text-outline">
+          <span class="material-symbols-outlined text-xl">search</span>
+        </div>
+        <input id="searchInput" oninput="onSearch()" type="text" placeholder="Поиск по названию, улице или ориентиру в Ташкенте..." class="w-full bg-surface-container-low border-0 focus:ring-2 focus:ring-primary rounded-xl py-2.5 pl-11 pr-4 text-sm text-on-surface placeholder:text-outline-variant"/>
+      </div>
+
+      <!-- Чипсы районов + Сортировка -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+        <!-- Фильтры по районам -->
+        <div class="filters flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+          <button type="button" data-district="all" class="px-3.5 py-1.5 rounded-full text-xs font-bold transition-all bg-primary text-white shadow-xs">
+            Все районы
+          </button>
+          <button type="button" data-district="Чиланзар" class="px-3.5 py-1.5 rounded-full text-xs font-bold transition-all bg-surface-container hover:bg-surface-variant text-on-surface-variant">
+            Чиланзар
+          </button>
+          <button type="button" data-district="Юнусабад" class="px-3.5 py-1.5 rounded-full text-xs font-bold transition-all bg-surface-container hover:bg-surface-variant text-on-surface-variant">
+            Юнусабад
+          </button>
+          <button type="button" data-district="Мирзо-Улугбек" class="px-3.5 py-1.5 rounded-full text-xs font-bold transition-all bg-surface-container hover:bg-surface-variant text-on-surface-variant">
+            Мирзо-Улугбек
+          </button>
+          <button type="button" data-district="mine" class="px-3.5 py-1.5 rounded-full text-xs font-bold transition-all bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 flex items-center gap-1">
+            <span>⭐ Мои объявления</span>
+          </button>
+        </div>
+
+        <!-- Сортировка -->
+        <div class="flex items-center gap-2 flex-shrink-0 self-end sm:self-auto">
+          <label class="text-xs text-on-surface-variant hidden sm:inline">Сортировка:</label>
+          <div class="relative">
+            <select id="sortSelect" onchange="onSortChange()" class="appearance-none bg-surface-container-low border border-outline-variant/40 rounded-xl py-1.5 pl-3 pr-8 text-xs font-medium text-on-surface focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer">
+              <option value="">По дате (новые)</option>
+              <option value="price">Сначала дешевле</option>
+              <option value="-price">Сначала дороже</option>
+            </select>
+            <span class="material-symbols-outlined text-base pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-outline">expand_more</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Вторичные фильтры: Комнатность + Бюджет + Сброс -->
+      <div class="flex items-center justify-between gap-3 pt-2 border-t border-outline-variant/30 flex-wrap">
+        <!-- Room Selector Chips -->
+        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+          <span class="text-xs font-bold text-on-surface-variant mr-1 flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm text-primary">meeting_room</span>
+            <span>Комнат:</span>
+          </span>
+          <button type="button" onclick="onCatalogRoomClick('all')" class="catalog-room-btn px-2.5 sm:px-3 py-1 rounded-lg text-xs font-bold transition-all bg-primary text-white shadow-xs" data-rooms="all">Все</button>
+          <button type="button" onclick="onCatalogRoomClick('1')" class="catalog-room-btn px-2.5 sm:px-3 py-1 rounded-lg text-xs font-medium transition-all bg-surface-container hover:bg-surface-variant text-on-surface-variant" data-rooms="1">1</button>
+          <button type="button" onclick="onCatalogRoomClick('2')" class="catalog-room-btn px-2.5 sm:px-3 py-1 rounded-lg text-xs font-medium transition-all bg-surface-container hover:bg-surface-variant text-on-surface-variant" data-rooms="2">2</button>
+          <button type="button" onclick="onCatalogRoomClick('3')" class="catalog-room-btn px-2.5 sm:px-3 py-1 rounded-lg text-xs font-medium transition-all bg-surface-container hover:bg-surface-variant text-on-surface-variant" data-rooms="3">3</button>
+          <button type="button" onclick="onCatalogRoomClick('4+')" class="catalog-room-btn px-2.5 sm:px-3 py-1 rounded-lg text-xs font-medium transition-all bg-surface-container hover:bg-surface-variant text-on-surface-variant" data-rooms="4+">4+</button>
+        </div>
+
+        <!-- Фильтр по бюджету / сброс -->
+        <div class="flex items-center gap-2">
+          <div class="relative flex items-center">
+            <input id="catalogMaxPrice" oninput="onMaxPriceChange()" type="number" min="0" step="1000" placeholder="Бюджет до $" class="w-28 sm:w-32 bg-surface-container-low border border-outline-variant/40 rounded-xl py-1 pl-2 pr-6 text-xs text-on-surface focus:outline-none focus:ring-1 focus:ring-primary"/>
+            <span class="material-symbols-outlined absolute right-1.5 text-on-surface-variant text-sm pointer-events-none">attach_money</span>
+          </div>
+          <button id="resetFiltersBtn" onclick="resetAllFilters()" title="Сбросить все фильтры" class="text-xs text-on-surface-variant hover:text-red-600 flex items-center gap-0.5 px-2 py-1 rounded-lg hover:bg-surface-container transition-colors">
+            <span class="material-symbols-outlined text-sm">restart_alt</span>
+            <span class="hidden sm:inline">Сбросить</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN FEED CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 pt-6">
+    <!-- Мета-информация -->
+    <div class="flex items-center justify-between mb-5">
+      <h1 class="text-xl sm:text-2xl font-bold text-on-surface font-display">Каталог квартир в Ташкенте</h1>
+      <span id="listings-count" class="text-xs sm:text-sm font-medium text-on-surface-variant bg-surface-container px-3 py-1 rounded-full">
+        Загрузка объектов...
+      </span>
+    </div>
+
+    <!-- Сетка карточек каталога (динамически через script.js) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="listingsGrid">
+      <div class="col-span-full text-center py-16 text-on-surface-variant">
+        ⏳ Загрузка каталога...
+      </div>
+    </div>
+  </main>
+
+  <!-- МОДАЛЬНОЕ ОКНО: ДЕТАЛЬНЫЙ ПРОСМОТР ОБЪЕКТА -->
+  <div class="modal-overlay" id="detailModal">
+    <div class="w-full max-w-2xl bg-surface-container-lowest rounded-3xl shadow-2xl flex flex-col max-h-[92vh] border border-outline-variant/40 overflow-hidden">
+      <div class="p-4 border-b border-outline-variant/30 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold text-secondary bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full" id="modalDetailBadge">В продаже</span>
+          <span class="text-xs text-on-surface-variant font-mono" id="modalDetailId">ID: #1</span>
+        </div>
+        <button onclick="closeDetails()" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="p-5 overflow-y-auto space-y-4">
+        <div class="relative rounded-2xl overflow-hidden aspect-[16/10] bg-surface-container">
+          <img id="modalDetailImg" class="w-full h-full object-cover" src="" alt="Фото объекта"/>
+        </div>
+
+        <div class="flex items-baseline justify-between pt-1">
+          <div>
+            <span id="modalDetailPrice" class="text-2xl sm:text-3xl font-extrabold text-primary font-display">0 у.е.</span>
+            <p id="modalDetailPriceUzs" class="text-xs text-on-surface-variant font-medium">~ 0 сум</p>
+          </div>
+          <span id="modalDetailOwnBadge" class="hidden text-xs font-bold text-amber-700 bg-amber-100 border border-amber-300 px-2.5 py-1 rounded-full">
+            ⭐ Ваше объявление
+          </span>
+        </div>
+
+        <div>
+          <h3 id="modalDetailTitle" class="text-lg font-bold text-on-surface font-display">Заголовок объекта</h3>
+          <p id="modalDetailAddress" class="text-xs sm:text-sm text-on-surface-variant flex items-center gap-1 mt-1">
+            <span class="material-symbols-outlined text-sm text-primary">location_on</span>
+            <span>Адрес</span>
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2" id="modalDetailSpecs"></div>
+
+        <div class="bg-surface-container-low p-3.5 rounded-xl border border-outline-variant/30">
+          <p class="text-xs font-bold text-on-surface mb-1">Особенности объекта:</p>
+          <p class="text-xs text-on-surface-variant leading-relaxed" id="modalDetailDesc">
+            Светлая квартира с отличной планировкой в развитом районе Ташкента.
+          </p>
+        </div>
+      </div>
+
+      <div class="p-4 border-t border-outline-variant/30 flex items-center justify-between gap-3 bg-surface-container-low/50">
+        <a id="modalDetailDirectLink" href="#" class="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+          <span>Открыть отдельную страницу</span>
+          <span class="material-symbols-outlined text-sm">open_in_new</span>
+        </a>
+        <div class="flex gap-2">
+          <a href="tel:+998901234567" class="bg-primary text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1 shadow-sm hover:opacity-95">
+            <span class="material-symbols-outlined text-sm">call</span>
+            <span>Позвонить</span>
+          </a>
+          <button onclick="closeDetails()" class="bg-surface-container text-on-surface px-4 py-2 rounded-xl text-xs font-bold hover:bg-surface-variant">
+            Закрыть
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО: ДОБАВИТЬ ОБЪЯВЛЕНИЕ -->
+  <div class="modal-overlay" id="clientAddModal">
+    <div class="w-full max-w-lg bg-surface-container-lowest rounded-3xl shadow-2xl flex flex-col max-h-[92vh] border border-outline-variant/40 overflow-hidden">
+      <div class="p-4 border-b border-outline-variant/30 flex items-center justify-between">
+        <h3 class="text-lg font-bold text-on-surface font-display flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-secondary">add_circle</span>
+          <span>Разместить объявление</span>
+        </h3>
+        <button onclick="closeCreateModal()" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <form id="clientAddForm" onsubmit="handleClientCreate(event)" class="p-5 overflow-y-auto space-y-3.5">
+        <div>
+          <label class="text-xs font-bold text-on-surface-variant block mb-1">Заголовок объявления *</label>
+          <input type="text" id="newListingTitle" required placeholder="Например: 2-комн. квартира возле парка" class="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl py-2 px-3 text-sm text-on-surface focus:ring-2 focus:ring-primary"/>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-xs font-bold text-on-surface-variant block mb-1">Цена ($) *</label>
+            <input type="number" id="newListingPrice" required min="1" placeholder="55000" class="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl py-2 px-3 text-sm text-on-surface focus:ring-2 focus:ring-primary"/>
+          </div>
+          <div>
+            <label class="text-xs font-bold text-on-surface-variant block mb-1">Комнат (1-10) *</label>
+            <input type="number" id="newListingRooms" required min="1" max="10" value="2" class="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl py-2 px-3 text-sm text-on-surface focus:ring-2 focus:ring-primary"/>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-xs font-bold text-on-surface-variant block mb-1">Район Ташкента *</label>
+            <input type="text" id="newListingDistrict" required placeholder="Чиланзар" class="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl py-2 px-3 text-sm text-on-surface focus:ring-2 focus:ring-primary"/>
+          </div>
+          <div>
+            <label class="text-xs font-bold text-on-surface-variant block mb-1">Точный адрес *</label>
+            <input type="text" id="newListingAddress" required placeholder="ул. Катартал, 12" class="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl py-2 px-3 text-sm text-on-surface focus:ring-2 focus:ring-primary"/>
+          </div>
+        </div>
+
+        <div>
+          <label class="text-xs font-bold text-on-surface-variant block mb-1">Фотография объекта</label>
+          <div onclick="document.getElementById('newListingFile').click()" class="border-2 border-dashed border-outline-variant/60 hover:border-primary rounded-xl p-4 text-center cursor-pointer bg-surface-container-low transition-colors">
+            <div id="clientPhotoPreviewWrap" class="hidden mb-2">
+              <img id="clientPhotoPreview" src="" alt="Предпросмотр" class="max-h-32 mx-auto rounded-lg object-cover"/>
+            </div>
+            <span class="material-symbols-outlined text-2xl text-on-surface-variant">photo_camera</span>
+            <p class="text-xs text-on-surface-variant mt-1">Нажмите для выбора фото с компьютера</p>
+            <input type="file" id="newListingFile" accept="image/*" class="hidden" onchange="handleClientPhotoSelect(event)"/>
+          </div>
+          <input type="url" id="newListingUrl" placeholder="или вставьте прямую ссылку: https://..." class="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl py-1.5 px-3 text-xs text-on-surface mt-2"/>
+        </div>
+
+        <div class="pt-3 border-t border-outline-variant/30 flex justify-end gap-2">
+          <button type="button" onclick="closeCreateModal()" class="px-4 py-2 rounded-xl text-xs font-bold bg-surface-container text-on-surface">Отмена</button>
+          <button type="submit" class="px-5 py-2 rounded-xl text-xs font-bold bg-secondary text-white shadow hover:opacity-95">Опубликовать</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО: РЕДАКТИРОВАТЬ ОБЪЯВЛЕНИЕ -->
+  <div class="modal-overlay" id="editModal">
+    <div class="w-full max-w-lg bg-surface-container-lowest rounded-3xl shadow-2xl flex flex-col max-h-[92vh] border border-outline-variant/40 overflow-hidden">
+      <div class="p-4 border-b border-outline-variant/30 flex items-center justify-between">
+        <h3 class="text-lg font-bold text-on-surface font-display flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-amber-500">edit_note</span>
+          <span>Редактировать объявление</span>
+        </h3>
+        <button onclick="closeEditModal()" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <form id="editForm" onsubmit="handleEditSubmit(event)" class="p-5 overflow-y-auto space-y-3.5">
+        <input type="hidden" id="editListingId"/>
+        <div>
+          <label class="text-xs font-bold text-on-surface-variant block mb-1">Заголовок объявления *</label>
+          <input type="text" id="editListingTitle" required class="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl py-2 px-3 text-sm text-on-surface focus:ring-2 focus:ring-primary"/>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-xs font-bold text-on-surface-variant block mb-1">Цена ($) *</label>
+            <input type="number" id="editListingPrice" required min="1" class="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl py-2 px-3 text-sm text-on-surface focus:ring-2 focus:ring-primary"/>
+          </div>
+          <div>
+            <label class="text-xs font-bold text-on-surface-variant block mb-1">Комнат *</label>
+            <input type="number" id="editListingRooms" required min="1" max="10" class="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl py-2 px-3 text-sm text-on-surface focus:ring-2 focus:ring-primary"/>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-xs font-bold text-on-surface-variant block mb-1">Район *</label>
+            <input type="text" id="editListingDistrict" required class="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl py-2 px-3 text-sm text-on-surface focus:ring-2 focus:ring-primary"/>
+          </div>
+          <div>
+            <label class="text-xs font-bold text-on-surface-variant block mb-1">Адрес *</label>
+            <input type="text" id="editListingAddress" required class="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl py-2 px-3 text-sm text-on-surface focus:ring-2 focus:ring-primary"/>
+          </div>
+        </div>
+
+        <div>
+          <label class="text-xs font-bold text-on-surface-variant block mb-1">Фото (прямая ссылка)</label>
+          <input type="url" id="editListingUrl" placeholder="https://..." class="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl py-1.5 px-3 text-xs text-on-surface"/>
+          <div id="editPhotoPreviewWrap" class="hidden mt-2 text-center">
+            <img id="editPhotoPreview" src="" alt="Предпросмотр" class="max-h-28 mx-auto rounded-lg object-cover"/>
+          </div>
+        </div>
+
+        <div>
+          <label class="text-xs font-bold text-on-surface-variant block mb-1">Или замените файл с компьютера</label>
+          <input type="file" id="editListingFile" accept="image/*" onchange="handleEditPhotoSelect(event)" class="text-xs text-on-surface-variant file:mr-2 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-surface-container file:text-on-surface hover:file:bg-surface-variant cursor-pointer"/>
+        </div>
+
+        <div class="pt-3 border-t border-outline-variant/30 flex justify-end gap-2">
+          <button type="button" onclick="closeEditModal()" class="px-4 py-2 rounded-xl text-xs font-bold bg-surface-container text-on-surface">Отмена</button>
+          <button type="submit" class="px-5 py-2 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-600 text-white shadow">💾 Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>

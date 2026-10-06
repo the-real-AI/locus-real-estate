@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Контакты — Locus Недвижимость</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- ШАПКА -->
+  <header>
+    <div class="brand">
+      <span class="brand-icon">🏢</span>
+      <div class="brand-text">
+        <h2>Locus</h2>
+        <span>Недвижимость Ташкента</span>
+      </div>
+    </div>
+    <nav>
+      <a href="index.html">Главная</a>
+      <a href="catalog.html">Каталог</a>
+      <a href="efcore-practice.html">EF Core (Урок 3)</a>
+      <a href="angular-practice.html">Angular Signals (Урок 4)</a>
+      <a href="solid-practice.html">SOLID</a>
+      <a href="hub.html">Хаб</a>
+      <a href="about.html">О нас</a>
+      <a href="contacts.html" class="nav-active">Контакты</a>
+      <button id="theme" class="btn btn-ghost" type="button">🌙</button>
+    </nav>
+  </header>
+
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="container">
+      <h1>📞 Контакты</h1>
+      <p>Свяжитесь с нами любым удобным способом. Работаем ежедневно с 09:00 до 20:00.</p>
+    </div>
+  </div>
+
+  <main class="container">
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start;">
+
+      <!-- ФОРМА СВЯЗИ -->
+      <section class="card" id="formSection">
+        <h2>Написать нам</h2>
+
+        <p>
+          <button id="show-phone" class="btn btn-secondary" type="button">📞 Показать телефон</button>
+          <span id="phone" hidden style="font-size:1.1rem; font-weight:700; color:var(--primary); margin-left:10px;">+998 90 123-45-67</span>
+        </p>
+
+        <form id="contact-form" action="/send" method="post">
+          <p>
+            <label for="name">Ваше имя</label>
+            <input id="name" name="name" type="text" placeholder="Иван Иванов">
+          </p>
+          <p>
+            <label for="phone-input">Номер телефона</label>
+            <input id="phone-input" name="phone" type="tel" placeholder="+998 90 123 45 67">
+          </p>
+          <p>
+            <label for="email">Электронная почта</label>
+            <input id="email" name="email" type="email" placeholder="example@mail.uz">
+          </p>
+          <p>
+            <label for="when">Когда удобно позвонить?</label>
+            <select id="when" name="when">
+              <option>Утром (09:00 – 12:00)</option>
+              <option>Днём (12:00 – 16:00)</option>
+              <option>Вечером (16:00 – 19:00)</option>
+            </select>
+          </p>
+          <p>
+            Способ связи:<br>
+            <label><input type="radio" name="contact" value="call" checked> Позвонить</label>
+            <label><input type="radio" name="contact" value="telegram"> Telegram</label>
+            <label><input type="radio" name="contact" value="whatsapp"> WhatsApp</label>
+          </p>
+          <p>
+            <label for="msg">Сообщение</label>
+            <textarea id="msg" name="msg" rows="4" placeholder="Интересует квартира в Чиланзаре, 2 комнаты..."></textarea>
+          </p>
+          <p>
+            <label><input type="checkbox" name="agree" required> Согласен на обработку персональных данных</label>
+          </p>
+          <p id="form-error" class="error"></p>
+          <button class="btn" type="submit">📨 Отправить заявку</button>
+        </form>
+      </section>
+
+      <!-- КОНТАКТНАЯ ИНФОРМАЦИЯ -->
+      <div>
+        <section class="card">
+          <h2>Контактная информация</h2>
+          <div class="contact-list">
+            <div class="contact-item">
+              <div class="contact-icon">📍</div>
+              <div>
+                <h4>Адрес офиса</h4>
+                <p>г. Ташкент, ул. Амира Тимура, 107</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">📞</div>
+              <div>
+                <h4>Телефон</h4>
+                <p><a href="tel:+998901234567">+998 90 123-45-67</a></p>
+                <p><a href="tel:+998711234567">+998 71 123-45-67</a></p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">✉️</div>
+              <div>
+                <h4>Email</h4>
+                <p><a href="mailto:info@locus.uz">info@locus.uz</a></p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">🕐</div>
+              <div>
+                <h4>Режим работы</h4>
+                <p>Пн–Пт: 09:00 – 19:00</p>
+                <p>Сб–Вс: 10:00 – 16:00</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" style="margin-top: 0;">
+          <h2>Социальные сети</h2>
+          <div class="social-links">
+            <a href="#" class="social-btn">📱 Telegram</a>
+            <a href="#" class="social-btn">📘 Facebook</a>
+            <a href="#" class="social-btn">📸 Instagram</a>
+          </div>
+        </section>
+
+        <section class="card" style="margin-top: 0;">
+          <h2>🗺️ Как нас найти</h2>
+          <p>Мы находимся в центре Ташкента, рядом со станцией метро «Абдулла Кодирий».</p>
+          <ol>
+            <li>Выйдите на метро «Абдулла Кодирий»</li>
+            <li>Идите прямо по ул. Амира Тимура</li>
+            <li>Дом 107, вход со двора, 2 этаж</li>
+          </ol>
+        </section>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ПОДВАЛ -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h4>🏢 Locus</h4>
+        <p>Лучшая платформа недвижимости Ташкента.</p>
+      </div>
+      <div>
+        <h4>Навигация</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="catalog.html">Каталог</a></li>
+          <li><a href="about.html">О нас</a></li>
+          <li><a href="contacts.html">Контакты</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Контакты</h4>
+        <p><a href="tel:+998901234567">+998 90 123-45-67</a></p>
+        <p><a href="mailto:info@locus.uz">info@locus.uz</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Locus · <a href="/swagger" target="_blank">OpenAPI</a></p>
+    </div>
+  </footer>
+
+
+  <button id="scroll-top" title="Наверх">↑</button>
+
+</body>
+</html>

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+
+<html lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Locus - Детали объекта</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "secondary": "#006c49",
+            "tertiary-container": "#996100",
+            "surface-container-lowest": "#ffffff",
+            "surface-tint": "#0053db",
+            "on-surface-variant": "#434655",
+            "on-surface": "#171b26",
+            "error-container": "#ffdad6",
+            "tertiary": "#784b00",
+            "tertiary-fixed-dim": "#ffb95f",
+            "on-secondary": "#ffffff",
+            "inverse-surface": "#2c303b",
+            "primary": "#004ac6",
+            "on-tertiary-container": "#ffeedd",
+            "background": "#faf8ff",
+            "on-tertiary": "#ffffff",
+            "primary-fixed-dim": "#b4c5ff",
+            "on-tertiary-fixed-variant": "#653e00",
+            "secondary-fixed-dim": "#4edea3",
+            "surface-container": "#ebedfc",
+            "surface-container-low": "#f2f3ff",
+            "secondary-container": "#6cf8bb",
+            "on-secondary-fixed-variant": "#005236",
+            "surface-variant": "#dfe2f1",
+            "tertiary-fixed": "#ffddb8",
+            "on-error": "#ffffff",
+            "on-primary-container": "#eeefff",
+            "on-primary": "#ffffff",
+            "surface-dim": "#d7d9e8",
+            "outline-variant": "#c3c6d7",
+            "on-background": "#171b26",
+            "surface-bright": "#faf8ff",
+            "primary-container": "#2563eb",
+            "on-error-container": "#93000a",
+            "secondary-fixed": "#6ffbbe",
+            "surface-container-high": "#e5e7f6",
+            "outline": "#737686",
+            "surface-container-highest": "#dfe2f1",
+            "inverse-primary": "#b4c5ff",
+            "on-primary-fixed": "#00174b",
+            "on-primary-fixed-variant": "#003ea8",
+            "error": "#ba1a1a",
+            "on-tertiary-fixed": "#2a1700",
+            "on-secondary-fixed": "#002113",
+            "inverse-on-surface": "#eef0ff",
+            "primary-fixed": "#dbe1ff",
+            "surface": "#faf8ff",
+            "on-secondary-container": "#00714d"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xl": "2rem",
+            "space-lg": "1.5rem",
+            "margin-tablet": "1.5rem",
+            "space-md": "1rem",
+            "margin-desktop": "2rem",
+            "margin": "1rem",
+            "gutter-desktop": "1.5rem",
+            "gutter": "1rem",
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-lg": ["Inter"],
+            "display": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "price-xl": ["Plus Jakarta Sans"],
+            "display-mobile": ["Plus Jakarta Sans"],
+            "label-sm": ["Inter"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "label-md": ["Inter"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "price-lg": ["Plus Jakarta Sans"],
+            "body-md": ["Inter"]
+          },
+          "fontSize": {
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "display": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "price-xl": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+            "display-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "800" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }],
+            "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "price-lg": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface antialiased font-body-md text-body-md pb-28 selection:bg-primary-container selection:text-white">
+<!-- Top Floating App Bar (Listing Context - Non-shell subpage) -->
+<header class="sticky top-0 z-40 bg-surface-container-lowest/90 backdrop-blur-md shadow-sm">
+<div class="max-w-xl mx-auto px-margin h-14 flex items-center justify-between">
+<a class="flex items-center gap-space-xs text-on-surface hover:text-primary active:scale-95 transition-all py-space-xs" href="#">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+<span class="font-label-md text-label-md">Назад в каталог</span>
+</a>
+<div class="flex items-center gap-space-xs">
+<button aria-label="В избранное" class="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container-low hover:bg-surface-container active:scale-95 transition-all text-on-surface" id="favorite-btn">
+<span class="material-symbols-outlined" id="fav-icon">favorite</span>
+</button>
+<button aria-label="Поделиться" class="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container-low hover:bg-surface-container active:scale-95 transition-all text-on-surface">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-xl mx-auto px-margin space-y-space-lg pt-space-sm">
+<!-- Photo Gallery Container -->
+<section class="relative rounded-xl overflow-hidden shadow-sm bg-surface-container-low aspect-[16/10] group">
+<img class="w-full h-full object-cover" data-alt="Luxurious high-end contemporary apartment interior in Mirabad Tashkent with open floor layout, warm ambient recessed architectural lighting, floor to ceiling windows showing Tashkent city skyline, modern oak wood paneling, designer modular slate blue sofa, and minimalist marble kitchen island. High quality architectural photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2Q07_Dn8Xbsf48mC4qTlB7L0xL0N3QXRmUchryZeg1Z7OdVEtkFbe6BHwLksyHFQ4UaNP4R1COVF9UPSp0ZvcmuPaUIfoKuBzNsU-qVtkZQ54lfHFIq1O0bQdsAuJfokA2BX_C_OR1HfkizJ9g3lpVuVVx7Pld4a7A6aQ7fUSoIiL0O2J_LWPHmuYtokyakMNrEJoSv9dyz4Ie7UQEjOUYhQrmGDlGeIB06obLjpMKbFZGicqqQ-A"/>
+<!-- Badge 0% Commission -->
+<div class="absolute top-space-md left-space-md bg-secondary text-on-secondary px-space-sm py-1 rounded-full shadow-sm flex items-center gap-1 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+<span>Без комиссии • 0%</span>
+</div>
+<!-- Verified OneID subtle badge -->
+<div class="absolute top-space-md right-space-md bg-surface-container-lowest/80 backdrop-blur-md text-primary font-label-sm text-label-sm px-space-sm py-1 rounded-full flex items-center gap-1 border border-outline-variant/30 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">shield</span>
+<span>OneID Проверен</span>
+</div>
+<!-- Photo Counter -->
+<div class="absolute bottom-space-md right-space-md bg-inverse-surface/80 backdrop-blur-md text-inverse-on-surface px-space-sm py-0.5 rounded-full font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">photo_camera</span>
+<span id="photo-index">1 / 8</span>
+</div>
+</section>
+<!-- Price & Address Block -->
+<section class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/30 shadow-sm space-y-space-xs">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-price-xl text-price-xl text-on-surface tracking-tight font-extrabold">$95,000</span>
+<p class="font-label-md text-label-md text-on-surface-variant font-medium">~1,215,000,000 UZS <span class="font-body-sm text-body-sm text-outline">(курс 12,800)</span></p>
+</div>
+<div class="bg-primary/10 text-primary font-label-sm text-label-sm px-space-sm py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span>$1,079/м²</span>
+</div>
+</div>
+<div class="pt-space-xs border-t border-outline-variant/20 flex items-start gap-space-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">location_on</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface font-semibold">г. Ташкент, Мирабадский район, ул. Нукусская</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Ориентир: Госпитальный рынок, посольство РФ</p>
+</div>
+</div>
+</section>
+<!-- Key Parameters Grid (2x3 Bento) -->
+<section class="space-y-space-xs">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Характеристики</h2>
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="bg-surface-container-lowest p-space-md rounded-xl border border-outline-variant/30 flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined">meeting_room</span>
+</div>
+<div>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Комнат</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">3 раздельные</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl border border-outline-variant/30 flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined">straighten</span>
+</div>
+<div>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Общая площадь</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">88 м²</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl border border-outline-variant/30 flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined">apartment</span>
+</div>
+<div>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Этаж</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">5 из 9 (лифт)</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl border border-outline-variant/30 flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined">brush</span>
+</div>
+<div>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Состояние</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Евроремонт</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl border border-outline-variant/30 flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined">foundation</span>
+</div>
+<div>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Материал стен</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Кирпич-монолит</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl border border-outline-variant/30 flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined">bathtub</span>
+</div>
+<div>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Санузел</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">2 раздельных</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Location & Perks (Инфраструктура) -->
+<section class="space-y-space-xs">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Инфраструктура рядом</h2>
+<span class="font-label-sm text-label-sm text-primary font-bold">Карта района</span>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/30 shadow-sm divide-y divide-outline-variant/20">
+<div class="flex items-center gap-space-sm py-space-xs first:pt-0">
+<span class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[20px]">subway</span>
+</span>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface font-semibold">Метро «Ойбек»</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">6 мин пешком (450 м)</p>
+</div>
+<span class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm px-space-xs py-0.5 rounded">Пешком</span>
+</div>
+<div class="flex items-center gap-space-sm py-space-xs">
+<span class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+</span>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface font-semibold">Супермаркет «Корзинка»</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">2 мин пешком (120 м)</p>
+</div>
+<span class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm px-space-xs py-0.5 rounded">Рядом</span>
+</div>
+<div class="flex items-center gap-space-sm py-space-xs">
+<span class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-tertiary-container shrink-0">
+<span class="material-symbols-outlined text-[20px]">school</span>
+</span>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface font-semibold">Школа №60 и детский сад</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Во дворе дома, без перехода дорог</p>
+</div>
+<span class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm px-space-xs py-0.5 rounded">Во дворе</span>
+</div>
+<div class="flex items-center gap-space-sm py-space-xs last:pb-0">
+<span class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary-container shrink-0">
+<span class="material-symbols-outlined text-[20px]">park</span>
+</span>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface font-semibold">Центральный Эко-парк</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">10 мин на авто (3.2 км)</p>
+</div>
+<span class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm px-space-xs py-0.5 rounded">На авто</span>
+</div>
+</div>
+</section>
+<!-- Interactive Tashkent Mortgage Calculator -->
+<section class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/30 shadow-sm space-y-space-md">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Ипотечный калькулятор</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Расчет по стандартам ЦБ Республики Узбекистан</p>
+</div>
+<span class="bg-primary/10 text-primary font-label-sm text-label-sm px-space-sm py-1 rounded-full font-bold">Банки-партнеры UZ</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-md flex items-center justify-between">
+<div>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Расчетный платеж в месяц</span>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-primary font-bold" id="monthly-usd">~$910</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium" id="monthly-uzs">(11,650,000 сум)</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary text-[28px]">calculate</span>
+</div>
+<div class="space-y-space-md">
+<!-- Down Payment Slider -->
+<div class="space-y-1">
+<div class="flex justify-between font-label-md text-label-md">
+<span class="text-on-surface-variant">Первоначальный взнос (<span id="down-pct">30</span>%)</span>
+<span class="font-bold text-on-surface" id="down-val">$28,500</span>
+</div>
+<input class="w-full accent-primary-container h-2 bg-surface-container rounded-lg cursor-pointer" id="slider-downpayment" max="60" min="15" step="5" type="range" value="30"/>
+<div class="flex justify-between font-body-sm text-body-sm text-outline">
+<span>15% ($14,250)</span>
+<span>60% ($57,000)</span>
+</div>
+</div>
+<!-- Term & Rate Pills -->
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="p-space-sm bg-surface-container-low rounded-lg border border-outline-variant/30">
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Срок кредитования</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">15 лет (180 мес)</span>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg border border-outline-variant/30">
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Процентная ставка</span>
+<span class="font-label-md text-label-md text-secondary font-bold">17% годовых</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Owner / Agent Profile Card -->
+<section class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/30 shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-space-md">
+<div class="relative">
+<img class="w-14 h-14 rounded-full object-cover border border-outline-variant/30" data-alt="Close up warm confident headshot of an Uzbek gentleman property owner in modern casual business blazer smiling genuinely against a clean blurred office background. Photorealistic commercial portrait style with soft studio lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGEgl8cBUBiK8WioHDsipfLDL-kQcVWfCMhMnCbXdslEykNlyzidHWR-TYUAsvBjmYGwNsFnnziXQtxTkpf1suanP4kGm5q-JZMMYPy9uhOVy3BYyXvtWtlMwSYTlPDzjZrs2LOi0XfAQM6Gh978rQNm1ZXZiMdKK1Uv5imCDXX9ukf5c7X3X7TYjihm7I6_ALoYdsIAniH0yYl4eRkXdJBAIYCPDZK9iBeVn6Eq8L7zTRKJbQ9pXv"/>
+<span class="absolute bottom-0 right-0 w-4 h-4 bg-secondary border-2 border-white rounded-full"></span>
+</div>
+<div>
+<div class="flex items-center gap-1">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Сардор М.</span>
+<span class="bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm px-1.5 py-0.5 rounded">Собственник</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+            Личность подтверждена (OneID)
+          </p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">На Locus с октября 2023 г. · Отвечает за 5 мин</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Sticky Bottom Contact Bar -->
+<footer class="fixed bottom-0 left-0 w-full z-50 bg-surface-container-lowest/95 backdrop-blur-md shadow-lg">
+<div class="max-w-xl mx-auto px-margin py-space-sm flex items-center gap-space-sm">
+<!-- Call Direct Action Button -->
+<a class="flex-1 bg-secondary hover:bg-on-secondary-fixed-variant text-on-secondary py-3 px-space-md rounded-xl font-label-md text-label-md flex items-center justify-center gap-2 active:scale-95 transition-all shadow-sm" href="tel:+998901234567">
+<span class="material-symbols-outlined text-[20px]">phone</span>
+<span>Позвонить</span>
+</a>
+<!-- Telegram Direct Messenger -->
+<a class="flex-1 bg-primary-container hover:bg-primary text-on-primary py-3 px-space-md rounded-xl font-label-md text-label-md flex items-center justify-center gap-2 active:scale-95 transition-all shadow-sm" href="https://t.me/" rel="noopener noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+<span>Telegram</span>
+</a>
+</div>
+</footer>
+<script>
+    // Mortgage dynamic slider interactive calculation
+    const slider = document.getElementById('slider-downpayment');
+    const downPctText = document.getElementById('down-pct');
+    const downValText = document.getElementById('down-val');
+    const monthlyUsd = document.getElementById('monthly-usd');
+    const monthlyUzs = document.getElementById('monthly-uzs');
+    const favBtn = document.getElementById('favorite-btn');
+    const favIcon = document.getElementById('fav-icon');
+
+    const TOTAL_PRICE = 95000;
+    const UZS_RATE = 12800;
+    const ANNUAL_RATE = 0.17;
+    const MONTHS = 180;
+
+    slider.addEventListener('input', (e) => {
+      const pct = Number(e.target.value);
+      downPctText.textContent = pct;
+      const downPayment = Math.round(TOTAL_PRICE * (pct / 100));
+      downValText.textContent = '$' + downPayment.toLocaleString('en-US');
+
+      const principal = TOTAL_PRICE - downPayment;
+      const monthlyRate = ANNUAL_RATE / 12;
+      const payment = Math.round(principal * (monthlyRate * Math.pow(1 + monthlyRate, MONTHS)) / (Math.pow(1 + monthlyRate, MONTHS) - 1));
+      const paymentUzs = payment * UZS_RATE;
+
+      monthlyUsd.textContent = '~$' + payment.toLocaleString('en-US');
+      monthlyUzs.textContent = '(' + paymentUzs.toLocaleString('ru-RU') + ' сум)';
+    });
+
+    // Favorite button toggle
+    let isFav = false;
+    favBtn.addEventListener('click', () => {
+      isFav = !isFav;
+      if (isFav) {
+        favIcon.style.fontVariationSettings = "'FILL' 1";
+        favBtn.classList.add('text-error');
+      } else {
+        favIcon.style.fontVariationSettings = "'FILL' 0";
+        favBtn.classList.remove('text-error');
+      }
+    });
+  </script>
+</body></html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2-комнатная квартира в Чиланзаре</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- Шапка сайта -->
+  <header>
+    <p>Locus · объявления о недвижимости</p>
+    <nav>
+      <a href="#photos">Фото</a>
+      <a href="#prices">Цены по районам</a>
+      <a href="#calc">Калькулятор</a>
+      <a href="#similar">Похожие</a>
+      <a href="#form">Связаться</a>
+      <a href="contacts.html">Контакты</a>
+      <a href="https://locus.uz" target="_blank">Все объявления</a>
+      <button id="theme" class="btn" type="button">🌙 Тема</button>
+    </nav>
+  </header>
+
+  <!-- Основное содержимое -->
+  <main class="container">
+    <article>
+      <h1>2-комнатная квартира, Чиланзар</h1>
+      <span class="badge">Без посредников</span>
+
+      <p>Светлая квартира на 4 этаже 9-этажного дома, 54 м². Рядом метро, школа и парк.
+         <strong>Без посредников.</strong></p>
+
+      <!-- Раздел Описание и Калькулятор -->
+      <section class="card" id="description">
+        <h2>Описание</h2>
+        <p>Свежий ремонт 2024 года, окна во двор. Кухня 9 м², раздельный санузел, балкон застеклён.</p>
+        <p><span class="price">48 000 у.е.</span> · торг уместен при быстрой сделке</p>
+
+        <!-- Калькулятор цены за м² (Урок 3) -->
+        <div class="calc" id="calc">
+          <label for="calc-price">Цена, у.е.</label>
+          <input id="calc-price" type="number" value="48000" min="0">
+
+          <label for="calc-area">Площадь, м²</label>
+          <input id="calc-area" type="number" value="54" min="1">
+
+          <p>За квадратный метр: <strong id="calc-result">—</strong></p>
+        </div>
+      </section>
+
+      <!-- Раздел Фотографии с figure и figcaption -->
+      <section class="card" id="photos">
+        <h2>Фотографии</h2>
+        <div class="photos">
+          <figure class="photo">
+            <span class="tag">Срочно</span>
+            <img src="images/kitchen.jpg" alt="Кухня 9 м² с окном во двор">
+            <figcaption>Кухня 9 м²</figcaption>
+          </figure>
+
+          <figure>
+            <img src="images/room.jpg" alt="Гостиная после ремонта">
+            <figcaption>Гостиная</figcaption>
+          </figure>
+
+          <figure>
+            <img src="images/view.jpg" alt="Вид с балкона на парк">
+            <figcaption>Вид с балкона</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- Раздел Характеристики (Сетка с обязательными 3 пунктами) -->
+      <section class="card features">
+        <h2>Характеристики</h2>
+        <div class="grid">
+          <div class="feature"><strong>54 м²</strong><span>площадь</span></div>
+          <div class="feature"><strong>2</strong><span>комнаты</span></div>
+          <div class="feature"><strong>4 / 9</strong><span>этаж</span></div>
+          <div class="feature"><strong>9 м²</strong><span>кухня</span></div>
+          <div class="feature"><strong>есть</strong><span>балкон</span></div>
+          <div class="feature"><strong>2024</strong><span>ремонт</span></div>
+          <!-- Обязательное задание Урока 1: +3 характеристики -->
+          <div class="feature"><strong>Кирпич</strong><span>материал стен</span></div>
+          <div class="feature"><strong>2.8 м</strong><span>высота потолков</span></div>
+          <div class="feature"><strong>Раздельный</strong><span>санузел</span></div>
+        </div>
+
+        <h3>Рядом</h3>
+        <ul>
+          <li>Школа №110 — 5 минут</li>
+          <li>Поликлиника — 10 минут</li>
+          <li>Метро «Чиланзар» — 7 минут
+            <ul>
+              <li>Выход №2 к парку</li>
+              <li>Автобусная остановка маршрутов 8, 34, 84</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Раздел Как добраться -->
+      <section class="card">
+        <h2>Как добраться</h2>
+        <ol>
+          <li>Выйдите на станции «Чиланзар», выход №2</li>
+          <li>Идите прямо 300 метров до школы</li>
+          <li>Поверните направо, дом 12, подъезд 3</li>
+        </ol>
+      </section>
+    </article>
+
+    <!-- Боковая колонка Aside -->
+    <aside>
+      <!-- Таблица цен (С обязательным столбцом «4 комн.» и сортировкой) -->
+      <section class="card">
+        <h2 id="prices">Средние цены по районам</h2>
+        <table>
+          <caption>Цены в у.е., сентябрь 2026 (кликните на заголовок столбца для сортировки)</caption>
+          <thead>
+            <tr>
+              <th>Район</th>
+              <th>1 комн.</th>
+              <th>2 комн.</th>
+              <th>3 комн.</th>
+              <th>4 комн.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Чиланзар</td>
+              <td>32 000</td>
+              <td>48 000</td>
+              <td>65 000</td>
+              <td>82 000</td>
+            </tr>
+            <tr>
+              <td>Юнусабад</td>
+              <td>36 000</td>
+              <td>55 000</td>
+              <td>71 000</td>
+              <td>90 000</td>
+            </tr>
+            <tr>
+              <td>Мирзо-Улугбек</td>
+              <td>38 000</td>
+              <td>57 000</td>
+              <td>74 000</td>
+              <td>95 000</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Раскрывающийся блок details (Задание со звёздочкой) -->
+        <details>
+          <summary>Показать телефон</summary>
+          <p><a href="tel:+998901234567">+998 90 123-45-67</a></p>
+        </details>
+      </section>
+
+      <!-- Блок Похожие объявления (Фильтр Урок 3) -->
+      <section class="card" id="similar">
+        <h2>Похожие объявления</h2>
+        <p class="filters">
+          <button class="btn" type="button" data-district="all">Все</button>
+          <button class="btn" type="button" data-district="Чиланзар">Чиланзар</button>
+          <button class="btn" type="button" data-district="Юнусабад">Юнусабад</button>
+          <button class="btn" type="button" data-district="Мирзо-Улугбек">Мирзо-Улугбек</button>
+        </p>
+
+        <ul class="listings">
+          <li data-district="Чиланзар">1-комн., Чиланзар — 32 000 у.е.</li>
+          <li data-district="Юнусабад">3-комн., Юнусабад — 71 000 у.е.</li>
+          <li data-district="Чиланзар">3-комн., Чиланзар — 65 000 у.е.</li>
+          <li data-district="Юнусабад">2-комн., Юнусабад — 55 000 у.е.</li>
+        </ul>
+
+        <p id="listings-count"></p>
+      </section>
+    </aside>
+
+    <!-- Секция связи с продавцом и формы -->
+    <section class="card" id="form">
+      <h2>Связаться с продавцом</h2>
+      <p>
+        <button id="show-phone" class="btn" type="button">Показать телефон</button>
+        <span id="phone" hidden>+998 90 123-45-67</span>
+      </p>
+
+      <form id="contact-form" action="/send" method="post">
+        <p>
+          <label for="name">Ваше имя</label>
+          <input id="name" name="name" type="text" placeholder="Иван">
+        </p>
+
+        <p>
+          <label for="phone-input">Телефон</label>
+          <input id="phone-input" name="phone" type="tel" placeholder="+998 90 123 45 67">
+        </p>
+
+        <p>
+          <label for="email">Электронная почта</label>
+          <input id="email" name="email" type="email" placeholder="example@mail.uz">
+        </p>
+
+        <p>
+          <label for="when">Когда удобно посмотреть?</label>
+          <select id="when" name="when">
+            <option>Утром</option>
+            <option>Днём</option>
+            <option>Вечером</option>
+          </select>
+        </p>
+
+        <p>
+          Как связаться:<br>
+          <label><input type="radio" name="contact" value="call" checked> Позвонить</label>
+          <label><input type="radio" name="contact" value="telegram"> Написать в Telegram</label>
+        </p>
+
+        <p>
+          <label for="msg">Сообщение</label>
+          <textarea id="msg" name="msg" rows="4"></textarea>
+        </p>
+
+        <p>
+          <label><input type="checkbox" name="agree" required> Согласен на обработку данных</label>
+        </p>
+
+        <p id="form-error" class="error"></p>
+
+        <button class="btn" type="submit">Отправить</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Подвал сайта -->
+  <footer>
+    <p>Телефон: <a href="tel:+998901234567">+998 90 123-45-67</a> · <a href="contacts.html">Страница контактов</a></p>
+    <p>
+      <em>Обновлено: <time datetime="2026-09-13">13 сентября 2026</time></em> · © 2026 Locus · 
+      Вы открывали эту страницу <strong id="views-count">1</strong> раз
+    </p>
+  </footer>
+
+  <!-- Кнопка «Наверх» -->
+  <button id="scroll-top" title="Наверх">↑</button>
+
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Locus - Каталог и поиск недвижимости в Ташкенте</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "secondary": "#006c49",
+          "tertiary-container": "#996100",
+          "surface-container-lowest": "#ffffff",
+          "surface-tint": "#0053db",
+          "on-surface-variant": "#434655",
+          "on-surface": "#171b26",
+          "error-container": "#ffdad6",
+          "tertiary": "#784b00",
+          "tertiary-fixed-dim": "#ffb95f",
+          "on-secondary": "#ffffff",
+          "inverse-surface": "#2c303b",
+          "primary": "#004ac6",
+          "on-tertiary-container": "#ffeedd",
+          "background": "#faf8ff",
+          "on-tertiary": "#ffffff",
+          "primary-fixed-dim": "#b4c5ff",
+          "on-tertiary-fixed-variant": "#653e00",
+          "secondary-fixed-dim": "#4edea3",
+          "surface-container": "#ebedfc",
+          "surface-container-low": "#f2f3ff",
+          "secondary-container": "#6cf8bb",
+          "on-secondary-fixed-variant": "#005236",
+          "surface-variant": "#dfe2f1",
+          "tertiary-fixed": "#ffddb8",
+          "on-error": "#ffffff",
+          "on-primary-container": "#eeefff",
+          "on-primary": "#ffffff",
+          "surface-dim": "#d7d9e8",
+          "outline-variant": "#c3c6d7",
+          "on-background": "#171b26",
+          "surface-bright": "#faf8ff",
+          "primary-container": "#2563eb",
+          "on-error-container": "#93000a",
+          "secondary-fixed": "#6ffbbe",
+          "surface-container-high": "#e5e7f6",
+          "outline": "#737686",
+          "surface-container-highest": "#dfe2f1",
+          "inverse-primary": "#b4c5ff",
+          "on-primary-fixed": "#00174b",
+          "on-primary-fixed-variant": "#003ea8",
+          "error": "#ba1a1a",
+          "on-tertiary-fixed": "#2a1700",
+          "on-secondary-fixed": "#002113",
+          "inverse-on-surface": "#eef0ff",
+          "primary-fixed": "#dbe1ff",
+          "surface": "#faf8ff",
+          "on-secondary-container": "#00714d"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-xl": "2rem",
+          "space-lg": "1.5rem",
+          "margin-tablet": "1.5rem",
+          "space-md": "1rem",
+          "margin-desktop": "2rem",
+          "margin": "1rem",
+          "gutter-desktop": "1.5rem",
+          "gutter": "1rem",
+          "space-xs": "0.25rem",
+          "space-sm": "0.5rem"
+        },
+        "fontFamily": {
+          "body-lg": ["Inter"],
+          "display": ["Plus Jakarta Sans"],
+          "body-sm": ["Inter"],
+          "price-xl": ["Plus Jakarta Sans"],
+          "display-mobile": ["Plus Jakarta Sans"],
+          "label-sm": ["Inter"],
+          "headline-lg-mobile": ["Plus Jakarta Sans"],
+          "headline-lg": ["Plus Jakarta Sans"],
+          "label-md": ["Inter"],
+          "headline-sm": ["Plus Jakarta Sans"],
+          "headline-md": ["Plus Jakarta Sans"],
+          "price-lg": ["Plus Jakarta Sans"],
+          "body-md": ["Inter"]
+        },
+        "fontSize": {
+          "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+          "display": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+          "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+          "price-xl": ["26px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+          "display-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "800"}],
+          "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700"}],
+          "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+          "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700"}],
+          "label-md": ["13px", {"lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+          "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+          "headline-md": ["22px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+          "price-lg": ["20px", {"lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+          "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+        }
+      }
+    }
+  }
+</script>
+<style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .owner-card-glow {
+      box-shadow: 0 0 0 1px #f59e0b, 0 4px 16px rgba(245, 158, 11, 0.12);
+    }
+    .verified-card-glow {
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05), 0 10px 25px -5px rgba(15, 23, 42, 0.04);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen pb-24 antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopAppBar (from Shared Components JSON) -->
+<header class="docked full-width top-0 sticky z-40 bg-surface-container-lowest/90 dark:bg-inverse-surface/90 backdrop-blur-md shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center w-full px-margin max-w-7xl mx-auto h-14">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="real_estate_agent">real_estate_agent</span>
+<span class="text-headline-md font-headline-md tracking-tight font-extrabold text-primary dark:text-inverse-primary">Locus</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary text-on-secondary font-label-md text-label-md hover:opacity-95 transition-opacity active:scale-95 duration-150">
+<span class="material-symbols-outlined text-base leading-none" data-icon="add">add</span>
+<span>Подать</span>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-xl" data-icon="notifications">notifications</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Sticky Search & Quick Filter Cluster -->
+<div class="sticky top-14 z-30 bg-surface-container-lowest/95 backdrop-blur-md pb-space-sm shadow-sm">
+<div class="max-w-7xl mx-auto px-margin space-y-3 pt-3">
+<!-- Quick Search Bar -->
+<div class="relative flex items-center">
+<div class="absolute left-3.5 flex items-center pointer-events-none text-outline">
+<span class="material-symbols-outlined text-xl" data-icon="search">search</span>
+</div>
+<input class="w-full h-12 pl-10 pr-10 rounded-xl bg-surface-container-low border border-outline-variant/60 text-on-surface font-body-md placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Чиланзар 9-квартал, Oybek, Новостройки..." type="text" value="Чиланзар 9-квартал, Oybek..."/>
+<button class="absolute right-3 flex items-center text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-lg" data-icon="tune">tune</span>
+</button>
+</div>
+<!-- District Chips (Horizontal Scroll) -->
+<div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
+<button class="flex-shrink-0 px-3.5 py-1.5 rounded-full font-label-md text-label-md transition-colors bg-surface-container hover:bg-surface-variant text-on-surface-variant">
+          Все
+        </button>
+<!-- Highlighted Active Tab for Owner Filter -->
+<button class="flex-shrink-0 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full font-label-md text-label-md transition-all bg-tertiary-fixed text-tertiary shadow-sm border border-tertiary/20">
+<span>⭐ Мои объявления (2)</span>
+</button>
+<button class="flex-shrink-0 px-3.5 py-1.5 rounded-full font-label-md text-label-md transition-colors bg-primary text-on-primary font-bold shadow-sm">
+          Чиланзар
+        </button>
+<button class="flex-shrink-0 px-3.5 py-1.5 rounded-full font-label-md text-label-md transition-colors bg-surface-container hover:bg-surface-variant text-on-surface-variant">
+          Юнусабад
+        </button>
+<button class="flex-shrink-0 px-3.5 py-1.5 rounded-full font-label-md text-label-md transition-colors bg-surface-container hover:bg-surface-variant text-on-surface-variant">
+          Мирзо-Улугбек
+        </button>
+<button class="flex-shrink-0 px-3.5 py-1.5 rounded-full font-label-md text-label-md transition-colors bg-surface-container hover:bg-surface-variant text-on-surface-variant">
+          Мирабад
+        </button>
+</div>
+<!-- Secondary Controls: Rooms Pill Selector & Sort Dropdown -->
+<div class="flex items-center justify-between gap-3 pt-1 border-t border-outline-variant/20">
+<!-- Room Selector Chips -->
+<div class="flex items-center gap-1 overflow-x-auto no-scrollbar">
+<button class="px-2.5 py-1 rounded-lg text-label-sm font-label-sm bg-surface-container hover:bg-surface-variant text-on-surface-variant">Студия</button>
+<button class="px-2.5 py-1 rounded-lg text-label-sm font-label-sm bg-surface-container hover:bg-surface-variant text-on-surface-variant">1</button>
+<button class="px-2.5 py-1 rounded-lg text-label-sm font-label-sm bg-primary text-on-primary font-bold">2</button>
+<button class="px-2.5 py-1 rounded-lg text-label-sm font-label-sm bg-surface-container hover:bg-surface-variant text-on-surface-variant">3</button>
+<button class="px-2.5 py-1 rounded-lg text-label-sm font-label-sm bg-surface-container hover:bg-surface-variant text-on-surface-variant">4+</button>
+</div>
+<!-- Sort dropdown -->
+<div class="flex-shrink-0 relative">
+<select class="appearance-none bg-surface-container-low border border-outline-variant/40 rounded-lg py-1.5 pl-3 pr-8 text-label-sm font-label-sm text-on-surface focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer">
+<option>Сначала дешевле</option>
+<option>Сначала дороже</option>
+<option selected="">По дате</option>
+</select>
+<span class="material-symbols-outlined text-base pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-outline" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Feed Container -->
+<main class="max-w-7xl mx-auto px-margin pt-space-md">
+<!-- Search Results Meta Info -->
+<div class="flex items-center justify-between mb-4">
+<h1 class="text-headline-sm font-headline-sm text-on-surface">Каталог квартир в Ташкенте</h1>
+<span class="text-label-md font-label-md text-on-surface-variant">Найдено: 184</span>
+</div>
+<!-- Listings Grid (1 col mobile, 2 col tablet, 3 col desktop) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
+<!-- 1. ПЕРСОНАЛЬНОЕ ОБЪЯВЛЕНИЕ ПОЛЬЗОВАТЕЛЯ -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden owner-card-glow transition-all duration-200 flex flex-col justify-between">
+<div>
+<!-- Top Banner: User Owned Indicator -->
+<div class="bg-amber-500/10 border-b border-amber-500/20 px-3.5 py-2 flex items-center justify-between">
+<span class="inline-flex items-center gap-1 text-label-md font-label-md text-tertiary-container font-bold">
+<span>⭐ Ваше объявление</span>
+</span>
+<span class="text-label-sm font-label-sm text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full font-medium">Активно · 142 просмотра</span>
+</div>
+<!-- Card Media Container -->
+<div class="relative aspect-[16/10] w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A modern, sunlit two-room apartment in a newly built residential complex in Chilanzar, Tashkent. Interior features elegant minimalist Scandinavian furniture, light oak laminate flooring, floor-to-ceiling panoramic windows, and sleek recessed architectural lighting. The room is decorated in crisp warm whites, soft beige, and subtle sapphire blue accent pillows, creating an airy, prestigious residential ambiance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWjOGKionT8kuEv0GkLflgfOCbpyV3zQ_eQpuFeihyT34M4uZT_ggDvJNMBWrsDK_azf1lJ0d4pIJYJ3eUQd4Jk2RxsbYnDZewJbTxWhqgz5ZeR4wF1Yh-RJfaUDipMLy5lK0_6CD15uupR3LQgf-QX3Y16qPHQnDrgA3Sl3U33G8m3_HOzj8NeXaJ-Zre4nA4BeyIh0r1HFtLeCig_H01f4Kque0qdKCG-3UP51J58JrTBsYZDIon"/>
+<div class="absolute top-3 left-3">
+<span class="bg-secondary text-on-secondary text-label-sm font-label-sm px-2.5 py-1 rounded-md shadow-sm">
+                Продажа
+              </span>
+</div>
+<div class="absolute bottom-3 right-3 bg-inverse-surface/80 text-inverse-on-surface text-label-sm font-label-sm px-2 py-0.5 rounded backdrop-blur-sm">
+<span class="material-symbols-outlined text-xs align-middle" data-icon="photo_camera">photo_camera</span> 8 фото
+            </div>
+</div>
+<!-- Card Body -->
+<div class="p-space-md space-y-2.5">
+<!-- Price Display -->
+<div class="flex items-baseline justify-between">
+<div>
+<span class="text-price-lg font-price-lg text-primary">$58,500</span>
+<span class="block text-body-sm font-body-sm text-on-surface-variant">745,000,000 UZS</span>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant bg-surface-container px-2 py-1 rounded">
+                $943 / м²
+              </span>
+</div>
+<!-- District & Address -->
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Чиланзар 6-й квартал</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-sm text-outline" data-icon="near_me">near_me</span>
+<span>м. Мирзо Улугбек · 5 мин пешком</span>
+</p>
+</div>
+<!-- Micro Parameters Chips -->
+<div class="flex flex-wrap items-center gap-1.5 pt-1">
+<span class="px-2 py-1 bg-surface-container-low rounded text-label-sm font-label-sm text-on-surface-variant">62 м²</span>
+<span class="px-2 py-1 bg-surface-container-low rounded text-label-sm font-label-sm text-on-surface-variant">2 комнаты</span>
+<span class="px-2 py-1 bg-surface-container-low rounded text-label-sm font-label-sm text-on-surface-variant">4/9 этаж</span>
+<span class="px-2 py-1 bg-surface-container-low rounded text-label-sm font-label-sm text-on-surface-variant">Новостройка</span>
+</div>
+<!-- Description -->
+<p class="text-body-sm font-body-sm text-on-surface line-clamp-2 pt-1 border-t border-outline-variant/20">
+              Новый евроремонт, вся мебель и дорогая техника остаются новому владельцу. Окна выходят в тихий закрытый двор.
+            </p>
+</div>
+</div>
+<!-- Owner Action Buttons Cluster -->
+<div class="p-space-md pt-0">
+<div class="grid grid-cols-2 gap-2 pt-3 border-t border-outline-variant/30">
+<button class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-label-md text-label-md transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-base leading-none" data-icon="edit">edit</span>
+<span>Редактировать</span>
+</button>
+<button class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-error text-error hover:bg-error-container/40 font-label-md text-label-md transition-all active:scale-95">
+<span class="material-symbols-outlined text-base leading-none" data-icon="delete">delete</span>
+<span>Удалить</span>
+</button>
+</div>
+</div>
+</article>
+<!-- 2. ОБЫЧНОЕ ОБЪЯВЛЕНИЕ (Чужое) -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/40 verified-card-glow hover:border-primary/40 transition-all duration-200 flex flex-col justify-between">
+<div>
+<!-- Card Media Container -->
+<div class="relative aspect-[16/10] w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Luxurious open-concept three-bedroom apartment on Chekhov Street in the upscale Mirabad district of Tashkent. The interior boasts floor-to-ceiling windows with panoramic city views, Italian marble countertops, warm architectural cove lighting, and tailored contemporary designer furnishings in muted slate, charcoal, and warm bronze tones. The aesthetic is sophisticated, tranquil, and distinctly high-end urban living." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAIguHh_pauw1Fmh1xEHbkBUaWBHSUx9O_rhxquU5p-0MOgZIKR7-FG7llOSIIeUTteXVSgm0iWQZXiHDOPvKQDeigPtTxCU7bZC9fjC2UYO7wqo6JTqfPbv_csy_pj9uMRxc-uHWXHyHd8wVyoMVt5_YTlBSuQF_QaMKRZDXfjLJC95svdiaOXquBiYkqwb9vi6bDzrcazm5bVS7aZxOv4U55925I_kXoUHhQdNdg9jOOPSUR0U6R"/>
+<div class="absolute top-3 left-3 flex gap-1.5">
+<span class="bg-primary text-on-primary text-label-sm font-label-sm px-2.5 py-1 rounded-md shadow-sm">
+                Продажа
+              </span>
+<span class="bg-surface-container-lowest/90 backdrop-blur-sm text-secondary text-label-sm font-label-sm px-2 py-1 rounded-md font-bold flex items-center gap-1 border border-secondary/20">
+<span class="material-symbols-outlined text-sm leading-none" data-icon="verified">verified</span>
+<span>Проверено Locus</span>
+</span>
+</div>
+<!-- Favorite button -->
+<button class="absolute top-3 right-3 w-9 h-9 rounded-full bg-surface-container-lowest/80 backdrop-blur-md flex items-center justify-center text-on-surface hover:text-error transition-colors shadow-sm">
+<span class="material-symbols-outlined text-lg" data-icon="favorite">favorite</span>
+</button>
+<div class="absolute bottom-3 right-3 bg-inverse-surface/80 text-inverse-on-surface text-label-sm font-label-sm px-2 py-0.5 rounded backdrop-blur-sm">
+<span class="material-symbols-outlined text-xs align-middle" data-icon="photo_camera">photo_camera</span> 14 фото
+            </div>
+</div>
+<!-- Card Body -->
+<div class="p-space-md space-y-2.5">
+<!-- Price Display -->
+<div class="flex items-baseline justify-between">
+<div>
+<span class="text-price-lg font-price-lg text-primary">$125,000</span>
+<span class="block text-body-sm font-body-sm text-on-surface-variant">1,590,000,000 UZS</span>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant bg-surface-container px-2 py-1 rounded">
+                $1,315 / м²
+              </span>
+</div>
+<!-- District & Address -->
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Мирабадский р-н, ул. Чехова</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-sm text-outline" data-icon="location_on">location_on</span>
+<span>ЖК «Chekhov Residence» · Центр</span>
+</p>
+</div>
+<!-- Micro Parameters Chips -->
+<div class="flex flex-wrap items-center gap-1.5 pt-1">
+<span class="px-2 py-1 bg-surface-container-low rounded text-label-sm font-label-sm text-on-surface-variant">95 м²</span>
+<span class="px-2 py-1 bg-surface-container-low rounded text-label-sm font-label-sm text-on-surface-variant">3 комнаты</span>
+<span class="px-2 py-1 bg-surface-container-low rounded text-label-sm font-label-sm text-on-surface-variant">7/12 этаж</span>
+<span class="px-2 py-1 bg-surface-container-low rounded text-label-sm font-label-sm text-on-surface-variant">2 санузла</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface line-clamp-2 pt-1 border-t border-outline-variant/20">
+              Премиальные апартаменты в самом сердце города. Высокие потолки 3.3м, охраняемая территория, консьерж-сервис, паркинг.
+            </p>
+</div>
+</div>
+<!-- Buyer Action Buttons Cluster -->
+<div class="p-space-md pt-0">
+<div class="grid grid-cols-2 gap-2 pt-3 border-t border-outline-variant/30">
+<button class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md transition-all active:scale-95 shadow-sm">
+<span>Подробнее</span>
+</button>
+<button class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-secondary hover:opacity-90 text-on-secondary font-label-md text-label-md transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-base leading-none" data-icon="call">call</span>
+<span>Позвонить</span>
+</button>
+</div>
+</div>
+</article>
+<!-- 3. ВТОРОЕ ПЕРСОНАЛЬНОЕ ОБЪЯВЛЕНИЕ ПОЛЬЗОВАТЕЛЯ -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden owner-card-glow transition-all duration-200 flex flex-col justify-between">
+<div>
+<!-- Top Banner: User Owned Indicator -->
+<div class="bg-amber-500/10 border-b border-amber-500/20 px-3.5 py-2 flex items-center justify-between">
+<span class="inline-flex items-center gap-1 text-label-md font-label-md text-tertiary-container font-bold">
+<span>⭐ Ваше объявление</span>
+</span>
+<span class="text-label-sm font-label-sm text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full font-medium">Активно · 89 просмотров</span>
+</div>
+<!-- Card Media Container -->
+<div class="relative aspect-[16/10] w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A compact and stylish one-room studio apartment in Yunusabad district of Tashkent. The space features smart zoning with glass and black metal partitions, compact modern kitchen with integrated appliances, light grey walls, polished concrete textures, and bright natural morning sunlight streaming across a cozy work desk and sofa." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaXrQbuLe-QlKM4bWYnZM8BQI0JaSbsYqO2KeypFuvNoN171g7TzOKHWsTqNrKoKEoyUXB3frOlULu7RYnII8VSGFBnKBZfWIbDAYm-V-7KgL9nFBxTynIA7rCu53Lgq2CGAi3GJNAG8_v4pZQlL2ttD9Kg-Ya4cqe5P02sqSSm7WpSyVWywtQNPw4XCQ2isbAg2px9uEetPTgiz9Yq3ihnBUASk4K1AjXhsDwoazqe5OjWMJ5oBos"/>
+<div class="absolute top-3 left-3">
+<span class="bg-secondary text-on-secondary text-label-sm font-label-sm px-2.5 py-1 rounded-md shadow-sm">
+                Продажа
+              </span>
+</div>
+<div class="absolute bottom-3 right-3 bg-inverse-surface/80 text-inverse-on-surface text-label-sm font-label-sm px-2 py-0.5 rounded backdrop-blur-sm">
+<span class="material-symbols-outlined text-xs align-middle" data-icon="photo_camera">photo_camera</span> 6 фото
+            </div>
+</div>
+<!-- Card Body -->
+<div class="p-space-md space-y-2.5">
+<!-- Price Display -->
+<div class="flex items-baseline justify-between">
+<div>
+<span class="text-price-lg font-price-lg text-primary">$39,000</span>
+<span class="block text-body-sm font-body-sm text-on-surface-variant">498,000,000 UZS</span>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant bg-surface-container px-2 py-1 rounded">
+                $886 / м²
+              </span>
+</div>
+<!-- District & Address -->
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Юнусабад 13-й квартал</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-sm text-outline" data-icon="near_me">near_me</span>
+<span>м. Туркистон · 7 мин пешком</span>
+</p>
+</div>
+<!-- Micro Parameters Chips -->
+<div class="flex flex-wrap items-center gap-1.5 pt-1">
+<span class="px-2 py-1 bg-surface-container-low rounded text-label-sm font-label-sm text-on-surface-variant">44 м²</span>
+<span class="px-2 py-1 bg-surface-container-low rounded text-label-sm font-label-sm text-on-surface-variant">1 комната</span>
+<span class="px-2 py-1 bg-surface-container-low rounded text-label-sm font-label-sm text-on-surface-variant">3/4 этаж</span>
+<span class="px-2 py-1 bg-surface-container-low rounded text-label-sm font-label-sm text-on-surface-variant">Кирпич</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface line-clamp-2 pt-1 border-t border-outline-variant/20">
+              Уютная светлая квартира с качественным косметическим ремонтом. Заменены все трубы и проводка. Идеально под сдачу в аренду.
+            </p>
+</div>
+</div>
+<!-- Owner Action Buttons Cluster -->
+<div class="p-space-md pt-0">
+<div class="grid grid-cols-2 gap-2 pt-3 border-t border-outline-variant/30">
+<button class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-label-md text-label-md transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-base leading-none" data-icon="edit">edit</span>
+<span>Редактировать</span>
+</button>
+<button class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-error text-error hover:bg-error-container/40 font-label-md text-label-md transition-all active:scale-95">
+<span class="material-symbols-outlined text-base leading-none" data-icon="delete">delete</span>
+<span>Удалить</span>
+</button>
+</div>
+</div>
+</article>
+<!-- 4. ЕЩЕ ОБЪЯВЛЕНИЕ (Яшнабад) -->
+<article class="bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant/40 verified-card-glow hover:border-primary/40 transition-all duration-200 flex flex-col justify-between">
+<div>
+<!-- Card Media Container -->
+<div class="relative aspect-[16/10] w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A modern well-lit living room and kitchen in a contemporary residential complex in Yashnabad district of Tashkent. The space features neutral warm tones, textured wall paneling, modular grey sofa, brass lighting fixtures, and large double-glazed windows overlooking a lush landscaped courtyard garden." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCni8sUpdTz9QsYvaq0FXK4qqLVmI3HFWsju9jgbuZpguF0FWjfoDdLVmZF3PC-yuIDGHSpHhpvlPzhfcBkgdIIOXMBHY9mz3VmvEzrSZ1SRNVaYtW0kwd7xjsZ-WSEITNEC4d23sCK-taST8m0m7Oir5wmBG93e8Sl5JLwfgDyNMjYV13CD3X_pEASEDXfMl8uXzhRNVfIElRMD-NdsOWgkBJmO3A3c2yikW06-hBSL1vJcxa9B9kK"/>
+<div class="absolute top-3 left-3 flex gap-1.5">
+<span class="bg-primary text-on-primary text-label-sm font-label-sm px-2.5 py-1 rounded-md shadow-sm">
+                Продажа
+              </span>
+<span class="bg-surface-container-lowest/90 backdrop-blur-sm text-primary text-label-sm font-label-sm px-2 py-1 rounded-md font-semibold border border-primary/20">
+                Новый ЖК
+              </span>
+</div>
+<!-- Favorite button -->
+<button class="absolute top-3 right-3 w-9 h-9 rounded-full bg-surface-container-lowest/80 backdrop-blur-md flex items-center justify-center text-on-surface hover:text-error transition-colors shadow-sm">
+<span class="material-symbols-outlined text-lg" data-icon="favorite">favorite</span>
+</button>
+<div class="absolute bottom-3 right-3 bg-inverse-surface/80 text-inverse-on-surface text-label-sm font-label-sm px-2 py-0.5 rounded backdrop-blur-sm">
+<span class="material-symbols-outlined text-xs align-middle" data-icon="photo_camera">photo_camera</span> 10 фото
+            </div>
+</div>
+<!-- Card Body -->
+<div class="p-space-md space-y-2.5">
+<!-- Price Display -->
+<div class="flex items-baseline justify-between">
+<div>
+<span class="text-price-lg font-price-lg text-primary">$52,000</span>
+<span class="block text-body-sm font-body-sm text-on-surface-variant">662,000,000 UZS</span>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant bg-surface-container px-2 py-1 rounded">
+                $912 / м²
+              </span>
+</div>
+<!-- District & Address -->
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Яшнабадский р-н, ул. Паркентская</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-sm text-outline" data-icon="location_on">location_on</span>
+<span>ЖК «Parkent Avenue» · м. Дустлик</span>
+</p>
+</div>
+<!-- Micro Parameters Chips -->
+<div class="flex flex-wrap items-center gap-1.5 pt-1">
+<span class="px-2 py-1 bg-surface-container-low rounded text-label-sm font-label-sm text-on-surface-variant">57 м²</span>
+<span class="px-2 py-1 bg-surface-container-low rounded text-label-sm font-label-sm text-on-surface-variant">2 комнаты</span>
+<span class="px-2 py-1 bg-surface-container-low rounded text-label-sm font-label-sm text-on-surface-variant">5/10 этаж</span>
+<span class="px-2 py-1 bg-surface-container-low rounded text-label-sm font-label-sm text-on-surface-variant">Чистовая отделка</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface line-clamp-2 pt-1 border-t border-outline-variant/20">
+              Квартира с предчистовой отделкой white box. Индивидуальный двухконтурный котел, панорамная лоджия с видом на горы.
+            </p>
+</div>
+</div>
+<!-- Buyer Action Buttons Cluster -->
+<div class="p-space-md pt-0">
+<div class="grid grid-cols-2 gap-2 pt-3 border-t border-outline-variant/30">
+<button class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md transition-all active:scale-95 shadow-sm">
+<span>Подробнее</span>
+</button>
+<button class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-secondary hover:opacity-90 text-on-secondary font-label-md text-label-md transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-base leading-none" data-icon="call">call</span>
+<span>Позвонить</span>
+</button>
+</div>
+</div>
+</article>
+</div>
+<!-- Map Preview CTA Banner for Desktop / Tablet -->
+<div class="mt-8 mb-6 p-6 rounded-2xl bg-surface-container border border-outline-variant/30 flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="space-y-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Ищете квартиру в конкретном районе?</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Откройте интерактивную карту Ташкента с точными ценами по махаллям и кварталам.</p>
+</div>
+<button class="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-primary text-on-primary font-label-md text-label-md shadow-sm active:scale-95 transition-all">
+<span class="material-symbols-outlined text-lg" data-icon="map">map</span>
+<span>Смотреть на карте</span>
+</button>
+</div>
+</main>
+<!-- BottomNavBar (from Shared Components JSON) -->
+<!-- Active state: "Каталог" is active based on Intent Fallback & Search Screen -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-space-sm bg-surface-container-lowest/95 dark:bg-inverse-surface/95 backdrop-blur-md shadow-lg dark:shadow-none">
+<!-- Item 1: Главная (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant font-label-sm text-label-sm hover:text-primary dark:hover:text-inverse-primary transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="home">home</span>
+<span>Главная</span>
+</a>
+<!-- Item 2: Каталог (ACTIVE - Strict Semantic Mapping) -->
+<a class="flex flex-col items-center justify-center text-primary dark:text-inverse-primary font-label-md text-label-md hover:text-primary dark:hover:text-inverse-primary transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="search" style="font-variation-settings: 'FILL' 1;">search</span>
+<span class="font-bold">Каталог</span>
+</a>
+<!-- Item 3: Избранное (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant font-label-sm text-label-sm hover:text-primary dark:hover:text-inverse-primary transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="favorite">favorite</span>
+<span>Избранное</span>
+</a>
+<!-- Item 4: Профиль (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant font-label-sm text-label-sm hover:text-primary dark:hover:text-inverse-primary transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="person">person</span>
+<span>Профиль</span>
+</a>
+</nav>
+</body></html>

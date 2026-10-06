@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Locus - Новое объявление</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "secondary": "#006c49",
+            "tertiary-container": "#996100",
+            "surface-container-lowest": "#ffffff",
+            "surface-tint": "#0053db",
+            "on-surface-variant": "#434655",
+            "on-surface": "#171b26",
+            "error-container": "#ffdad6",
+            "tertiary": "#784b00",
+            "tertiary-fixed-dim": "#ffb95f",
+            "on-secondary": "#ffffff",
+            "inverse-surface": "#2c303b",
+            "primary": "#004ac6",
+            "on-tertiary-container": "#ffeedd",
+            "background": "#faf8ff",
+            "on-tertiary": "#ffffff",
+            "primary-fixed-dim": "#b4c5ff",
+            "on-tertiary-fixed-variant": "#653e00",
+            "secondary-fixed-dim": "#4edea3",
+            "surface-container": "#ebedfc",
+            "surface-container-low": "#f2f3ff",
+            "secondary-container": "#6cf8bb",
+            "on-secondary-fixed-variant": "#005236",
+            "surface-variant": "#dfe2f1",
+            "tertiary-fixed": "#ffddb8",
+            "on-error": "#ffffff",
+            "on-primary-container": "#eeefff",
+            "on-primary": "#ffffff",
+            "surface-dim": "#d7d9e8",
+            "outline-variant": "#c3c6d7",
+            "on-background": "#171b26",
+            "surface-bright": "#faf8ff",
+            "primary-container": "#2563eb",
+            "on-error-container": "#93000a",
+            "secondary-fixed": "#6ffbbe",
+            "surface-container-high": "#e5e7f6",
+            "outline": "#737686",
+            "surface-container-highest": "#dfe2f1",
+            "inverse-primary": "#b4c5ff",
+            "on-primary-fixed": "#00174b",
+            "on-primary-fixed-variant": "#003ea8",
+            "error": "#ba1a1a",
+            "on-tertiary-fixed": "#2a1700",
+            "on-secondary-fixed": "#002113",
+            "inverse-on-surface": "#eef0ff",
+            "primary-fixed": "#dbe1ff",
+            "surface": "#faf8ff",
+            "on-secondary-container": "#00714d"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xl": "2rem",
+            "space-lg": "1.5rem",
+            "margin-tablet": "1.5rem",
+            "space-md": "1rem",
+            "margin-desktop": "2rem",
+            "margin": "1rem",
+            "gutter-desktop": "1.5rem",
+            "gutter": "1rem",
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-lg": ["Inter"],
+            "display": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "price-xl": ["Plus Jakarta Sans"],
+            "display-mobile": ["Plus Jakarta Sans"],
+            "label-sm": ["Inter"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "label-md": ["Inter"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "price-lg": ["Plus Jakarta Sans"],
+            "body-md": ["Inter"]
+          },
+          "fontSize": {
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "display": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "price-xl": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+            "display-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "800" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }],
+            "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "price-lg": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface antialiased overflow-hidden select-none">
+<!-- BACKGROUND: Dimmed blurred view of the Locus marketplace catalog behind the active sheet -->
+<div class="fixed inset-0 overflow-y-auto pointer-events-none filter blur-sm scale-[0.99] opacity-40 transition-all duration-300">
+<!-- Mock Top Bar -->
+<header class="bg-surface-container-lowest/90 border-b border-outline-variant/30 h-14 px-margin flex items-center justify-between max-w-7xl mx-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="real_estate_agent">real_estate_agent</span>
+<span class="text-headline-md font-headline-md tracking-tight font-extrabold text-primary">Locus</span>
+</div>
+<button class="bg-secondary text-on-secondary px-3 py-1.5 rounded-lg text-label-md font-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="add">add</span> Подать
+      </button>
+</header>
+<!-- Mock Catalog Grid (Background Context) -->
+<main class="max-w-7xl mx-auto px-margin py-4 space-y-4">
+<div class="h-10 bg-surface-container-high rounded-xl w-3/4"></div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<!-- Mock Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/40 p-3 space-y-2">
+<div class="w-full h-36 bg-surface-container rounded-lg"></div>
+<div class="h-6 w-24 bg-surface-container-high rounded"></div>
+<div class="h-4 w-40 bg-surface-container rounded"></div>
+</div>
+<!-- Mock Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/40 p-3 space-y-2">
+<div class="w-full h-36 bg-surface-container rounded-lg"></div>
+<div class="h-6 w-24 bg-surface-container-high rounded"></div>
+<div class="h-4 w-40 bg-surface-container rounded"></div>
+</div>
+</div>
+</main>
+</div>
+<!-- BACKDROP OVERLAY -->
+<div class="fixed inset-0 bg-on-surface/40 backdrop-blur-md z-40 transition-opacity duration-300"></div>
+<!-- BOTTOM SHEET / MODAL CONTAINER -->
+<div class="fixed inset-0 z-50 flex flex-col justify-end md:justify-center items-center pointer-events-none p-0 md:p-6">
+<!-- Modal Card (Sheet) -->
+<div class="pointer-events-auto w-full max-w-2xl bg-surface-container-lowest rounded-t-3xl md:rounded-3xl shadow-2xl flex flex-col max-h-[92vh] md:max-h-[88vh] border border-outline-variant/30 transform transition-transform duration-300">
+<!-- Grab Handle for Mobile -->
+<div class="w-full pt-3 pb-1.5 flex justify-center md:hidden cursor-grab">
+<div class="w-12 h-1.5 bg-outline-variant/70 rounded-full"></div>
+</div>
+<!-- Sheet Header -->
+<div class="px-space-md md:px-space-lg pt-2 pb-3 border-b border-outline-variant/20 flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-secondary font-extrabold text-headline-sm">➕</span>
+<h2 class="font-headline-sm text-headline-sm md:font-headline-md md:text-headline-md text-on-surface">Новое объявление</h2>
+</div>
+<p class="mt-1 font-body-sm text-body-sm text-on-surface-variant max-w-md">
+            Разместите квартиру без комиссии. Вы сможете редактировать и удалить только свой объект.
+          </p>
+</div>
+<button aria-label="Закрыть" class="p-2 text-on-surface-variant hover:text-on-surface rounded-full hover:bg-surface-container transition-colors active:scale-95 duration-150" type="button">
+<span class="material-symbols-outlined text-[22px]" data-icon="close">close</span>
+</button>
+</div>
+<!-- Sheet Scrollable Form Body -->
+<form class="overflow-y-auto px-space-md md:px-space-lg py-4 space-y-5 flex-1" id="listing-form" onsubmit="event.preventDefault();">
+<!-- 1. Заголовок объявления -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-on-surface">Заголовок объявления <span class="text-error">*</span></label>
+<input class="w-full h-12 px-3.5 rounded-xl border border-outline-variant bg-surface-bright text-on-surface font-body-md text-body-md focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all outline-none" placeholder="Например: Уютная 2-комнатная квартира на Чиланзаре" type="text" value="Уютная 2-комнатная квартира на Чиланзаре"/>
+</div>
+<!-- 2. Тип сделки -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-on-surface">Тип сделки <span class="text-error">*</span></label>
+<div class="grid grid-cols-2 p-1 bg-surface-container rounded-xl gap-1">
+<button class="py-2.5 rounded-lg font-label-md text-label-md font-bold bg-surface-container-lowest text-primary shadow-sm transition-all duration-150 flex items-center justify-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="sell" style="font-variation-settings: 'FILL' 1;">sell</span>
+              Продажа
+            </button>
+<button class="py-2.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all duration-150 flex items-center justify-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="key">key</span>
+              Аренда
+            </button>
+</div>
+</div>
+<!-- 3. Район Ташкента -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-on-surface">Район Ташкента <span class="text-error">*</span></label>
+<div class="relative">
+<select class="w-full h-12 pl-3.5 pr-10 rounded-xl border border-outline-variant bg-surface-bright text-on-surface font-body-md text-body-md focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 appearance-none outline-none">
+<option selected="">Чиланзарский район</option>
+<option>Юнусабадский район</option>
+<option>Мирзо-Улугбекский район</option>
+<option>Мирабадский район</option>
+<option>Яшнабадский район</option>
+<option>Шайхантахурский район</option>
+<option>Яккасарайский район</option>
+<option>Сергелийский район</option>
+</select>
+<div class="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant flex items-center">
+<span class="material-symbols-outlined" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<!-- 4. Точный адрес и ориентир -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-on-surface">Точный адрес и ориентир</label>
+<div class="relative">
+<span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-on-surface-variant material-symbols-outlined text-[20px]" data-icon="location_on">location_on</span>
+<input class="w-full h-12 pl-10 pr-3.5 rounded-xl border border-outline-variant bg-surface-bright text-on-surface font-body-md text-body-md focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all outline-none" placeholder="ул. Катартал, дом 12, ориентир ТЦ Парус" type="text" value="ул. Катартал, дом 12, ориентир ТЦ Парус"/>
+</div>
+</div>
+<!-- 5. Характеристики в ряд -->
+<div class="space-y-2">
+<label class="block font-label-md text-label-md text-on-surface">Характеристики объекта</label>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+<!-- Комнаты -->
+<div class="p-2.5 bg-surface-container-low rounded-xl border border-outline-variant/40 flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Комнаты</span>
+<div class="flex items-center gap-1 mt-1.5">
+<span class="px-2 py-0.5 rounded-md text-label-sm font-label-sm bg-surface-container text-on-surface-variant">1</span>
+<span class="px-2 py-0.5 rounded-md text-label-sm font-label-sm bg-primary-container text-on-primary font-bold">2</span>
+<span class="px-2 py-0.5 rounded-md text-label-sm font-label-sm bg-surface-container text-on-surface-variant">3</span>
+<span class="px-1.5 py-0.5 rounded-md text-label-sm font-label-sm bg-surface-container text-on-surface-variant">4+</span>
+</div>
+</div>
+<!-- Этаж -->
+<div class="p-2.5 bg-surface-container-low rounded-xl border border-outline-variant/40">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Этаж</span>
+<div class="flex items-center gap-1 mt-1">
+<input class="w-full bg-transparent font-headline-sm text-headline-sm text-on-surface font-bold border-0 p-0 focus:ring-0 outline-none" max="50" min="1" type="number" value="5"/>
+<span class="text-body-sm font-body-sm text-on-surface-variant">эт.</span>
+</div>
+</div>
+<!-- Этажность дома -->
+<div class="p-2.5 bg-surface-container-low rounded-xl border border-outline-variant/40">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Этажность</span>
+<div class="flex items-center gap-1 mt-1">
+<input class="w-full bg-transparent font-headline-sm text-headline-sm text-on-surface font-bold border-0 p-0 focus:ring-0 outline-none" max="50" min="1" type="number" value="9"/>
+<span class="text-body-sm font-body-sm text-on-surface-variant">всего</span>
+</div>
+</div>
+<!-- Площадь -->
+<div class="p-2.5 bg-surface-container-low rounded-xl border border-outline-variant/40">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Площадь</span>
+<div class="flex items-center gap-1 mt-1">
+<input class="w-full bg-transparent font-headline-sm text-headline-sm text-on-surface font-bold border-0 p-0 focus:ring-0 outline-none" max="1000" min="10" type="number" value="58"/>
+<span class="text-body-sm font-body-sm text-on-surface-variant font-medium">м²</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 6. Стоимость с автопересчетом -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-on-surface">Стоимость объекта <span class="text-error">*</span></label>
+<div class="p-3 bg-surface-container-low rounded-xl border border-outline-variant/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-center gap-2 flex-1">
+<span class="font-price-xl text-price-xl text-primary font-extrabold">$</span>
+<input class="font-price-xl text-price-xl text-on-surface font-bold bg-transparent border-0 p-0 focus:ring-0 w-full outline-none" id="price-input" placeholder="68 000" type="number" value="68000"/>
+</div>
+<div class="bg-surface-container-lowest px-3 py-1.5 rounded-lg border border-outline-variant/40 flex items-center gap-1.5 shrink-0 self-start sm:self-center">
+<span class="material-symbols-outlined text-[16px] text-secondary" data-icon="currency_exchange">currency_exchange</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold" id="converted-uzs">≈ 860 200 000 UZS</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-right">Курс ЦБ РУз: 1 USD ≈ 12 650 UZS</p>
+</div>
+<!-- 7. Зона загрузки фото Drag-and-Drop & Превью -->
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<label class="block font-label-md text-label-md text-on-surface">Фотографии объекта</label>
+<span class="font-label-sm text-label-sm text-on-surface-variant">2 из 10 загружено</span>
+</div>
+<!-- Drag and Drop Box -->
+<div class="border-2 border-dashed border-primary-container/40 bg-surface-container-low/60 hover:bg-surface-container rounded-2xl p-4 transition-colors flex flex-col items-center justify-center text-center cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-primary-fixed flex items-center justify-center text-primary group-hover:scale-105 transition-transform duration-150 mb-2">
+<span class="material-symbols-outlined text-[26px]" data-icon="add_a_photo">add_a_photo</span>
+</div>
+<span class="font-label-md text-label-md text-primary font-bold">Нажмите или перетащите фото сюда</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Загрузите до 10 качественных фото в JPG, PNG или WEBP</span>
+</div>
+<!-- Previews of 2 uploaded images -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+<!-- Thumbnail 1 -->
+<div class="relative group rounded-xl overflow-hidden aspect-[4/3] border border-outline-variant/40 bg-surface-container shadow-sm">
+<img class="w-full h-full object-cover" data-alt="A bright, sunlit modern living room interior in Tashkent with contemporary Scandinavian furniture, neutral cream and beige tones, parquet floor, floor-to-ceiling windows, crisp architectural lines, professional real estate wide-angle photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSWQjt8lpqCebvNV1wKKZDoDYOZpwuR3VKDR-I3lYbtUpLnmcThvbjwcnnegPc9pywa8yHQxlzHWHSeXJTbkDlOLyvQ9SfUHKPwzzCqRHbOqGJSEyOPVsL_ltGvbp5wjLH5olfVLVM1dMkd9x9Eh2eb7Iz5Hse9C-fzf4te6hVWthDP2dkQ0HSrugs07MezJMl8M134tia6Rrg3Q1MQCUKsXih_5OJCmzEAqjb5jE9tHNOt0cU6tMN"/>
+<span class="absolute top-1.5 left-1.5 bg-surface-container-lowest/90 backdrop-blur-sm text-primary font-label-sm text-label-sm px-1.5 py-0.5 rounded font-bold shadow-xs">Главное</span>
+<button aria-label="Удалить фото" class="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-error text-on-error flex items-center justify-center shadow-md active:scale-90 transition-transform" type="button">
+<span class="material-symbols-outlined text-[14px]" data-icon="close">close</span>
+</button>
+</div>
+<!-- Thumbnail 2 -->
+<div class="relative group rounded-xl overflow-hidden aspect-[4/3] border border-outline-variant/40 bg-surface-container shadow-sm">
+<img class="w-full h-full object-cover" data-alt="A clean minimalist master bedroom in a newly constructed Tashkent high-rise, king size bed with neat white and charcoal bedding, ambient warm evening lighting, city skyline visible through balcony glass, premium editorial property style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-OrjQ19WkukhXAjUWLNk769KTwBGuJAW4snC-Zxm7k64NijvBGNQWZ9D0FpG21MsoDUqQB-00E93SqNB5ztpPZnLpJqKjFFweOeK14z-nWCkhrF_pchXinWoU6RoNgazq239ML19e3Dyh8kyLhCbx7_VrYWrMptMHtBpWkCQOSb8h_yKk6cvx30GSieG8iasfOEApmHT3eZClkyvVy9LkeGxEphbEC1WKngnVvTzKAIYKJDdty9Vq"/>
+<button aria-label="Удалить фото" class="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-error text-on-error flex items-center justify-center shadow-md active:scale-90 transition-transform" type="button">
+<span class="material-symbols-outlined text-[14px]" data-icon="close">close</span>
+</button>
+</div>
+<!-- Slot for adding next -->
+<div class="rounded-xl border border-dashed border-outline-variant bg-surface-bright flex flex-col items-center justify-center aspect-[4/3] cursor-pointer hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-outline-variant text-[24px]" data-icon="add_circle">add_circle</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">+ Ещё фото</span>
+</div>
+</div>
+</div>
+<!-- 8. Описание объекта -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-on-surface">Описание объекта</label>
+<textarea class="w-full p-3 rounded-xl border border-outline-variant bg-surface-bright text-on-surface font-body-md text-body-md focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all outline-none resize-none" placeholder="Опишите состояние ремонта, мебель, бытовую технику, транспортную доступность и инфраструктуру двора..." rows="3">Светлая квартира с евроремонтом. Полностью укомплектована мебелью и встроенной техникой Bosch. В шаговой доступности ТЦ Парус, метро Мирзо Улугбек, парки и школы. Чистый подъезд, тихий закрытый двор с детской площадкой.</textarea>
+</div>
+<!-- 9. Контакты: телефон и Telegram -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-on-surface">Контактный телефон <span class="text-error">*</span></label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant material-symbols-outlined text-[18px]" data-icon="phone">phone</span>
+<input class="w-full h-11 pl-9 pr-3 rounded-xl border border-outline-variant bg-surface-bright text-on-surface font-body-md text-body-md focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none" type="tel" value="+998 90 123-45-67"/>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-on-surface">Ник Telegram</label>
+<div class="relative">
+<span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-primary font-bold text-label-md">@</span>
+<input class="w-full h-11 pl-8 pr-3 rounded-xl border border-outline-variant bg-surface-bright text-on-surface font-body-md text-body-md focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 outline-none" placeholder="username" type="text" value="tashkent_owner"/>
+</div>
+</div>
+</div>
+<!-- 10. Предупреждение с золотой звездой -->
+<div class="p-3.5 rounded-xl bg-tertiary-fixed/30 border border-tertiary-fixed-dim/70 flex items-start gap-3">
+<span class="text-tertiary font-extrabold text-headline-sm select-none">⭐</span>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface font-bold">Привилегия владельца объекта</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+              Объявление будет закреплено за вашим аккаунтом с бейджем <span class="font-bold text-tertiary">«Ваше объявление»</span>. Вы сможете в любой момент поднять его в топ или снять с публикации.
+            </p>
+</div>
+</div>
+</form>
+<!-- Sheet Footer: Primary Action (Emerald Green CTA) -->
+<div class="px-space-md md:px-space-lg py-3.5 border-t border-outline-variant/20 bg-surface-container-lowest flex items-center gap-3">
+<button class="w-full h-12 bg-secondary hover:bg-secondary/90 active:scale-[0.98] transition-transform duration-150 text-on-secondary rounded-xl font-label-md text-label-md font-bold flex items-center justify-center gap-2 shadow-md shadow-secondary/20" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="publish">publish</span>
+          Опубликовать объявление
+        </button>
+</div>
+</div>
+</div>
+<script>
+    // Live currency conversion calculation demo
+    const priceInput = document.getElementById('price-input');
+    const uzsDisplay = document.getElementById('converted-uzs');
+    const exchangeRate = 12650;
+
+    if (priceInput && uzsDisplay) {
+      priceInput.addEventListener('input', (e) => {
+        const val = parseFloat(e.target.value) || 0;
+        const uzs = Math.round(val * exchangeRate);
+        uzsDisplay.textContent = `≈ ${uzs.toLocaleString('ru-RU')} UZS`;
+      });
+    }
+  </script>
+</body></html>

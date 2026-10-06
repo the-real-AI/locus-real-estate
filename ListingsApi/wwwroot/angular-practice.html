@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Урок 4: Angular 22 & Реактивные Сигналы | Locus Education</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#dd0031", // Фирменный цвет Angular
+            "angular-dark": "#c3002f",
+            "secondary": "#006c49",
+            "surface": "#faf8ff",
+            "on-surface": "#171b26"
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"],
+            "body": ["Inter", "sans-serif"],
+            "code": ["Fira Code", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    .code-block {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body class="bg-[#faf8ff] text-[#171b26] antialiased font-body pb-20">
+
+  <!-- ШАПКА НАВИГАЦИИ -->
+  <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center space-x-2 text-decoration-none">
+        <span class="material-symbols-outlined text-[#dd0031] text-3xl">deployed_code</span>
+        <div class="flex flex-col">
+          <span class="text-xl font-extrabold tracking-tight text-[#dd0031] font-display leading-tight">Locus</span>
+          <span class="text-[11px] font-bold text-slate-500 leading-none">Урок 4 · Angular Signals & Architecture</span>
+        </div>
+      </a>
+
+      <nav class="hidden lg:flex items-center space-x-6 text-sm font-display font-medium">
+        <a href="index.html" class="text-slate-600 hover:text-primary transition-colors">Главная</a>
+        <a href="catalog.html" class="text-slate-600 hover:text-primary transition-colors">Каталог</a>
+        <a href="efcore-practice.html" class="text-slate-600 hover:text-primary transition-colors">База EF Core (Урок 3)</a>
+        <a href="angular-practice.html" class="text-[#dd0031] font-bold border-b-2 border-[#dd0031] py-1">Angular Signals (Урок 4)</a>
+        <a href="solid-practice.html" class="text-slate-600 hover:text-primary transition-colors">SOLID Практикум</a>
+        <a href="css-practice.html" class="text-slate-600 hover:text-primary transition-colors">CSS Практика</a>
+        <a href="hub.html" class="text-slate-600 hover:text-primary transition-colors">Учебный Хаб</a>
+      </nav>
+
+      <div class="flex items-center space-x-3">
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-rose-100 text-[#dd0031]">
+          Angular 22 Signals
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- КОНТЕНТ УРОКА 4 -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 mt-8 space-y-12">
+
+    <!-- HERO БАННЕР -->
+    <section class="bg-gradient-to-r from-rose-900 via-red-900 to-slate-900 text-white rounded-3xl p-6 sm:p-10 shadow-lg relative overflow-hidden">
+      <div class="relative z-10 max-w-3xl space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 border border-rose-400/30 text-xs font-semibold text-rose-200">
+          <span class="material-symbols-outlined text-sm">bolt</span>
+          Реактивное программирование без RxJS в Angular 19/22
+        </div>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display leading-tight tracking-tight">
+          Карточка, список, фильтр и детали на Сигналах
+        </h1>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+          Интерактивный стенд по материалам методички <code class="text-rose-300">Урок_4_Практика_Angular.docx</code>. Построение 4 автономных компонентов (<code class="text-yellow-300">ListingCard</code>, <code class="text-yellow-300">ListingList</code>, <code class="text-yellow-300">ListingFilter</code>, <code class="text-yellow-300">ListingDetails</code>), взаимодействие через <code class="text-rose-300">input()</code>, <code class="text-rose-300">output()</code> и реактивные сигналы <code class="text-rose-300">signal()</code> / <code class="text-rose-300">computed()</code>.
+        </p>
+        <div class="flex flex-wrap gap-3 pt-2">
+          <a href="#interactive-showcase" class="bg-white text-slate-900 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shadow-md hover:bg-slate-100 transition">
+            Живой стенд компонентов
+          </a>
+          <a href="#signals-inspector" class="bg-rose-600/80 hover:bg-rose-600 text-white border border-rose-400/40 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition">
+            Инспектор графа Сигналов
+          </a>
+          <a href="#code-viewer" class="bg-slate-800/80 hover:bg-slate-800 text-slate-300 px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition">
+            Исходный TypeScript код
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 1: ЖИВОЙ СТЕНД КОМПОНЕНТОВ -->
+    <section id="interactive-showcase" class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-[#dd0031]">Архитектура Angular 22</span>
+          <h2 class="text-2xl sm:text-3xl font-bold font-display text-slate-900">Стенд 4-х компонентов Locus</h2>
+        </div>
+        <!-- Переключатель источников данных -->
+        <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-2xl text-xs font-bold">
+          <button onclick="setDataSource('mock')" id="src-mock-btn" class="px-3 py-1.5 rounded-xl bg-white text-slate-900 shadow-xs">Mock Data (8 шт)</button>
+          <button onclick="setDataSource('live')" id="src-live-btn" class="px-3 py-1.5 rounded-xl text-slate-600 hover:text-slate-900">Live API (/api/listings)</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- КОМПОНЕНТ 1: ListingFilter (3 колонки) -->
+        <div class="lg:col-span-4 space-y-6">
+          <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-900 uppercase flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-base text-rose-600">tune</span> ListingFilter
+              </span>
+              <span class="text-[11px] font-mono bg-rose-50 text-rose-700 px-2 py-0.5 rounded-full">output: filterChange</span>
+            </div>
+
+            <!-- Район -->
+            <div>
+              <label class="text-xs font-semibold text-slate-600 block mb-1">Район (district)</label>
+              <select id="ng-filter-district" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs" onchange="onFilterChange()">
+                <option value="all">Все районы</option>
+                <option value="Чиланзар">Чиланзар</option>
+                <option value="Юнусабад">Юнусабад</option>
+                <option value="Мирзо-Улугбек">Мирзо-Улугбек</option>
+                <option value="Мирабад">Мирабад</option>
+              </select>
+            </div>
+
+            <!-- Цена -->
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <label class="text-xs font-semibold text-slate-600">Макс. цена (maxPrice)</label>
+                <span id="ng-filter-price-val" class="text-xs font-extrabold text-[#dd0031]">$100,000</span>
+              </div>
+              <input type="range" id="ng-filter-price" min="20000" max="150000" step="5000" value="100000" class="w-full accent-rose-600 cursor-pointer" oninput="onFilterChange()"/>
+            </div>
+
+            <!-- Сброс -->
+            <button onclick="resetFilters()" class="w-full text-xs font-bold py-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition">
+              Сбросить фильтры
+            </button>
+          </div>
+
+          <!-- КОМПОНЕНТ 4: ListingDetails (Панель выбранного объекта) -->
+          <div id="ng-details-box" class="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-900 uppercase flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-base text-purple-600">info</span> ListingDetails
+              </span>
+              <span class="text-[11px] font-mono bg-purple-50 text-purple-700 px-2 py-0.5 rounded-full">input: listing</span>
+            </div>
+
+            <div id="ng-details-content">
+              <div class="text-center py-8 text-slate-400 text-xs">
+                <span class="material-symbols-outlined text-3xl mb-1 text-slate-300">touch_app</span>
+                <p>Кликните по любой карточке объявления, чтобы передать объект в сигнал <code class="text-purple-600">selectedListing</code></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- КОМПОНЕНТ 2 & 3: ListingList & ListingCard (8 колонок) -->
+        <div class="lg:col-span-8 space-y-4">
+          <div class="flex items-center justify-between bg-white px-5 py-3 rounded-2xl border border-slate-200">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-slate-800 uppercase">ListingList</span>
+              <span id="ng-counter-badge" class="bg-rose-100 text-[#dd0031] text-xs font-extrabold px-2.5 py-0.5 rounded-full">
+                8 объявлений
+              </span>
+            </div>
+            <span class="text-[11px] text-slate-400 font-mono">@for (l of filteredListings(); track l.id)</span>
+          </div>
+
+          <!-- Сетка карточек ListingCard -->
+          <div id="ng-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Заполняется JS -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 2: ИНСПЕКТОР ГРАФА СИГНАЛОВ -->
+    <section id="signals-inspector" class="space-y-4">
+      <div class="border-b border-slate-200 pb-3">
+        <span class="text-xs font-bold uppercase tracking-wider text-rose-600">Реактивный граф состояний</span>
+        <h2 class="text-xl sm:text-2xl font-bold font-display text-slate-900">Signal Graph Inspector</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs font-mono">
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-1">
+          <span class="text-slate-400 uppercase text-[10px] block">WritableSignal&lt;Listing[]&gt;</span>
+          <span class="font-bold text-slate-900">listings()</span>
+          <p id="sig-listings-count" class="text-primary font-bold text-base font-display">8 записей</p>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-1">
+          <span class="text-slate-400 uppercase text-[10px] block">WritableSignal&lt;FilterState&gt;</span>
+          <span class="font-bold text-slate-900">filterState()</span>
+          <p id="sig-filter-val" class="text-slate-700 text-xs truncate">Все / $100k</p>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-1">
+          <span class="text-slate-400 uppercase text-[10px] block">Computed&lt;Listing[]&gt;</span>
+          <span class="font-bold text-slate-900">filteredListings()</span>
+          <p id="sig-filtered-count" class="text-emerald-600 font-bold text-base font-display">8 записей</p>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-1">
+          <span class="text-slate-400 uppercase text-[10px] block">Computed&lt;number&gt;</span>
+          <span class="font-bold text-slate-900">averagePrice()</span>
+          <p id="sig-avg-price" class="text-purple-600 font-bold text-base font-display">$58,250</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 3: ИСХОДНЫЙ КОД АРХИТЕКТУРЫ ANGULAR -->
+    <section id="code-viewer" class="bg-slate-900 text-slate-200 rounded-3xl p-6 sm:p-8 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+          <span class="font-bold font-display text-sm text-white">Код компонентов Angular 22 (Урок 4)</span>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="showCodeTab('card')" id="tab-btn-card" class="text-xs px-2.5 py-1 rounded-lg bg-slate-800 text-rose-400 font-bold">ListingCard</button>
+          <button onclick="showCodeTab('filter')" id="tab-btn-filter" class="text-xs px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">ListingFilter</button>
+          <button onclick="showCodeTab('app')" id="tab-btn-app" class="text-xs px-2.5 py-1 rounded-lg text-slate-400 hover:text-white">App (Root)</button>
+        </div>
+      </div>
+
+      <pre id="code-display" class="code-block text-xs text-rose-300 overflow-x-auto whitespace-pre-wrap max-h-64">// Код компонента загружается...</pre>
+    </section>
+
+  </main>
+
+  <script>
+    // 8 мок-объявлений по ТЗ Урока 4 (mock-listings.ts)
+    const mockListings = [
+      { id: 1, title: "2-комн. рядом с метро Чиланзар", price: 48000, rooms: 2, districtId: 1, districtName: "Чиланзар", createdAt: "2026-09-01T00:00:00Z", address: "ул. Катартал, 12", imageUrl: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800" },
+      { id: 2, title: "3-комн. с ремонтом", price: 71000, rooms: 3, districtId: 2, districtName: "Юнусабад", createdAt: "2026-09-01T00:00:00Z", address: "14-й квартал, 5", imageUrl: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800" },
+      { id: 3, title: "1-комн. студия в центре", price: 32000, rooms: 1, districtId: 3, districtName: "Мирзо-Улугбек", createdAt: "2026-09-01T00:00:00Z", address: "пр-т Мустакиллик, 88", imageUrl: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800" },
+      { id: 4, title: "4-комн. пентхаус с террасой", price: 145000, rooms: 4, districtId: 4, districtName: "Мирабад", createdAt: "2026-09-05T00:00:00Z", address: "ул. Нукусская, 21", imageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800" },
+      { id: 5, title: "2-комн. новостройка комфорт", price: 55000, rooms: 2, districtId: 1, districtName: "Чиланзар", createdAt: "2026-09-08T00:00:00Z", address: "массив Чиланзар, 9", imageUrl: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800" },
+      { id: 6, title: "3-комн. улучшенной планировки", price: 68000, rooms: 3, districtId: 2, districtName: "Юнусабад", createdAt: "2026-09-10T00:00:00Z", address: "19-й квартал, 14", imageUrl: "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=800" },
+      { id: 7, title: "1-комн. рядом с IT Park", price: 36000, rooms: 1, districtId: 3, districtName: "Мирзо-Улугбек", createdAt: "2026-09-12T00:00:00Z", address: "ул. Тепамасжид, 4", imageUrl: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800" },
+      { id: 8, title: "2-комн. евроремонт у парка", price: 62000, rooms: 2, districtId: 4, districtName: "Мирабад", createdAt: "2026-09-15T00:00:00Z", address: "ул. Чехова, 32", imageUrl: "https://images.unsplash.com/photo-1502005229762-ee1b2b8ab00f?w=800" }
+    ];
+
+    let currentSource = 'mock';
+    let rawListings = [...mockListings];
+    let selectedId = 1;
+
+    // Сигналы
+    function getFilterState() {
+      return {
+        district: document.getElementById('ng-filter-district').value,
+        maxPrice: parseFloat(document.getElementById('ng-filter-price').value) || 100000
+      };
+    }
+
+    function renderComponentShowcase() {
+      const filter = getFilterState();
+      document.getElementById('ng-filter-price-val').innerText = '$' + filter.maxPrice.toLocaleString('en-US');
+
+      // computed(() => listings().filter(...))
+      const filtered = rawListings.filter(l => {
+        const dMatch = filter.district === 'all' || l.districtName === filter.district || l.district === filter.district;
+        const pMatch = l.price <= filter.maxPrice;
+        return dMatch && pMatch;
+      });
+
+      // Обновление счетчиков
+      document.getElementById('ng-counter-badge').innerText = `${filtered.length} объявлений`;
+      document.getElementById('sig-listings-count').innerText = `${rawListings.length} записей`;
+      document.getElementById('sig-filter-val').innerText = `${filter.district} / $${(filter.maxPrice/1000)}k`;
+      document.getElementById('sig-filtered-count').innerText = `${filtered.length} записей`;
+
+      const avgPrice = filtered.length > 0 ? Math.round(filtered.reduce((sum, x) => sum + x.price, 0) / filtered.length) : 0;
+      document.getElementById('sig-avg-price').innerText = '$' + avgPrice.toLocaleString('en-US');
+
+      // Рендер ListingCard
+      const container = document.getElementById('ng-cards-grid');
+      container.innerHTML = '';
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-2 bg-white rounded-3xl p-10 text-center text-slate-400 border border-slate-200">
+            <span class="material-symbols-outlined text-4xl text-slate-300">search_off</span>
+            <p class="font-bold text-slate-700 mt-2">@empty: Объявлений не найдено</p>
+            <p class="text-xs text-slate-400">Попробуйте увеличить максимальную цену или выбрать другой район.</p>
+          </div>
+        `;
+      } else {
+        filtered.forEach(item => {
+          const isSelected = item.id === selectedId;
+          const card = document.createElement('div');
+          card.className = `bg-white rounded-2xl border transition-all cursor-pointer overflow-hidden p-4 space-y-3 ${isSelected ? 'border-[#dd0031] ring-2 ring-rose-200 shadow-md' : 'border-slate-200 hover:border-rose-300 shadow-xs'}`;
+          card.onclick = () => selectListing(item.id);
+          card.innerHTML = `
+            <div class="relative h-36 rounded-xl overflow-hidden bg-slate-100">
+              <img src="${item.imageUrl}" class="w-full h-full object-cover" alt="${item.title}"/>
+              <span class="absolute top-2 right-2 bg-white/90 backdrop-blur-xs text-slate-900 text-[11px] font-extrabold px-2 py-0.5 rounded-lg shadow-xs">
+                $${Number(item.price).toLocaleString()}
+              </span>
+              <span class="absolute bottom-2 left-2 bg-slate-900/80 text-white text-[10px] font-bold px-2 py-0.5 rounded-lg">
+                📍 ${item.districtName || item.district}
+              </span>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold text-slate-900 line-clamp-1">${item.title}</h4>
+              <p class="text-[11px] text-slate-500 mt-0.5">${item.address || 'Адрес уточняется'} • ${item.rooms}-комн.</p>
+            </div>
+            <div class="flex items-center justify-between pt-1 border-t border-slate-100">
+              <span class="text-[10px] font-mono text-slate-400">ID: #${item.id}</span>
+              <span class="text-xs font-bold text-[#dd0031] flex items-center gap-1">
+                ${isSelected ? 'Выбрано ✓' : 'Подробнее →'}
+              </span>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      }
+
+      // Рендер ListingDetails
+      renderDetails();
+    }
+
+    function selectListing(id) {
+      selectedId = id;
+      renderComponentShowcase();
+    }
+
+    function renderDetails() {
+      const item = rawListings.find(x => x.id === selectedId);
+      const container = document.getElementById('ng-details-content');
+      if (!item) {
+        container.innerHTML = '<p class="text-xs text-slate-400">Объект не выбран</p>';
+        return;
+      }
+
+      const areaEstimate = item.rooms * 26 + 10;
+      const pricePerMeter = Math.round(item.price / areaEstimate);
+
+      container.innerHTML = `
+        <div class="space-y-4">
+          <div class="rounded-xl overflow-hidden h-32 bg-slate-100">
+            <img src="${item.imageUrl}" class="w-full h-full object-cover"/>
+          </div>
+          <div>
+            <h4 class="font-bold text-sm text-slate-900">${item.title}</h4>
+            <p class="text-xs text-slate-500">📍 ${item.districtName || item.district}, ${item.address || ''}</p>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="bg-slate-50 p-2 rounded-xl">
+              <span class="text-slate-400 block text-[10px]">Цена</span>
+              <span class="font-extrabold text-[#dd0031] text-sm">$${Number(item.price).toLocaleString()}</span>
+            </div>
+            <div class="bg-slate-50 p-2 rounded-xl">
+              <span class="text-slate-400 block text-[10px]">Цена за м²</span>
+              <span class="font-bold text-slate-800 text-sm">$${pricePerMeter}</span>
+            </div>
+          </div>
+          <button onclick="alert('Звонок риелтору: +998 (90) 123-45-67')" class="w-full bg-[#dd0031] hover:bg-rose-700 text-white font-bold py-2 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-xs">
+            <span class="material-symbols-outlined text-base">call</span> Показать телефон
+          </button>
+        </div>
+      `;
+    }
+
+    function onFilterChange() {
+      renderComponentShowcase();
+    }
+
+    function resetFilters() {
+      document.getElementById('ng-filter-district').value = 'all';
+      document.getElementById('ng-filter-price').value = 100000;
+      renderComponentShowcase();
+    }
+
+    async function setDataSource(src) {
+      currentSource = src;
+      const btnMock = document.getElementById('src-mock-btn');
+      const btnLive = document.getElementById('src-live-btn');
+
+      if (src === 'mock') {
+        btnMock.className = 'px-3 py-1.5 rounded-xl bg-white text-slate-900 shadow-xs';
+        btnLive.className = 'px-3 py-1.5 rounded-xl text-slate-600 hover:text-slate-900';
+        rawListings = [...mockListings];
+        renderComponentShowcase();
+      } else {
+        btnLive.className = 'px-3 py-1.5 rounded-xl bg-white text-slate-900 shadow-xs';
+        btnMock.className = 'px-3 py-1.5 rounded-xl text-slate-600 hover:text-slate-900';
+        try {
+          const res = await fetch('/api/listings');
+          if (!res.ok) throw new Error('API error');
+          const data = await res.json();
+          const items = data.items || data;
+          rawListings = items.map(l => ({
+            ...l,
+            districtName: l.district,
+            imageUrl: l.imageUrl || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800'
+          }));
+          renderComponentShowcase();
+        } catch (e) {
+          alert('Не удалось загрузить данные из Live API');
+        }
+      }
+    }
+
+    // Вкладки с кодом Angular
+    const codeSnippets = {
+      card: `@Component({
+  selector: 'app-listing-card',
+  standalone: true,
+  template: \`
+    <div class="card" (click)="selected.emit(listing())">
+      <img [src]="listing().imageUrl" />
+      <h3>{{ listing().title }}</h3>
+      <p class="price">{{ listing().price | currency:'USD' }}</p>
+    </div>
+  \`
+})
+export class ListingCard {
+  listing = input.required<Listing>();
+  selected = output<Listing>();
+}`,
+      filter: `@Component({
+  selector: 'app-listing-filter',
+  standalone: true,
+  template: \`
+    <select [value]="district()" (change)="onDistrictChange($event)">
+      <option value="all">Все районы</option>
+      @for (d of districts; track d) { <option [value]="d">{{ d }}</option> }
+    </select>
+  \`
+})
+export class ListingFilter {
+  filterChange = output<FilterState>();
+  district = signal('all');
+  maxPrice = signal(100000);
+}`,
+      app: `@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [ListingCard, ListingList, ListingFilter, ListingDetails]
+})
+export class App {
+  listings = signal<Listing[]>(MOCK_LISTINGS);
+  filter = signal<FilterState>({ district: 'all', maxPrice: 100000 });
+
+  // Реактивное вычисляемое свойство
+  filteredListings = computed(() => {
+    const f = this.filter();
+    return this.listings().filter(l => 
+      (f.district === 'all' || l.districtName === f.district) &&
+      l.price <= f.maxPrice
+    );
+  });
+}`
+    };
+
+    function showCodeTab(tab) {
+      document.querySelectorAll('#code-viewer button').forEach(b => {
+        b.className = 'text-xs px-2.5 py-1 rounded-lg text-slate-400 hover:text-white';
+      });
+      document.getElementById('tab-btn-' + tab).className = 'text-xs px-2.5 py-1 rounded-lg bg-slate-800 text-rose-400 font-bold';
+      document.getElementById('code-display').innerText = codeSnippets[tab];
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderComponentShowcase();
+      showCodeTab('card');
+    });
+  </script>
+</body>
+</html>

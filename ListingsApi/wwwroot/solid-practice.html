@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>SOLID: Архитектурный тренажер и 5 принципов проектирования | Locus Education</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#004ac6",
+            "secondary": "#006c49",
+            "surface": "#faf8ff",
+            "surface-container": "#ebedfc",
+            "surface-container-low": "#f2f3ff",
+            "surface-container-lowest": "#ffffff",
+            "on-surface": "#171b26",
+            "on-surface-variant": "#434655",
+            "outline-variant": "#c3c6d7",
+            "inverse-surface": "#1e2230"
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"],
+            "body": ["Inter", "sans-serif"],
+            "code": ["Fira Code", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    .code-block {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+    .tab-active {
+      border-bottom: 2px solid #004ac6;
+      color: #004ac6;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body class="bg-[#faf8ff] text-[#171b26] antialiased font-body pb-20">
+
+  <!-- ШАПКА НАВИГАЦИИ -->
+  <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <!-- Логотип -->
+      <a href="index.html" class="flex items-center space-x-2 text-decoration-none">
+        <span class="material-symbols-outlined text-primary text-3xl">real_estate_agent</span>
+        <div class="flex flex-col">
+          <span class="text-xl font-extrabold tracking-tight text-primary font-display leading-tight">Locus</span>
+          <span class="text-[11px] font-bold text-slate-500 leading-none">Education & Architecture</span>
+        </div>
+      </a>
+
+      <!-- Меню -->
+      <nav class="hidden lg:flex items-center space-x-6 text-sm font-display font-medium">
+        <a href="index.html" class="text-slate-600 hover:text-primary transition-colors">Главная</a>
+        <a href="catalog.html" class="text-slate-600 hover:text-primary transition-colors">Каталог</a>
+        <a href="efcore-practice.html" class="text-slate-600 hover:text-primary transition-colors">База EF Core (Урок 3)</a>
+        <a href="angular-practice.html" class="text-slate-600 hover:text-primary transition-colors">Angular Signals (Урок 4)</a>
+        <a href="solid-practice.html" class="text-primary font-bold border-b-2 border-primary py-1">SOLID Практикум</a>
+        <a href="css-practice.html" class="text-slate-600 hover:text-primary transition-colors">CSS Практика</a>
+        <a href="hub.html" class="text-slate-600 hover:text-primary transition-colors">Учебный Хаб</a>
+      </nav>
+
+      <!-- Действия -->
+      <div class="flex items-center space-x-3">
+        <a href="#calculator-t2" class="bg-primary text-white text-xs sm:text-sm font-bold px-3.5 py-2 rounded-xl flex items-center space-x-1.5 shadow-sm hover:bg-blue-700 transition">
+          <span class="material-symbols-outlined text-base">calculate</span>
+          <span>Калькулятор T2</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ГЛАВНЫЙ КОНТЕЙНЕР -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 mt-8 space-y-12">
+
+    <!-- HERO БАННЕР -->
+    <section class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white rounded-3xl p-6 sm:p-10 shadow-lg relative overflow-hidden">
+      <div class="relative z-10 max-w-3xl space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-xs font-semibold text-blue-200">
+          <span class="material-symbols-outlined text-sm">verified</span>
+          Пять принципов объектно-ориентированного проектирования
+        </div>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display leading-tight tracking-tight">
+          SOLID на проекте платформы недвижимости
+        </h1>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+          Практический интерактивный практикум по материалам <code class="text-yellow-300">SOLIDnew.pptx</code>, <code class="text-yellow-300">SOLID_Задания.docx</code> и эталонным решениям преподавателя. Исследуйте принципы, запускайте рефакторинг в реальном времени и рассчитывайте ипотеку по чистой архитектуре.
+        </p>
+        <div class="flex flex-wrap gap-3 pt-2">
+          <a href="#principles" class="bg-white text-slate-900 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shadow-md hover:bg-slate-100 transition">
+            5 Принципов в деталях
+          </a>
+          <a href="#tasks-interactive" class="bg-blue-600/80 hover:bg-blue-600 text-white border border-blue-400/40 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition">
+            Тренажер заданий (S1–D2, T1, T2)
+          </a>
+          <a href="#checklist" class="bg-slate-800/80 hover:bg-slate-800 text-slate-300 px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition">
+            Чек-лист самопроверки
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 1: 5 ПРИНЦИПОВ (КАРТОЧКИ) -->
+    <section id="principles" class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-slate-200 pb-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-primary">Архитектурный фундамент</span>
+          <h2 class="text-2xl sm:text-3xl font-bold font-display text-slate-900">Что означает аббревиатура SOLID</h2>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-500 max-w-md">
+          Сформулированы Робертом Мартином для борьбы с тремя болезнями кода: <strong>жесткостью</strong>, <strong>хрупкостью</strong> и <strong>неподвижностью</strong>.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <!-- S -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs hover:border-primary/50 transition">
+          <div class="w-10 h-10 rounded-xl bg-blue-100 text-primary flex items-center justify-center font-display font-extrabold text-xl mb-3">S</div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Single Responsibility</h3>
+          <p class="text-xs font-semibold text-primary mb-2">Единственная ответственность</p>
+          <p class="text-xs text-slate-600 leading-relaxed mb-3">
+            У класса должна быть только <strong>одна причина для изменения</strong>. Класс отвечает за одну конкретную задачу.
+          </p>
+          <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100 text-[11px] text-slate-500">
+            <span class="font-bold text-rose-600">Симптом:</span> Класс одновременно валидирует, пишет в базу, формирует отчет и шлет письма.
+          </div>
+        </div>
+
+        <!-- O -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs hover:border-primary/50 transition">
+          <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-display font-extrabold text-xl mb-3">O</div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Open / Closed</h3>
+          <p class="text-xs font-semibold text-emerald-700 mb-2">Открытость / Закрытость</p>
+          <p class="text-xs text-slate-600 leading-relaxed mb-3">
+            Сущности открыты для расширения, но <strong>закрыты для изменения</strong>. Новое поведение — это новый класс, а не ветка switch.
+          </p>
+          <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100 text-[11px] text-slate-500">
+            <span class="font-bold text-rose-600">Симптом:</span> Для нового тарифа или типа квартиры дописывается очередная ветка <code>if / switch</code>.
+          </div>
+        </div>
+
+        <!-- L -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs hover:border-primary/50 transition">
+          <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-display font-extrabold text-xl mb-3">L</div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Liskov Substitution</h3>
+          <p class="text-xs font-semibold text-amber-700 mb-2">Подстановка Лисков</p>
+          <p class="text-xs text-slate-600 leading-relaxed mb-3">
+            Наследник должен заменять базовый класс, <strong>не ломая программу</strong>. Клиент базового типа не должен замечать подмены.
+          </p>
+          <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100 text-[11px] text-slate-500">
+            <span class="font-bold text-rose-600">Симптом:</span> Метод наследника бросает <code>NotSupportedException</code> или требует проверку <code>is Subclass</code>.
+          </div>
+        </div>
+
+        <!-- I -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs hover:border-primary/50 transition">
+          <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-display font-extrabold text-xl mb-3">I</div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Interface Segregation</h3>
+          <p class="text-xs font-semibold text-purple-700 mb-2">Разделение интерфейсов</p>
+          <p class="text-xs text-slate-600 leading-relaxed mb-3">
+            Клиент не должен зависеть от методов, которыми не пользуется. <strong>Много узких интерфейсов</strong> лучше одного жирного.
+          </p>
+          <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100 text-[11px] text-slate-500">
+            <span class="font-bold text-rose-600">Симптом:</span> Интерфейс <code>INotifier</code> требует реализовать Push-уведомления там, где они не поддерживаются.
+          </div>
+        </div>
+
+        <!-- D -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs hover:border-primary/50 transition">
+          <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center font-display font-extrabold text-xl mb-3">D</div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Dependency Inversion</h3>
+          <p class="text-xs font-semibold text-rose-700 mb-2">Инверсия зависимостей</p>
+          <p class="text-xs text-slate-600 leading-relaxed mb-3">
+            Модули верхнего уровня зависят от <strong>абстракций</strong>, а не от деталей. Зависимости передаются снаружи через конструктор (DI).
+          </p>
+          <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-100 text-[11px] text-slate-500">
+            <span class="font-bold text-rose-600">Симптом:</span> Сервис прямо в коде пишет <code>new SqliteConnection()</code> или <code>new SmtpClient()</code>.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 2: ИНТЕРАКТИВНЫЙ ТРЕНАЖЕР ЗАДАНИЙ -->
+    <section id="tasks-interactive" class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-secondary">Практическая мастерская</span>
+          <h2 class="text-2xl sm:text-3xl font-bold font-display text-slate-900">Интерактивный тренажер заданий</h2>
+        </div>
+        <!-- Вкладки заданий -->
+        <div class="flex overflow-x-auto gap-2 bg-slate-100 p-1.5 rounded-2xl">
+          <button onclick="switchTask('s1')" id="btn-s1" class="task-tab px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-primary shadow-xs">S1 (ListingManager)</button>
+          <button onclick="switchTask('o1')" id="btn-o1" class="task-tab px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900">O1 (Комиссия)</button>
+          <button onclick="switchTask('t1')" id="btn-t1" class="task-tab px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900">T1 (5 нарушений)</button>
+          <button onclick="switchTask('t2')" id="btn-t2" class="task-tab px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900">T2 (Ипотека ★)</button>
+        </div>
+      </div>
+
+      <!-- ЗАДАНИЕ S1: ListingManager -->
+      <div id="task-content-s1" class="task-panel bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-primary text-xs font-bold mb-2">
+              Задание S1 ● Базовый уровень
+            </div>
+            <h3 class="text-xl font-bold font-display text-slate-900">Рефакторинг монолитного класса ListingManager</h3>
+            <p class="text-xs text-slate-500">
+              Исходный класс делает всё: валидирует, хранит в списке, генерирует Id, считает средние цены и печатает в консоль.
+            </p>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="runS1Demo('bad')" class="px-4 py-2 text-xs font-bold rounded-xl border border-rose-300 bg-rose-50 text-rose-700 hover:bg-rose-100 transition">
+              Тест «Плохого» кода
+            </button>
+            <button onclick="runS1Demo('good')" class="px-4 py-2 text-xs font-bold rounded-xl bg-primary text-white hover:bg-blue-700 shadow-sm transition">
+              Тест SOLID Решения
+            </button>
+          </div>
+        </div>
+
+        <!-- Архитектурная трансформация -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- До рефакторинга -->
+          <div class="bg-rose-50/50 border border-rose-200 rounded-2xl p-5 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-rose-700 flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-base">cancel</span> До рефакторинга (1 монолитный класс)
+              </span>
+              <span class="text-[11px] font-semibold bg-rose-200 text-rose-800 px-2 py-0.5 rounded-full">5 причин для изменений!</span>
+            </div>
+            <div class="bg-slate-900 text-slate-100 p-4 rounded-xl code-block text-xs overflow-x-auto">
+              <span class="text-slate-400">// ListingManager делает ВСЁ:</span><br/>
+              public class <span class="text-amber-300">ListingManager</span> {<br/>
+              &nbsp;&nbsp;Add(title, price, area) { <span class="text-rose-400">/* 1. Валидация */</span> }<br/>
+              &nbsp;&nbsp;List&lt;Listing&gt; _list; <span class="text-rose-400">/* 2. Хранение и Id */</span><br/>
+              &nbsp;&nbsp;PricePerMeter(), AveragePrice() <span class="text-rose-400">/* 3. Статистика */</span><br/>
+              &nbsp;&nbsp;PrintReport() { Console.Write(...) } <span class="text-rose-400">/* 4. Формат консоли */</span><br/>
+              &nbsp;&nbsp;SaveToFile() { File.WriteAllText(...) } <span class="text-rose-400">/* 5. Файл */</span><br/>
+              }
+            </div>
+          </div>
+
+          <!-- После рефакторинга -->
+          <div class="bg-emerald-50/50 border border-emerald-200 rounded-2xl p-5 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-emerald-700 flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-base">check_circle</span> После рефакторинга (6 чистых классов)
+              </span>
+              <span class="text-[11px] font-semibold bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded-full">S + D соблюдены</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div class="bg-white p-2.5 rounded-xl border border-emerald-100">
+                <p class="font-bold text-slate-800">1. ListingValidator</p>
+                <p class="text-[11px] text-slate-500">Только правила валидации</p>
+              </div>
+              <div class="bg-white p-2.5 rounded-xl border border-emerald-100">
+                <p class="font-bold text-slate-800">2. ListingRepository</p>
+                <p class="text-[11px] text-slate-500">Только хранение и Id</p>
+              </div>
+              <div class="bg-white p-2.5 rounded-xl border border-emerald-100">
+                <p class="font-bold text-slate-800">3. ListingStatistics</p>
+                <p class="text-[11px] text-slate-500">Только расчет цен и средних</p>
+              </div>
+              <div class="bg-white p-2.5 rounded-xl border border-emerald-100">
+                <p class="font-bold text-slate-800">4. IReportWriter</p>
+                <p class="text-[11px] text-slate-500">ConsoleReport / StringReport</p>
+              </div>
+              <div class="bg-white p-2.5 rounded-xl border border-emerald-100">
+                <p class="font-bold text-slate-800">5. ReportPrinter</p>
+                <p class="text-[11px] text-slate-500">Только макет отчета</p>
+              </div>
+              <div class="bg-white p-2.5 rounded-xl border border-emerald-100">
+                <p class="font-bold text-slate-800">6. CsvListingStorage</p>
+                <p class="text-[11px] text-slate-500">Сохранение и загрузка CSV</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Консоль вывода результата -->
+        <div class="bg-slate-900 rounded-2xl p-4 text-slate-200 space-y-2">
+          <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800 pb-2">
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Вывод тестового стенда S1:</span>
+            <span id="s1-status" class="text-slate-400">Ожидание запуска</span>
+          </div>
+          <pre id="s1-output" class="code-block text-xs text-emerald-400 overflow-x-auto whitespace-pre-wrap max-h-48">Нажмите «Тест SOLID Решения», чтобы запустить сборку отчета через StringReportWriter без прямого Console.WriteLine!</pre>
+        </div>
+      </div>
+
+      <!-- ЗАДАНИЕ O1: Open/Closed (Расчет комиссии риелтора) -->
+      <div id="task-content-o1" class="task-panel hidden bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold mb-2">
+              Задание O1 ● Принцип открытости / закрытости
+            </div>
+            <h3 class="text-xl font-bold font-display text-slate-900">Калькулятор комиссии по паттерну Стратегия (Strategy)</h3>
+            <p class="text-xs text-slate-500">
+              Добавление нового типа недвижимости (например, «Пентхаус» или «Земельный участок») происходит через создание нового класса, без единой правки существующего кода!
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Форма калькулятора -->
+          <div class="lg:col-span-1 bg-slate-50 rounded-2xl p-5 border border-slate-200 space-y-4">
+            <h4 class="text-sm font-bold text-slate-800">Параметры объекта</h4>
+            <div>
+              <label class="text-xs font-semibold text-slate-600 block mb-1">Стоимость квартиры ($)</label>
+              <input type="number" id="o1-price" value="65000" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-primary focus:outline-none"/>
+            </div>
+
+            <div>
+              <label class="text-xs font-semibold text-slate-600 block mb-1">Стратегия комиссии (ICommissionStrategy)</label>
+              <select id="o1-strategy" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-primary focus:outline-none cursor-pointer">
+                <option value="apartment">Квартира (StandardApartmentCommission: 2%)</option>
+                <option value="house">Дом / Коттедж (HouseCommission: 3%)</option>
+                <option value="commercial">Коммерческая (CommercialCommission: 5%)</option>
+                <option value="penthouse">Пентхаус Premium (PenthouseCommission: 4% + VIP бонус $500)</option>
+              </select>
+            </div>
+
+            <button onclick="calculateO1Commission()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-sm transition shadow-sm">
+              Рассчитать комиссию
+            </button>
+          </div>
+
+          <!-- Результат и код -->
+          <div class="lg:col-span-2 space-y-4">
+            <div id="o1-result-box" class="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 flex items-center justify-between">
+              <div>
+                <span class="text-xs font-semibold text-emerald-800 block">Размер вознаграждения агентства:</span>
+                <span id="o1-fee-amount" class="text-3xl font-extrabold text-emerald-700 font-display">$1,300</span>
+                <span id="o1-rate-badge" class="text-xs text-emerald-600 block mt-0.5">Базовая ставка: 2.0% от суммы сделки</span>
+              </div>
+              <span class="material-symbols-outlined text-4xl text-emerald-500">payments</span>
+            </div>
+
+            <div class="bg-slate-900 rounded-2xl p-4 text-xs text-slate-300 code-block overflow-x-auto">
+              <span class="text-emerald-400">// Чистый OCP дизайн без if/switch:</span><br/>
+              public interface <span class="text-amber-300">ICommissionStrategy</span> {<br/>
+              &nbsp;&nbsp;decimal Calculate(decimal price);<br/>
+              }<br/><br/>
+              <span class="text-slate-400">// Калькулятор закрыт для модификации:</span><br/>
+              public class <span class="text-blue-300">CommissionCalculator</span> {<br/>
+              &nbsp;&nbsp;public decimal Compute(decimal price, ICommissionStrategy strategy) =&gt;<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;strategy.Calculate(price);<br/>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ЗАДАНИЕ T1: Пять нарушений в OrderProcessor -->
+      <div id="task-content-t1" class="task-panel hidden bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-bold mb-2">
+            Задание T1 ●● Сводное задание на 5 принципов
+          </div>
+          <h3 class="text-xl font-bold font-display text-slate-900">Комплексный рефакторинг OrderProcessor (S → D → O → I → L)</h3>
+          <p class="text-xs text-slate-500">
+            В исходном классе нарушены все 5 принципов. Исправление по цепочке позволяет добавлять новые типы клиентов («ветеран»), методы оплаты («перевод») и каналы («telegram») вообще без изменения кода старых классов!
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+            <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Параметры заказа</h4>
+            <div>
+              <label class="text-[11px] font-semibold text-slate-500 block mb-1">Категория покупателя</label>
+              <select id="t1-customer" class="w-full bg-white border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs">
+                <option value="standard">Обычный клиент (0% скидка)</option>
+                <option value="student">Студент (-10% скидка)</option>
+                <option value="pensioner">Пенсионер (-15% скидка)</option>
+                <option value="veteran">Ветеран (-20% скидка) ⭐ Новый класс!</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-[11px] font-semibold text-slate-500 block mb-1">Способ оплаты</label>
+              <select id="t1-payment" class="w-full bg-white border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs">
+                <option value="card">Банковская карта (CardPayment)</option>
+                <option value="cash">Наличные (CashPayment)</option>
+                <option value="transfer">Банковский перевод (TransferPayment) ⭐ Новый класс!</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-[11px] font-semibold text-slate-500 block mb-1">Канал уведомления</label>
+              <select id="t1-notifier" class="w-full bg-white border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs">
+                <option value="email">Email уведомление</option>
+                <option value="sms">SMS уведомление</option>
+                <option value="telegram">Telegram Bot ⭐ Новый класс!</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-[11px] font-semibold text-slate-500 block mb-1">Сумма бронирования ($)</label>
+              <input type="number" id="t1-price" value="50000" class="w-full bg-white border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs"/>
+            </div>
+            <button onclick="processT1Order()" class="w-full bg-purple-700 hover:bg-purple-800 text-white font-bold py-2 rounded-xl text-xs transition">
+              Обработать заказ (Execute)
+            </button>
+          </div>
+
+          <div class="md:col-span-2 bg-slate-900 rounded-2xl p-5 text-slate-200 space-y-3">
+            <div class="flex items-center justify-between text-xs border-b border-slate-800 pb-2">
+              <span class="text-purple-400 font-bold">Консольный поток событий OrderProcessor:</span>
+              <span id="t1-counter" class="text-slate-400">Обработано заказов: 0</span>
+            </div>
+            <pre id="t1-log" class="code-block text-xs text-purple-300 overflow-x-auto whitespace-pre-wrap max-h-56">Выберите параметры и нажмите «Обработать заказ» для симуляции чистой архитектуры...</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- ЗАДАНИЕ T2: Ипотечный калькулятор с нуля -->
+      <div id="calculator-t2" class="task-panel hidden bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold mb-2">
+              Задание T2 ●●● Со звёздочкой (Архитектура с нуля)
+            </div>
+            <h3 class="text-xl font-bold font-display text-slate-900">Ипотечный калькулятор платформы Locus по стандартам SOLID</h3>
+            <p class="text-xs text-slate-500">
+              Независимые банки с разными формулами расчёта (аннуитет, дифференцированный платёж, комиссии), независимый сервис курсов валют и экспорт в Консоль / CSV / Markdown.
+            </p>
+          </div>
+          <!-- Кнопки экспорта -->
+          <div class="flex flex-wrap gap-2">
+            <button onclick="exportMortgageCSV()" class="px-3 py-1.5 text-xs font-bold rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 flex items-center gap-1">
+              <span class="material-symbols-outlined text-base">download</span> Экспорт CSV
+            </button>
+            <button onclick="copyMortgageMarkdown()" class="px-3 py-1.5 text-xs font-bold rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 flex items-center gap-1">
+              <span class="material-symbols-outlined text-base">content_copy</span> Скопировать Markdown
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Параметры ипотеки -->
+          <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 space-y-4">
+            <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Параметры кредита</h4>
+
+            <div>
+              <label class="text-xs font-semibold text-slate-600 block mb-1">Выбор банка (IBankStrategy)</label>
+              <select id="t2-bank" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs font-medium cursor-pointer" onchange="recalculateMortgage()">
+                <option value="kapital">Капиталбанк (14.0% годовых, Аннуитет, Комиссия 0%)</option>
+                <option value="ipoteka">Ипотека-Банк (12.5% годовых, Дифференцированный, Комиссия 0.5%)</option>
+                <option value="it-subsidized">IT-Льготный Банк (8.5% годовых, Аннуитет, Без комиссии)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="text-xs font-semibold text-slate-600 block mb-1">Стоимость квартиры ($)</label>
+              <input type="number" id="t2-apartment-price" value="50000" step="1000" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs" oninput="recalculateMortgage()"/>
+            </div>
+
+            <div>
+              <label class="text-xs font-semibold text-slate-600 block mb-1">Первоначальный взнос ($)</label>
+              <input type="number" id="t2-down-payment" value="15000" step="1000" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs" oninput="recalculateMortgage()"/>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="text-xs font-semibold text-slate-600 block mb-1">Срок (лет)</label>
+                <input type="number" id="t2-years" value="15" min="1" max="30" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs" oninput="recalculateMortgage()"/>
+              </div>
+              <div>
+                <label class="text-xs font-semibold text-slate-600 block mb-1">Валюта показа</label>
+                <select id="t2-currency" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs cursor-pointer" onchange="recalculateMortgage()">
+                  <option value="USD">USD ($)</option>
+                  <option value="UZS">UZS (сум, 1$ = 12 750)</option>
+                  <option value="EUR">EUR (€, 1$ = 0.92€)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Результаты расчета -->
+          <div class="lg:col-span-2 space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div class="bg-blue-50 border border-blue-200 rounded-2xl p-4">
+                <span class="text-[11px] font-bold text-blue-700 uppercase">Ежемесячный платеж</span>
+                <p id="t2-monthly-payment" class="text-2xl font-extrabold text-blue-900 font-display mt-1">$466</p>
+                <span id="t2-payment-type-note" class="text-[10px] text-blue-600">Фиксированный (аннуитет)</span>
+              </div>
+              <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4">
+                <span class="text-[11px] font-bold text-amber-700 uppercase">Переплата по %</span>
+                <p id="t2-total-interest" class="text-2xl font-extrabold text-amber-900 font-display mt-1">$48,913</p>
+                <span id="t2-interest-percent" class="text-[10px] text-amber-600">139.7% от тела кредита</span>
+              </div>
+              <div class="bg-slate-100 border border-slate-200 rounded-2xl p-4">
+                <span class="text-[11px] font-bold text-slate-700 uppercase">Итоговая сумма выплат</span>
+                <p id="t2-total-paid" class="text-2xl font-extrabold text-slate-900 font-display mt-1">$83,913</p>
+                <span id="t2-fee-note" class="text-[10px] text-slate-500">Комиссия банка: $0</span>
+              </div>
+            </div>
+
+            <!-- График первых месяцев -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-4 space-y-2">
+              <div class="flex items-center justify-between">
+                <h5 class="text-xs font-bold text-slate-800">Первые 5 платежей графика погашения</h5>
+                <span class="text-[11px] text-slate-400">ICalculationFormatter</span>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs text-slate-600">
+                  <thead class="bg-slate-50 text-[11px] text-slate-400 uppercase border-b border-slate-200">
+                    <tr>
+                      <th class="py-2 px-3">Месяц</th>
+                      <th class="py-2 px-3">Платёж</th>
+                      <th class="py-2 px-3">Основной долг</th>
+                      <th class="py-2 px-3">Проценты</th>
+                      <th class="py-2 px-3">Остаток долга</th>
+                    </tr>
+                  </thead>
+                  <tbody id="t2-schedule-rows" class="divide-y divide-slate-100">
+                    <!-- Заполняется JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ 3: ЧЕК-ЛИСТ САМОПРОВЕРКИ И ОШИБКИ -->
+    <section id="checklist" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Чек-лист -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
+        <h3 class="text-lg font-bold font-display text-slate-900 flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary">checklist</span> Чек-лист самопроверки SOLID
+        </h3>
+        <div class="space-y-2.5 text-xs text-slate-700">
+          <div class="flex items-start gap-2 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+            <span class="w-5 h-5 rounded-full bg-blue-100 text-primary font-bold flex items-center justify-center shrink-0">S</span>
+            <div><strong>Вопрос:</strong> Могу ли я назвать класс двумя словами через «и» (например, «хранит и печатает»)? Если <strong>ДА</strong> — принцип нарушен!</div>
+          </div>
+          <div class="flex items-start gap-2 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+            <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center shrink-0">O</span>
+            <div><strong>Вопрос:</strong> Чтобы добавить новый вариант, я открываю старый файл и дописываю ветку if/switch? Если <strong>ДА</strong> — принцип нарушен!</div>
+          </div>
+          <div class="flex items-start gap-2 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+            <span class="w-5 h-5 rounded-full bg-amber-100 text-amber-800 font-bold flex items-center justify-center shrink-0">L</span>
+            <div><strong>Вопрос:</strong> Есть ли в наследнике override, который бросает NotSupportedException или игнорирует параметр? Если <strong>ДА</strong> — LSP нарушен!</div>
+          </div>
+          <div class="flex items-start gap-2 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+            <span class="w-5 h-5 rounded-full bg-purple-100 text-purple-800 font-bold flex items-center justify-center shrink-0">I</span>
+            <div><strong>Вопрос:</strong> Есть ли реализация интерфейса с методом-заглушкой (пустое тело / throw)? Если <strong>ДА</strong> — разделите интерфейс!</div>
+          </div>
+          <div class="flex items-start gap-2 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+            <span class="w-5 h-5 rounded-full bg-rose-100 text-rose-800 font-bold flex items-center justify-center shrink-0">D</span>
+            <div><strong>Вопрос:</strong> Есть ли в классе с бизнес-логикой слово <code>new</code> для базы, файла, почты, сети? Если <strong>ДА</strong> — внедрите зависимость!</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Частые ошибки -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
+        <h3 class="text-lg font-bold font-display text-slate-900 flex items-center gap-2">
+          <span class="material-symbols-outlined text-rose-600">warning</span> Частые ошибки при рефакторинге
+        </h3>
+        <div class="space-y-2.5 text-xs text-slate-700">
+          <div class="p-2.5 rounded-xl bg-rose-50/50 border border-rose-100">
+            <p class="font-bold text-rose-900">Разбивают класс на 5, но каждый класс создает остальные через new:</p>
+            <p class="text-slate-600 mt-0.5">S соблюден, но D нарушен. Классы по-прежнему склеены. Зависимости нужно передавать в конструктор!</p>
+          </div>
+          <div class="p-2.5 rounded-xl bg-amber-50/50 border border-amber-100">
+            <p class="font-bold text-amber-900">Вводят интерфейс с одной реализацией и инстанциируют через new:</p>
+            <p class="text-slate-600 mt-0.5">Интерфейс без внедрения ничего не дает. Нужна внешняя регистрация и возможность подмены фейком в тестах.</p>
+          </div>
+          <div class="p-2.5 rounded-xl bg-blue-50/50 border border-blue-100">
+            <p class="font-bold text-blue-900">Переименовывают switch в Dictionary&lt;string, Func&gt; внутри класса:</p>
+            <p class="text-slate-600 mt-0.5">Словарь всё равно правится при каждом новом варианте. Реализации должны регистрироваться снаружи (Program.cs).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- СКРИПТ ИНТЕРАКТИВА SOLID -->
+  <script>
+    // 1. Переключение вкладок тренажера
+    function switchTask(taskId) {
+      document.querySelectorAll('.task-panel').forEach(p => p.classList.add('hidden'));
+      document.querySelectorAll('.task-tab').forEach(t => {
+        t.classList.remove('bg-white', 'text-primary', 'shadow-xs');
+        t.classList.add('text-slate-600');
+      });
+
+      const activePanel = document.getElementById('task-content-' + taskId) || document.getElementById('calculator-' + taskId);
+      const activeBtn = document.getElementById('btn-' + taskId);
+      if (activePanel) activePanel.classList.remove('hidden');
+      if (activeBtn) {
+        activeBtn.classList.add('bg-white', 'text-primary', 'shadow-xs');
+        activeBtn.classList.remove('text-slate-600');
+      }
+    }
+
+    // 2. Демонстрация S1
+    function runS1Demo(mode) {
+      const output = document.getElementById('s1-output');
+      const status = document.getElementById('s1-status');
+      if (mode === 'bad') {
+        status.innerHTML = '<span class="text-rose-500 font-bold">Монолитный Console.WriteLine</span>';
+        output.innerText = 
+`[ListingManager::PrintReport] Внимание: метод жестко выводит в консоль!
+=== Отчёт по объявлениям ===
+  1 | 2-комн. рядом с метро          | Чиланзар       |    48000 |   889 у.е./м²
+  2 | 3-комн. с ремонтом             | Юнусабад       |    71000 |  1014 у.е./м²
+  3 | 1-комн. студия                 | Мирзо-Улугбек  |    32000 |   800 у.е./м²
+Всего: 3
+(Проблема: нельзя перенаправить вывод в файл, строку или UI без правок ListingManager.cs)`;
+      } else {
+        status.innerHTML = '<span class="text-emerald-500 font-bold">IReportWriter -> StringReportWriter</span>';
+        output.innerText = 
+`[ReportPrinter.Print(listings, new StringReportWriter())]
+=== Отчёт по объявлениям (SOLID) ===
+  1 | 2-комн. рядом с метро          | Чиланзар       |    48000 |   889 у.е./м²
+  2 | 3-комн. с ремонтом             | Юнусабад       |    71000 |  1014 у.е./м²
+  3 | 1-комн. студия                 | Мирзо-Улугбек  |    32000 |   800 у.е./м²
+Всего: 3
+------------------------------------------------------------
+[CsvListingStorage.Save("listings.csv")] Сохранено 3 записи в CSV формат без знания о репозитории!
+Валидация: ListingValidator гарантирует инварианты цен и площадей.`;
+      }
+    }
+
+    // 3. Калькулятор O1 комиссии
+    function calculateO1Commission() {
+      const price = parseFloat(document.getElementById('o1-price').value) || 0;
+      const strategy = document.getElementById('o1-strategy').value;
+      let fee = 0;
+      let badge = '';
+
+      if (strategy === 'apartment') {
+        fee = price * 0.02;
+        badge = 'Ставка 2.0% (StandardApartmentCommission)';
+      } else if (strategy === 'house') {
+        fee = price * 0.03;
+        badge = 'Ставка 3.0% (HouseCommission)';
+      } else if (strategy === 'commercial') {
+        fee = price * 0.05;
+        badge = 'Ставка 5.0% (CommercialCommission)';
+      } else if (strategy === 'penthouse') {
+        fee = (price * 0.04) + 500;
+        badge = 'Ставка 4.0% + $500 VIP бонус (PenthouseCommission)';
+      }
+
+      document.getElementById('o1-fee-amount').innerText = '$' + Math.round(fee).toLocaleString('en-US');
+      document.getElementById('o1-rate-badge').innerText = badge;
+    }
+
+    // 4. Симуляция T1 OrderProcessor
+    let orderCount = 0;
+    function processT1Order() {
+      orderCount++;
+      const customer = document.getElementById('t1-customer').value;
+      const payment = document.getElementById('t1-payment').value;
+      const notifier = document.getElementById('t1-notifier').value;
+      const price = parseFloat(document.getElementById('t1-price').value) || 50000;
+
+      let discount = 1.0;
+      let customerTitle = 'Обычный клиент';
+      if (customer === 'student') { discount = 0.9; customerTitle = 'Студент (-10%)'; }
+      if (customer === 'pensioner') { discount = 0.85; customerTitle = 'Пенсионер (-15%)'; }
+      if (customer === 'veteran') { discount = 0.8; customerTitle = 'Ветеран (-20%)'; }
+
+      const finalPrice = Math.round(price * discount);
+
+      let payMsg = '';
+      if (payment === 'card') payMsg = `[CardPaymentProcessor] Списано с карты $${finalPrice}`;
+      if (payment === 'cash') payMsg = `[CashPaymentProcessor] Ожидаем наличные $${finalPrice}`;
+      if (payment === 'transfer') payMsg = `[BankTransferPaymentProcessor] Сформирован счет на перевод $${finalPrice}`;
+
+      let notifyMsg = '';
+      if (notifier === 'email') notifyMsg = `[EmailNotifier] email client@mail.uz: Бронь квартиры за $${finalPrice}`;
+      if (notifier === 'sms') notifyMsg = `[SmsNotifier] sms +998901234567: Бронь квартиры за $${finalPrice}`;
+      if (notifier === 'telegram') notifyMsg = `[TelegramNotifier] @LocusBot send message to ID: Бронь квартиры за $${finalPrice}`;
+
+      const log = document.getElementById('t1-log');
+      log.innerText = 
+`--- Заказ #${orderCount} ---
+Клиент: ${customerTitle} | Базовая цена: $${price} -> Итог: $${finalPrice}
+${payMsg}
+${notifyMsg}
+[OrderRepository] Заказ сохранен в InMemoryOrderRepository
+Обработано заказов: ${orderCount}`;
+
+      document.getElementById('t1-counter').innerText = `Обработано заказов: ${orderCount}`;
+    }
+
+    // 5. Ипотечный калькулятор T2
+    let mortgageSchedule = [];
+    function recalculateMortgage() {
+      const bank = document.getElementById('t2-bank').value;
+      const aptPrice = parseFloat(document.getElementById('t2-apartment-price').value) || 50000;
+      const downPayment = parseFloat(document.getElementById('t2-down-payment').value) || 15000;
+      const years = parseInt(document.getElementById('t2-years').value) || 15;
+      const currency = document.getElementById('t2-currency').value;
+
+      const loanAmount = Math.max(0, aptPrice - downPayment);
+      const months = years * 12;
+
+      let annualRate = 0.14;
+      let isAnnuity = true;
+      let bankFeeRate = 0;
+
+      if (bank === 'kapital') {
+        annualRate = 0.14;
+        isAnnuity = true;
+        bankFeeRate = 0;
+      } else if (bank === 'ipoteka') {
+        annualRate = 0.125;
+        isAnnuity = false;
+        bankFeeRate = 0.005;
+      } else if (bank === 'it-subsidized') {
+        annualRate = 0.085;
+        isAnnuity = true;
+        bankFeeRate = 0;
+      }
+
+      const bankFee = loanAmount * bankFeeRate;
+      const monthlyRate = annualRate / 12;
+
+      mortgageSchedule = [];
+      let totalInterest = 0;
+      let monthlyPayment = 0;
+
+      if (isAnnuity) {
+        monthlyPayment = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
+        let balance = loanAmount;
+        for (let m = 1; m <= months; m++) {
+          const interestPart = balance * monthlyRate;
+          const principalPart = monthlyPayment - interestPart;
+          balance = Math.max(0, balance - principalPart);
+          totalInterest += interestPart;
+          if (m <= 5) {
+            mortgageSchedule.push({ month: m, payment: monthlyPayment, principal: principalPart, interest: interestPart, balance: balance });
+          }
+        }
+      } else {
+        // Дифференцированный платеж
+        const principalConst = loanAmount / months;
+        let balance = loanAmount;
+        let firstMonthPay = 0;
+        for (let m = 1; m <= months; m++) {
+          const interestPart = balance * monthlyRate;
+          const pay = principalConst + interestPart;
+          if (m === 1) firstMonthPay = pay;
+          balance = Math.max(0, balance - principalConst);
+          totalInterest += interestPart;
+          if (m <= 5) {
+            mortgageSchedule.push({ month: m, payment: pay, principal: principalConst, interest: interestPart, balance: balance });
+          }
+        }
+        monthlyPayment = firstMonthPay; // первый максимальный
+      }
+
+      // Курс валюты
+      let rate = 1;
+      let symbol = '$';
+      if (currency === 'UZS') { rate = 12750; symbol = ' сум'; }
+      if (currency === 'EUR') { rate = 0.92; symbol = '€'; }
+
+      function fmt(val) {
+        if (currency === 'UZS') return Math.round(val * rate).toLocaleString('ru-RU') + symbol;
+        return symbol + Math.round(val * rate).toLocaleString('en-US');
+      }
+
+      document.getElementById('t2-monthly-payment').innerText = fmt(monthlyPayment) + (isAnnuity ? '' : ' (1-й мес)');
+      document.getElementById('t2-payment-type-note').innerText = isAnnuity ? 'Фиксированный платеж (аннуитет)' : 'Уменьшающийся (дифференцированный)';
+      document.getElementById('t2-total-interest').innerText = fmt(totalInterest);
+      document.getElementById('t2-interest-percent').innerText = ((totalInterest / (loanAmount || 1)) * 100).toFixed(1) + '% от тела кредита';
+      document.getElementById('t2-total-paid').innerText = fmt(loanAmount + totalInterest + bankFee);
+      document.getElementById('t2-fee-note').innerText = 'Разовая комиссия банка: ' + fmt(bankFee);
+
+      // Заполнение таблицы
+      const tbody = document.getElementById('t2-schedule-rows');
+      tbody.innerHTML = '';
+      mortgageSchedule.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50 transition-colors';
+        tr.innerHTML = `
+          <td class="py-2 px-3 font-bold text-slate-800">Месяц ${r.month}</td>
+          <td class="py-2 px-3 text-slate-900 font-semibold">${fmt(r.payment)}</td>
+          <td class="py-2 px-3 text-emerald-700">${fmt(r.principal)}</td>
+          <td class="py-2 px-3 text-amber-700">${fmt(r.interest)}</td>
+          <td class="py-2 px-3 text-slate-500">${fmt(r.balance)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Экспорт в CSV
+    function exportMortgageCSV() {
+      let csv = 'Month,Payment,Principal,Interest,RemainingBalance\n';
+      mortgageSchedule.forEach(r => {
+        csv += `${r.month},${r.payment.toFixed(2)},${r.principal.toFixed(2)},${r.interest.toFixed(2)},${r.balance.toFixed(2)}\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', 'mortgage_schedule.csv');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Копирование Markdown
+    function copyMortgageMarkdown() {
+      let md = '### График ипотечных платежей Locus (SOLID T2)\n\n| Месяц | Платёж ($) | Основной долг ($) | Проценты ($) | Остаток ($) |\n|---|---|---|---|---|\n';
+      mortgageSchedule.forEach(r => {
+        md += `| ${r.month} | $${r.payment.toFixed(2)} | $${r.principal.toFixed(2)} | $${r.interest.toFixed(2)} | $${r.balance.toFixed(2)} |\n`;
+      });
+      navigator.clipboard.writeText(md).then(() => {
+        alert('Markdown-таблица успешно скопирована в буфер обмена!');
+      });
+    }
+
+    // Инициализация при загрузке
+    window.addEventListener('DOMContentLoaded', () => {
+      calculateO1Commission();
+      recalculateMortgage();
+    });
+  </script>
+</body>
+</html>

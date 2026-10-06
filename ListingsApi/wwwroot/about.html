@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>О нас — Locus Недвижимость</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- ШАПКА -->
+  <header>
+    <div class="brand">
+      <span class="brand-icon">🏢</span>
+      <div class="brand-text">
+        <h2>Locus</h2>
+        <span>Недвижимость Ташкента</span>
+      </div>
+    </div>
+    <nav>
+      <a href="index.html">Главная</a>
+      <a href="catalog.html">Каталог</a>
+      <a href="efcore-practice.html">EF Core (Урок 3)</a>
+      <a href="angular-practice.html">Angular Signals (Урок 4)</a>
+      <a href="solid-practice.html">SOLID</a>
+      <a href="hub.html">Хаб</a>
+      <a href="about.html" class="nav-active">О нас</a>
+      <a href="contacts.html">Контакты</a>
+      <button id="theme" class="btn btn-ghost" type="button">🌙</button>
+    </nav>
+  </header>
+
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="container">
+      <h1>🏢 О компании</h1>
+      <p>Мы помогаем ташкентцам находить и продавать недвижимость с 2024 года.</p>
+    </div>
+  </div>
+
+  <main class="container">
+
+    <!-- О КОМПАНИИ -->
+    <section class="card">
+      <h2>Наша миссия</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center;">
+        <div>
+          <p>Locus — современная платформа для аренды и продажи недвижимости в Ташкенте. Мы верим, что поиск жилья должен быть простым, прозрачным и безопасным.</p>
+          <p>Каждое объявление на нашей платформе принадлежит конкретному пользователю — только он может его редактировать или удалять. Администраторы следят за качеством объявлений.</p>
+          <ul>
+            <li>✅ Бесплатное размещение объявлений</li>
+            <li>✅ Загрузка фотографий с компьютера</li>
+            <li>✅ Удобный поиск по районам</li>
+            <li>✅ Безопасность — редактируй только своё</li>
+          </ul>
+        </div>
+        <div style="text-align: center;">
+          <img src="images/room.jpg" alt="Современная квартира" style="width:100%; border-radius: var(--radius-md); max-height: 280px; object-fit: cover;" onerror="this.style.display='none'">
+        </div>
+      </div>
+    </section>
+
+    <!-- КОМАНДА -->
+    <section class="card">
+      <h2>Наша команда</h2>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-avatar">👨‍💼</div>
+          <h4>Алишер Каримов</h4>
+          <span>Генеральный директор</span>
+          <p>15 лет в сфере недвижимости Узбекистана.</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar">👩‍💻</div>
+          <h4>Нилуфар Рашидова</h4>
+          <span>Технический директор</span>
+          <p>Разработала систему безопасности и API платформы.</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar">👨‍🎨</div>
+          <h4>Бехзод Юсупов</h4>
+          <span>Дизайнер</span>
+          <p>Создал удобный и современный интерфейс сайта.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- КАЛЬКУЛЯТОР ЦЕН -->
+    <section class="card" id="calcSection">
+      <h2>🧮 Калькулятор цены за м²</h2>
+      <p>Введите стоимость объекта и его площадь — узнайте цену за квадратный метр.</p>
+      <div class="calc">
+        <label for="calc-price">Цена, у.е.</label>
+        <input id="calc-price" type="number" value="55000" min="0">
+
+        <label for="calc-area">Площадь, м²</label>
+        <input id="calc-area" type="number" value="60" min="1">
+
+        <p>За квадратный метр: <strong id="calc-result">—</strong></p>
+      </div>
+    </section>
+
+    <!-- ТАБЛИЦА ЦЕН ПО РАЙОНАМ -->
+    <section class="card" id="pricesSection">
+      <h2>📊 Средние цены по районам Ташкента</h2>
+      <table>
+        <caption>Цены указаны в у.е. · Кликните заголовок столбца для сортировки</caption>
+        <thead>
+          <tr>
+            <th>Район</th>
+            <th>1 комн.</th>
+            <th>2 комн.</th>
+            <th>3 комн.</th>
+            <th>4 комн.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Чиланзар</td>
+            <td>32 000</td>
+            <td>48 000</td>
+            <td>65 000</td>
+            <td>82 000</td>
+          </tr>
+          <tr>
+            <td>Юнусабад</td>
+            <td>36 000</td>
+            <td>55 000</td>
+            <td>71 000</td>
+            <td>90 000</td>
+          </tr>
+          <tr>
+            <td>Мирзо-Улугбек</td>
+            <td>38 000</td>
+            <td>57 000</td>
+            <td>74 000</td>
+            <td>95 000</td>
+          </tr>
+          <tr>
+            <td>Яккасарай</td>
+            <td>40 000</td>
+            <td>62 000</td>
+            <td>80 000</td>
+            <td>105 000</td>
+          </tr>
+          <tr>
+            <td>Сергели</td>
+            <td>26 000</td>
+            <td>38 000</td>
+            <td>52 000</td>
+            <td>68 000</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <details>
+        <summary>Показать телефон консультанта по районам</summary>
+        <p><a href="tel:+998901234567">+998 90 123-45-67</a> (ежедневно с 09:00 до 20:00)</p>
+      </details>
+    </section>
+
+    <!-- ИСТОРИЯ -->
+    <section class="card">
+      <h2>📅 История компании</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-year">2024</div>
+          <div class="timeline-content">
+            <h4>Основание</h4>
+            <p>Locus запущен как открытая платформа для объявлений недвижимости Ташкента.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2025</div>
+          <div class="timeline-content">
+            <h4>Расширение</h4>
+            <p>Добавлена система загрузки фото, личный кабинет и фильтрация по районам.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2026</div>
+          <div class="timeline-content">
+            <h4>Безопасность</h4>
+            <p>Введена система прав владельца: каждый пользователь управляет только своими объявлениями.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ПОДВАЛ -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h4>🏢 Locus</h4>
+        <p>Лучшая платформа недвижимости Ташкента.</p>
+      </div>
+      <div>
+        <h4>Навигация</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="catalog.html">Каталог</a></li>
+          <li><a href="about.html">О нас</a></li>
+          <li><a href="contacts.html">Контакты</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Контакты</h4>
+        <p><a href="tel:+998901234567">+998 90 123-45-67</a></p>
+        <p><a href="mailto:info@locus.uz">info@locus.uz</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Locus · <a href="/swagger" target="_blank">OpenAPI</a></p>
+    </div>
+  </footer>
+
+
+  <button id="scroll-top" title="Наверх">↑</button>
+
+</body>
+</html>
