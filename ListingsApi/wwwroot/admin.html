@@ -740,8 +740,27 @@
       reader.readAsDataURL(file);
     }
 
+    function sanitizeImageUrl(url) {
+      if (!url) return '';
+      url = url.trim();
+      try {
+        if (url.includes('yandex.') && (url.includes('images/search') || url.includes('img_url='))) {
+          const u = new URL(url);
+          const imgParam = u.searchParams.get('img_url');
+          if (imgParam) return decodeURIComponent(imgParam);
+        }
+        if (url.includes('google.') && url.includes('imgurl=')) {
+          const u = new URL(url);
+          const imgParam = u.searchParams.get('imgurl');
+          if (imgParam) return decodeURIComponent(imgParam);
+        }
+      } catch (e) {}
+      return url;
+    }
+
     function handleEditAdminUrlInput(event) {
-      const url = event.target.value.trim();
+      let url = sanitizeImageUrl(event.target.value);
+      event.target.value = url;
       if (url) {
         document.getElementById('editAdminPhotoPreview').src = url;
         document.getElementById('editAdminPhotoPreviewWrap').style.display = 'block';
@@ -752,7 +771,7 @@
     async function handleAdminUpdate(e) {
       e.preventDefault();
       const id = parseInt(document.getElementById('editAdminId').value, 10);
-      let imageUrl = document.getElementById('editAdminImageUrl').value.trim();
+      let imageUrl = sanitizeImageUrl(document.getElementById('editAdminImageUrl').value);
       const fileInput = document.getElementById('editAdminPhotoFile');
 
       if (fileInput.files.length > 0) {
@@ -872,7 +891,8 @@
     }
 
     function handleAdminUrlInput(event) {
-      const url = event.target.value.trim();
+      const url = sanitizeImageUrl(event.target.value);
+      event.target.value = url;
       if (url) {
         document.getElementById('adminPhotoPreview').src = url;
         document.getElementById('adminPhotoPreviewWrap').style.display = 'block';
@@ -884,7 +904,7 @@
 
     async function handleAdminCreate(e) {
       e.preventDefault();
-      let imageUrl = document.getElementById('adminImageUrl').value.trim();
+      let imageUrl = sanitizeImageUrl(document.getElementById('adminImageUrl').value);
       const fileInput = document.getElementById('adminPhotoFile');
 
       if (fileInput.files.length > 0) {

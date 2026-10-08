@@ -112,6 +112,25 @@ let activeMaxPrice = null;
 let searchQuery    = "";
 let sortMode       = "";
 
+// Извлечение прямой ссылки из поиска Яндекс / Google Картинок
+function sanitizeImageUrl(url) {
+  if (!url) return '';
+  url = url.trim();
+  try {
+    if (url.includes('yandex.') && (url.includes('images/search') || url.includes('img_url='))) {
+      const u = new URL(url);
+      const imgParam = u.searchParams.get('img_url');
+      if (imgParam) return decodeURIComponent(imgParam);
+    }
+    if (url.includes('google.') && url.includes('imgurl=')) {
+      const u = new URL(url);
+      const imgParam = u.searchParams.get('imgurl');
+      if (imgParam) return decodeURIComponent(imgParam);
+    }
+  } catch (e) {}
+  return url;
+}
+
 const filterButtons = document.querySelectorAll(".filters button");
 const countEl       = document.querySelector("#listings-count");
 const listingsGrid  = document.querySelector("#listingsGrid");
@@ -583,7 +602,7 @@ function handleClientPhotoSelect(e) {
 
 async function handleClientCreate(e) {
   e.preventDefault();
-  let imageUrl = document.getElementById("newListingUrl")?.value.trim() || "";
+  let imageUrl = sanitizeImageUrl(document.getElementById("newListingUrl")?.value || "");
   const fileInput = document.getElementById("newListingFile");
   const prevImg = document.getElementById("clientPhotoPreview");
 
