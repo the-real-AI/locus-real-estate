@@ -522,6 +522,8 @@
         </div>
       </form>
     </div>
+  </div>
+
   <!-- Модальное окно полного редактирования любого объявления -->
   <div id="adminEditModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; padding: 1rem;">
     <div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-lg); width: 100%; max-width: 520px; padding: 1.75rem; box-shadow: 0 20px 50px rgba(0,0,0,0.6);">
@@ -678,9 +680,19 @@
     }
 
     // Полное редактирование любого объявления администратором
-    function openEditModal(id) {
-      const item = currentListings.find(x => x.id === id);
-      if (!item) return;
+    async function openEditModal(id) {
+      let item = currentListings.find(x => x.id == id);
+      if (!item) {
+        try {
+          const res = await fetch(`/api/listings/${id}`);
+          if (res.ok) item = await res.json();
+        } catch (e) {}
+      }
+
+      if (!item) {
+        showToast('Не удалось загрузить данные объявления #' + id, 'error');
+        return;
+      }
 
       document.getElementById('editAdminId').value = item.id;
       document.getElementById('editModalListingIdBadge').innerText = '#' + item.id;
@@ -705,7 +717,10 @@
         hint.innerText = '📷 Нажмите для выбора фото с диска';
       }
 
-      document.getElementById('adminEditModal').style.display = 'flex';
+      const modal = document.getElementById('adminEditModal');
+      if (modal) {
+        modal.style.display = 'flex';
+      }
     }
 
     function closeEditModal() {
