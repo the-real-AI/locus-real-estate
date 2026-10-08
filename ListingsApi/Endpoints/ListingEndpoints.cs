@@ -95,7 +95,7 @@ public static class ListingEndpoints
         .WithName("CreateListing")
         .WithSummary("Создать новое объявление");
 
-        // 5. PUT /api/listings/{id} — проверяем X-Client-Id
+        // 5. PUT /api/listings/{id} — проверяем X-Client-Id или права администратора
         group.MapPut("/{id:int}", async (HttpContext context, int id, UpdateListingRequest request, ListingStore store) =>
         {
             if (string.IsNullOrWhiteSpace(request.Title) || request.Price <= 0)
@@ -103,6 +103,11 @@ public static class ListingEndpoints
 
             var clientId = context.Request.Headers["X-Client-Id"].FirstOrDefault();
             string? requesterId = string.IsNullOrEmpty(clientId) ? null : clientId;
+
+            if (AdminEndpoints.IsAuthorized(context))
+            {
+                requesterId = null; // Администратор может редактировать любые объявления
+            }
 
             var result = store.Update(id, request, requesterId);
             return result switch
@@ -126,6 +131,11 @@ public static class ListingEndpoints
             var clientId = context.Request.Headers["X-Client-Id"].FirstOrDefault();
             string? requesterId = string.IsNullOrEmpty(clientId) ? null : clientId;
 
+            if (AdminEndpoints.IsAuthorized(context))
+            {
+                requesterId = null; // Администратор может изменять цену любого объявления
+            }
+
             var result = store.UpdatePrice(id, request.Price, requesterId);
             if (result == OwnerCheckResult.NotFound)
                 return Results.NotFound();
@@ -145,6 +155,11 @@ public static class ListingEndpoints
         {
             var clientId = context.Request.Headers["X-Client-Id"].FirstOrDefault();
             string? requesterId = string.IsNullOrEmpty(clientId) ? null : clientId;
+
+            if (AdminEndpoints.IsAuthorized(context))
+            {
+                requesterId = null; // Администратор может удалять любые объявления
+            }
 
             var result = store.Delete(id, requesterId);
             return result switch

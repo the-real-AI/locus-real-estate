@@ -522,12 +522,63 @@
         </div>
       </form>
     </div>
+  <!-- Модальное окно полного редактирования любого объявления -->
+  <div id="adminEditModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; padding: 1rem;">
+    <div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-lg); width: 100%; max-width: 520px; padding: 1.75rem; box-shadow: 0 20px 50px rgba(0,0,0,0.6);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+        <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; margin: 0; color: #a5b4fc;">✏️ Редактировать объявление <span id="editModalListingIdBadge" style="color: white; font-size: 0.95rem; background: rgba(99,102,241,0.25); padding: 3px 8px; border-radius: 6px;">#...</span></h3>
+        <button onclick="closeEditModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer;">&times;</button>
+      </div>
+      <form onsubmit="handleAdminUpdate(event)">
+        <input type="hidden" id="editAdminId">
+        <div class="form-group">
+          <label>Заголовок объявления</label>
+          <input type="text" id="editAdminTitle" required placeholder="Например: 3-комн. квартира">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <div class="form-group">
+            <label>Цена (у.е.)</label>
+            <input type="number" id="editAdminPrice" required min="1" placeholder="60000">
+          </div>
+          <div class="form-group">
+            <label>Комнат (1-10)</label>
+            <input type="number" id="editAdminRooms" required min="1" max="10" value="2">
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <div class="form-group">
+            <label>Район</label>
+            <input type="text" id="editAdminDistrict" required placeholder="Юнусабад">
+          </div>
+          <div class="form-group">
+            <label>Точный адрес</label>
+            <input type="text" id="editAdminAddress" required placeholder="ул. Амира Темура, 5">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Фотография объекта</label>
+          <div style="border: 1px dashed rgba(99,102,241,0.5); border-radius: 8px; padding: 0.75rem; text-align: center; cursor: pointer; background: rgba(8,13,25,0.6);" onclick="document.getElementById('editAdminPhotoFile').click()">
+            <div id="editAdminPhotoPreviewWrap" style="margin-bottom: 0.5rem; display: none;">
+              <img id="editAdminPhotoPreview" src="" alt="Предпросмотр" style="max-height: 120px; max-width: 100%; border-radius: 6px; object-fit: cover;">
+            </div>
+            <div id="editAdminPhotoHint" style="color: var(--text-muted); font-size: 0.82rem;">📷 Нажмите для выбора нового фото с диска</div>
+            <input type="file" id="editAdminPhotoFile" accept="image/*" style="display: none;" onchange="handleEditAdminPhotoSelect(event)">
+          </div>
+          <input type="url" id="editAdminImageUrl" placeholder="Или ссылка: https://images.unsplash.com/..." style="margin-top: 0.5rem; width: 100%; padding: 0.65rem 0.9rem; border-radius: var(--radius-sm); border: 1px solid var(--card-border); background: rgba(8,13,25,0.8); color: white; font-size: 0.88rem; outline: none;" oninput="handleEditAdminUrlInput(event)">
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+          <button type="button" class="btn-logout" style="border-radius: var(--radius-md);" onclick="closeEditModal()">Отмена</button>
+          <button type="submit" class="btn-submit" style="width: auto; margin: 0; padding: 0.6rem 1.25rem;">💾 Сохранить изменения</button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <div class="toast-container" id="toastContainer"></div>
 
   <script>
     let authToken = localStorage.getItem('adminToken') || '';
+    let currentListings = [];
 
     window.addEventListener('DOMContentLoaded', () => {
       if (authToken) {
@@ -598,10 +649,10 @@
     async function loadListings() {
       try {
         const res = await fetch('/api/listings');
-        const items = await res.json();
+        currentListings = await res.json();
         const tbody = document.getElementById('tableBody');
 
-        tbody.innerHTML = items.map(i => {
+        tbody.innerHTML = currentListings.map(i => {
           const imgHtml = i.imageUrl
             ? `<img src="${escapeHtml(i.imageUrl)}" alt="Фото" style="width: 44px; height: 34px; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border);" onerror="this.src='https://placehold.co/44x34/1e293b/a5b4fc?text=Дом'">`
             : `<span style="font-size: 1.25rem;">🏠</span>`;
@@ -615,14 +666,125 @@
             <td style="color: var(--text-muted);">${escapeHtml(i.address)}</td>
             <td>🚪 ${i.rooms}</td>
             <td style="color: var(--accent); font-weight: 700;">${i.price.toLocaleString()} у.е.</td>
-            <td>
-              <button class="btn-sm btn-edit" onclick="editPricePrompt(${i.id}, ${i.price})">💰 Изменить цену</button>
+            <td style="white-space: nowrap;">
+              <button class="btn-sm btn-edit" onclick="openEditModal(${i.id})">✏️ Редактировать</button>
+              <button class="btn-sm" style="background: rgba(245,158,11,0.2); color: #fbbf24;" onclick="editPricePrompt(${i.id}, ${i.price})">💰 Цена</button>
               <button class="btn-sm btn-del" onclick="deleteListing(${i.id})">🗑️ Удалить</button>
             </td>
           </tr>
         `;
         }).join('');
       } catch (e) {}
+    }
+
+    // Полное редактирование любого объявления администратором
+    function openEditModal(id) {
+      const item = currentListings.find(x => x.id === id);
+      if (!item) return;
+
+      document.getElementById('editAdminId').value = item.id;
+      document.getElementById('editModalListingIdBadge').innerText = '#' + item.id;
+      document.getElementById('editAdminTitle').value = item.title || '';
+      document.getElementById('editAdminPrice').value = item.price || 0;
+      document.getElementById('editAdminRooms').value = item.rooms || 1;
+      document.getElementById('editAdminDistrict').value = item.district || '';
+      document.getElementById('editAdminAddress').value = item.address || '';
+      document.getElementById('editAdminImageUrl').value = item.imageUrl || '';
+      document.getElementById('editAdminPhotoFile').value = '';
+
+      const preview = document.getElementById('editAdminPhotoPreview');
+      const previewWrap = document.getElementById('editAdminPhotoPreviewWrap');
+      const hint = document.getElementById('editAdminPhotoHint');
+      if (item.imageUrl) {
+        preview.src = item.imageUrl;
+        previewWrap.style.display = 'block';
+        hint.innerText = '📷 Нажмите для замены фото с диска';
+      } else {
+        preview.src = '';
+        previewWrap.style.display = 'none';
+        hint.innerText = '📷 Нажмите для выбора фото с диска';
+      }
+
+      document.getElementById('adminEditModal').style.display = 'flex';
+    }
+
+    function closeEditModal() {
+      document.getElementById('adminEditModal').style.display = 'none';
+    }
+
+    function handleEditAdminPhotoSelect(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        document.getElementById('editAdminPhotoPreview').src = e.target.result;
+        document.getElementById('editAdminPhotoPreviewWrap').style.display = 'block';
+        document.getElementById('editAdminPhotoHint').innerText = '✅ Новое фото выбрано (нажмите для замены)';
+        document.getElementById('editAdminImageUrl').value = '';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleEditAdminUrlInput(event) {
+      const url = event.target.value.trim();
+      if (url) {
+        document.getElementById('editAdminPhotoPreview').src = url;
+        document.getElementById('editAdminPhotoPreviewWrap').style.display = 'block';
+        document.getElementById('editAdminPhotoFile').value = '';
+      }
+    }
+
+    async function handleAdminUpdate(e) {
+      e.preventDefault();
+      const id = parseInt(document.getElementById('editAdminId').value, 10);
+      let imageUrl = document.getElementById('editAdminImageUrl').value.trim();
+      const fileInput = document.getElementById('editAdminPhotoFile');
+
+      if (fileInput.files.length > 0) {
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+        try {
+          const upRes = await fetch('/api/listings/upload', {
+            method: 'POST',
+            body: formData
+          });
+          if (upRes.ok) {
+            const upData = await upRes.json();
+            imageUrl = upData.url;
+          }
+        } catch (err) {}
+      }
+
+      const body = {
+        title: document.getElementById('editAdminTitle').value,
+        price: parseFloat(document.getElementById('editAdminPrice').value),
+        district: document.getElementById('editAdminDistrict').value,
+        address: document.getElementById('editAdminAddress').value,
+        rooms: parseInt(document.getElementById('editAdminRooms').value, 10),
+        imageUrl: imageUrl || null
+      };
+
+      try {
+        const res = await fetch(`/api/listings/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + authToken
+          },
+          body: JSON.stringify(body)
+        });
+
+        if (res.ok || res.status === 204) {
+          closeEditModal();
+          showToast(`Объявление #${id} успешно обновлено!`);
+          loadStats();
+          loadListings();
+        } else {
+          showToast('Ошибка при обновлении объявления', 'error');
+        }
+      } catch (err) {
+        showToast('Ошибка подключения к серверу', 'error');
+      }
     }
 
     async function editPricePrompt(id, oldPrice) {
