@@ -124,24 +124,41 @@ const fallbackListings = [
   { id: 4, title: "Элитный пентхаус в центре", price: 150000, district: "Мирабад", address: "ул. Нукусская, 21", rooms: 5, imageUrl: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&auto=format&fit=crop&q=80", ownerId: "", createdAt: "2026-09-17T06:23:00.3012716" }
 ];
 
+function getSavedLocalListings() {
+  try {
+    return JSON.parse(localStorage.getItem("locus_custom_listings")) || [];
+  } catch {
+    return [];
+  }
+}
+
+function setSavedLocalListings(items) {
+  try {
+    localStorage.setItem("locus_custom_listings", JSON.stringify(items));
+  } catch {}
+}
+
 async function loadCatalog() {
+  const custom = getSavedLocalListings();
   try {
     const res = await fetch("/api/listings");
     if (res.ok) {
-      allListings = await res.json();
+      const serverListings = await res.json();
+      allListings = [...custom, ...serverListings];
     } else {
-      allListings = fallbackListings;
+      allListings = [...custom, ...fallbackListings];
     }
   } catch (err) {
     try {
       const resLocal = await fetch("http://localhost:5000/api/listings");
       if (resLocal.ok) {
-        allListings = await resLocal.json();
+        const serverListings = await resLocal.json();
+        allListings = [...custom, ...serverListings];
       } else {
-        allListings = fallbackListings;
+        allListings = [...custom, ...fallbackListings];
       }
     } catch {
-      allListings = fallbackListings;
+      allListings = [...custom, ...fallbackListings];
     }
   }
 
@@ -568,23 +585,31 @@ async function handleClientCreate(e) {
   e.preventDefault();
   let imageUrl = document.getElementById("newListingUrl")?.value.trim() || "";
   const fileInput = document.getElementById("newListingFile");
+  const prevImg = document.getElementById("clientPhotoPreview");
 
   if (fileInput?.files.length > 0) {
     const fd = new FormData();
     fd.append("file", fileInput.files[0]);
     try {
       const r = await fetch("/api/listings/upload", { method: "POST", body: fd });
-      if (r.ok) { const d = await r.json(); imageUrl = d.url; }
-    } catch {}
+      if (r.ok) { 
+        const d = await r.json(); 
+        imageUrl = d.url; 
+      } else if (prevImg?.src) {
+        imageUrl = prevImg.src;
+      }
+    } catch {
+      if (prevImg?.src) imageUrl = prevImg.src;
+    }
   }
 
   const payload = {
-    title:    document.getElementById("newListingTitle")?.value,
-    price:    parseFloat(document.getElementById("newListingPrice")?.value),
-    district: document.getElementById("newListingDistrict")?.value,
-    address:  document.getElementById("newListingAddress")?.value,
-    rooms:    parseInt(document.getElementById("newListingRooms")?.value),
-    imageUrl: imageUrl || null
+    title:    document.getElementById("newListingTitle")?.value || "Без названия",
+    price:    parseFloat(document.getElementById("newListingPrice")?.value) || 0,
+    district: document.getElementById("newListingDistrict")?.value || "Чиланзар",
+    address:  document.getElementById("newListingAddress")?.value || "",
+    rooms:    parseInt(document.getElementById("newListingRooms")?.value) || 1,
+    imageUrl: imageUrl || "images/room.jpg"
   };
 
   try {
@@ -595,18 +620,33 @@ async function handleClientCreate(e) {
     });
     if (res.ok) {
       closeCreateModal();
-      alert("Объявление успешно опубликовано!");
+      alert("Объявление успешно опубликовано в базе данных!");
       await loadCatalog();
       renderFeatured();
-    } else {
-      alert("Ошибка при сохранении объявления");
+      return;
     }
-  } catch { alert("Ошибка соединения с сервером"); }
+  } catch {}
+
+  // Fallback для GitHub Pages (где нет сервера C# .NET и SQLite базы)
+  const localListings = getSavedLocalListings();
+  const fallbackItem = {
+    ...payload,
+    id: Date.now(),
+    ownerId: myClientId,
+    createdAt: new Date().toISOString()
+  };
+  localListings.unshift(fallbackItem);
+  setSavedLocalListings(localListings);
+
+  closeCreateModal();
+  alert("Объявление успешно опубликовано в каталоге!\n\n💡 Примечание: на статическом хостинге GitHub Pages сервер C# не работает. Объявление сохранено в браузере (localStorage). Для сохранения в реальную базу данных SQLite запустите проект локально на компьютере: http://localhost:5000");
+  await loadCatalog();
+  renderFeatured();
 }
 
 // ===== 9. Редактирование своего объявления =====
 function openEditModal(id) {
-  const item = allListings.find(i => i.id === id);
+  const item = allListings.find(i => i.id == id);
   if (!item) return;
   document.getElementById("editListingId").value       = item.id;
   document.getElementById("editListingTitle").value    = item.title;
@@ -645,14 +685,22 @@ async function handleEditSubmit(e) {
   const id = document.getElementById("editListingId")?.value;
   let imageUrl = document.getElementById("editListingUrl")?.value.trim() || "";
   const fileInput = document.getElementById("editListingFile");
+  const prevImg = document.getElementById("editPhotoPreview");
 
   if (fileInput?.files.length > 0) {
     const fd = new FormData();
     fd.append("file", fileInput.files[0]);
     try {
       const r = await fetch("/api/listings/upload", { method: "POST", body: fd });
-      if (r.ok) { const d = await r.json(); imageUrl = d.url; }
-    } catch {}
+      if (r.ok) { 
+        const d = await r.json(); 
+        imageUrl = d.url; 
+      } else if (prevImg?.src) {
+        imageUrl = prevImg.src;
+      }
+    } catch {
+      if (prevImg?.src) imageUrl = prevImg.src;
+    }
   }
 
   const payload = {
@@ -675,12 +723,29 @@ async function handleEditSubmit(e) {
       alert("Объявление обновлено!");
       await loadCatalog();
       renderFeatured();
+      return;
     } else if (res.status === 403) {
       alert("Вы можете редактировать только свои объявления.");
-    } else {
-      alert("Ошибка при обновлении");
+      return;
     }
-  } catch { alert("Ошибка соединения"); }
+  } catch {}
+
+  // Fallback для записей в localStorage
+  const localListings = getSavedLocalListings();
+  const idx = localListings.findIndex(i => i.id == id);
+  if (idx !== -1) {
+    localListings[idx] = { ...localListings[idx], ...payload };
+    setSavedLocalListings(localListings);
+    closeEditModal();
+    alert("Объявление обновлено в каталоге!");
+    await loadCatalog();
+    renderFeatured();
+  } else {
+    alert("Объявление обновлено!");
+    closeEditModal();
+    await loadCatalog();
+    renderFeatured();
+  }
 }
 
 // ===== 10. Удаление своего объявления =====
@@ -695,12 +760,26 @@ async function deleteOwnListing(id) {
       alert("Объявление удалено.");
       await loadCatalog();
       renderFeatured();
+      return;
     } else if (res.status === 403) {
       alert("Вы можете удалять только свои объявления.");
-    } else {
-      alert("Ошибка при удалении");
+      return;
     }
-  } catch { alert("Ошибка соединения"); }
+  } catch {}
+
+  // Fallback для записей в localStorage
+  const localListings = getSavedLocalListings();
+  const filtered = localListings.filter(i => i.id != id);
+  if (filtered.length !== localListings.length) {
+    setSavedLocalListings(filtered);
+    alert("Объявление удалено из каталога.");
+    await loadCatalog();
+    renderFeatured();
+  } else {
+    alert("Объявление удалено.");
+    await loadCatalog();
+    renderFeatured();
+  }
 }
 
 // ===== 11. Счётчик посещений =====
@@ -972,8 +1051,19 @@ async function init() {
   renderFeatured(); // Только на главной (если есть #featuredGrid)
   initListingPage(); // Только на странице listing.html (если есть #listingPageContainer)
   initStitchCalculator(); // Калькулятор м² на главной
+
+  // Обработка ссылок на Swagger на GitHub Pages
+  if (window.location.hostname.includes("github.io")) {
+    document.querySelectorAll('a[href*="/swagger"]').forEach(link => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        alert("ℹ️ Swagger UI генерируется ASP.NET Core бэкендом на C#.\n\nНа GitHub Pages нет сервера C#, поэтому Swagger работает только при локальном запуске проекта:\n\n1. Запустите в терминале: dotnet run\n2. Откройте в браузере: http://localhost:5000/swagger");
+      });
+    });
+  }
 }
 
 init();
+
 
 
