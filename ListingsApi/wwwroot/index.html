@@ -893,5 +893,63 @@
     });
   </script>
 
+
+  <!-- МОДАЛЬНОЕ ОКНО: РЕДАКТИРОВАТЬ ОБЪЯВЛЕНИЕ -->
+  <div class="modal-overlay" id="editModal">
+    <div class="w-full max-w-lg bg-surface-container-lowest rounded-3xl shadow-2xl flex flex-col max-h-[92vh] border border-outline-variant/40 overflow-hidden">
+      <div class="p-4 border-b border-outline-variant/30 flex items-center justify-between">
+        <h3 class="text-lg font-bold text-on-surface font-display flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-amber-500">edit_note</span>
+          <span>Редактировать объявление</span>
+        </h3>
+        <button onclick="closeEditModal()" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <form id="editForm" onsubmit="handleEditSubmit(event)" class="p-5 overflow-y-auto space-y-3.5">
+        <input type="hidden" id="editListingId"/>
+        <div>
+          <label class="text-xs font-bold text-on-surface-variant block mb-1">Заголовок объявления *</label>
+          <input type="text" id="editListingTitle" required class="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl py-2 px-3 text-sm text-on-surface focus:ring-2 focus:ring-primary"/>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-xs font-bold text-on-surface-variant block mb-1">Цена ($) *</label>
+            <input type="number" id="editListingPrice" required min="1" class="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl py-2 px-3 text-sm text-on-surface focus:ring-2 focus:ring-primary"/>
+          </div>
+          <div>
+            <label class="text-xs font-bold text-on-surface-variant block mb-1">Комнат *</label>
+            <input type="number" id="editListingRooms" required min="1" max="10" class="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl py-2 px-3 text-sm text-on-surface focus:ring-2 focus:ring-primary"/>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-xs font-bold text-on-surface-variant block mb-1">Район *</label>
+            <input type="text" id="editListingDistrict" required class="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl py-2 px-3 text-sm text-on-surface focus:ring-2 focus:ring-primary"/>
+          </div>
+          <div>
+            <label class="text-xs font-bold text-on-surface-variant block mb-1">Адрес *</label>
+            <input type="text" id="editListingAddress" required class="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl py-2 px-3 text-sm text-on-surface focus:ring-2 focus:ring-primary"/>
+          </div>
+        </div>
+        <div>
+          <label class="text-xs font-bold text-on-surface-variant block mb-1">Фото (прямая ссылка)</label>
+          <input type="url" id="editListingUrl" placeholder="https://..." class="w-full bg-surface-container-low border border-outline-variant/50 rounded-xl py-1.5 px-3 text-xs text-on-surface"/>
+          <div id="editPhotoPreviewWrap" class="hidden mt-2 text-center">
+            <img id="editPhotoPreview" src="" alt="Предпросмотр" class="max-h-28 mx-auto rounded-lg object-cover"/>
+          </div>
+        </div>
+        <div>
+          <label class="text-xs font-bold text-on-surface-variant block mb-1">Или замените файл с компьютера</label>
+          <input type="file" id="editListingFile" accept="image/*" onchange="handleEditPhotoSelect(event)" class="text-xs text-on-surface-variant file:mr-2 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-surface-container file:text-on-surface hover:file:bg-surface-variant cursor-pointer"/>
+        </div>
+        <div class="pt-3 border-t border-outline-variant/30 flex justify-end gap-2">
+          <button type="button" onclick="closeEditModal()" class="px-4 py-2 rounded-xl text-xs font-bold bg-surface-container text-on-surface">Отмена</button>
+          <button type="submit" class="px-5 py-2 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-600 text-white shadow">💾 Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
 </body>
 </html>
