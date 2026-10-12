@@ -32,6 +32,8 @@ if (themeBtn) {
 } else {
   // Применить тему без кнопки (страница без кнопки, но тема нужна)
   applyTheme(localStorage.getItem("theme") === "dark");
+}
+
 // ===== 1.1 Валюта и Уведомления (Stitch 9) =====
 let currentCurrency = localStorage.getItem("locus_currency") || "USD";
 

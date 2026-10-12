@@ -125,10 +125,6 @@
         <nav class="hidden lg:flex items-center gap-5 ml-2 text-sm font-display font-medium">
           <a class="text-primary font-bold border-b-2 border-primary pb-1" href="index.html">Главная</a>
           <a class="text-on-surface-variant hover:text-primary transition-colors pb-1" href="catalog.html">Каталог</a>
-          <a class="text-on-surface-variant hover:text-primary transition-colors pb-1 flex items-center gap-1" href="stitch-gallery.html">
-            <span>Stitch Экраны</span>
-            <span class="px-1.5 py-0.2 rounded-full bg-secondary-container text-[#00714d] text-[10px] font-bold">10 шт</span>
-          </a>
           <a class="text-on-surface-variant hover:text-primary transition-colors pb-1" href="hub.html">Учебный Хаб</a>
           <a class="text-on-surface-variant hover:text-primary transition-colors pb-1" href="efcore-practice.html">EF Core</a>
           <a class="text-on-surface-variant hover:text-primary transition-colors pb-1" href="angular-practice.html">Angular</a>
@@ -461,7 +457,7 @@
           <button class="px-3 py-1.5 rounded-xl bg-surface-container hover:bg-surface-variant text-on-surface-variant text-xs font-medium transition-all" data-district="Мирабад">Мирабад</button>
 
           <div class="relative ml-auto">
-            <select id="sortSelect" onchange="onSortChange(this.value)" class="h-9 pl-3 pr-7 rounded-xl bg-surface-container border border-outline-variant text-xs font-medium text-on-surface focus:outline-none appearance-none cursor-pointer">
+            <select id="sortSelect" onchange="onSortChange()" class="h-9 pl-3 pr-7 rounded-xl bg-surface-container border border-outline-variant text-xs font-medium text-on-surface focus:outline-none appearance-none cursor-pointer">
               <option value="">По умолчанию</option>
               <option value="price">Сначала дешевле</option>
               <option value="-price">Сначала дороже</option>
