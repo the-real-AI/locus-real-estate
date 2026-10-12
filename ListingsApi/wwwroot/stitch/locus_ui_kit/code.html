@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-background" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Locus Tashkent — UI Kit: Кнопки и Интерактивные элементы</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Plus Jakarta Sans & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-surface": "#171b26",
+            "on-primary-fixed": "#00174b",
+            "on-surface-variant": "#434655",
+            "surface-container-lowest": "#ffffff",
+            "secondary-fixed-dim": "#4edea3",
+            "primary-container": "#2563eb",
+            "surface-variant": "#dfe2f1",
+            "secondary": "#006c49",
+            "on-secondary": "#ffffff",
+            "secondary-container": "#6cf8bb",
+            "error": "#ba1a1a",
+            "on-error-container": "#93000a",
+            "on-tertiary": "#ffffff",
+            "on-tertiary-container": "#ffeedd",
+            "surface-tint": "#0053db",
+            "surface-container": "#ebedfc",
+            "tertiary": "#784b00",
+            "on-primary-fixed-variant": "#003ea8",
+            "surface-bright": "#faf8ff",
+            "inverse-surface": "#2c303b",
+            "on-background": "#171b26",
+            "surface-container-low": "#f2f3ff",
+            "surface-container-high": "#e5e7f6",
+            "outline-variant": "#c3c6d7",
+            "inverse-primary": "#b4c5ff",
+            "error-container": "#ffdad6",
+            "primary": "#004ac6",
+            "primary-fixed-dim": "#b4c5ff",
+            "primary-fixed": "#dbe1ff",
+            "on-primary": "#ffffff",
+            "surface-dim": "#d7d9e8",
+            "secondary-fixed": "#6ffbbe",
+            "tertiary-fixed-dim": "#ffb95f",
+            "outline": "#737686",
+            "on-error": "#ffffff",
+            "tertiary-fixed": "#ffddb8",
+            "tertiary-container": "#996100",
+            "inverse-on-surface": "#eef0ff",
+            "on-tertiary-fixed": "#2a1700",
+            "on-secondary-container": "#00714d",
+            "surface": "#faf8ff",
+            "on-tertiary-fixed-variant": "#653e00",
+            "background": "#faf8ff",
+            "surface-container-highest": "#dfe2f1",
+            "on-primary-container": "#eeefff",
+            "on-secondary-fixed": "#002113",
+            "on-secondary-fixed-variant": "#005236"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xs": "0.25rem",
+            "gutter-desktop": "1.5rem",
+            "space-md": "1rem",
+            "margin-tablet": "1.5rem",
+            "margin": "1rem",
+            "space-lg": "1.5rem",
+            "margin-desktop": "2rem",
+            "space-xl": "2rem",
+            "space-sm": "0.5rem",
+            "gutter": "1rem"
+          },
+          "fontFamily": {
+            "price-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "label-md": ["Inter"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "price-xl": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "label-sm": ["Inter"],
+            "body-lg": ["Inter"],
+            "display": ["Plus Jakarta Sans"],
+            "display-mobile": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "body-md": ["Inter"]
+          },
+          "fontSize": {
+            "price-lg": ["20px", {"lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+            "headline-md": ["22px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+            "label-md": ["13px", {"lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700"}],
+            "price-xl": ["26px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+            "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+            "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700"}],
+            "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "display": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+            "display-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "800"}],
+            "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+            "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-outlined.fill {
+      font-variation-settings: 'FILL' 1;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #c3c6d7;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="min-h-full flex flex-col font-body-md text-on-surface bg-background antialiased selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar (Shared Component) -->
+<header class="sticky top-0 w-full z-50 bg-surface-container-lowest dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm">
+<div class="flex items-center justify-between px-space-md lg:px-margin-desktop max-w-[1280px] mx-auto w-full h-16">
+<!-- Brand & Left Navigation Links -->
+<div class="flex items-center gap-space-lg">
+<a class="text-headline-md font-headline-md font-extrabold text-primary dark:text-inverse-primary tracking-tight flex items-center gap-space-xs" href="#">
+<span class="material-symbols-outlined text-primary fill" data-icon="location_city">location_city</span>
+<span>Locus Tashkent</span>
+</a>
+<nav class="hidden md:flex items-center gap-space-md">
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors font-label-md text-label-md" href="#">Купить</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors font-label-md text-label-md" href="#">Аренда</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors font-label-md text-label-md" href="#">Новостройки</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors font-label-md text-label-md" href="#">Коммерческая</a>
+</nav>
+</div>
+<!-- Trailing Action Cluster -->
+<div class="flex items-center gap-space-sm">
+<a class="hidden sm:inline-flex items-center gap-space-xs px-3 py-1.5 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors font-label-md text-label-md text-on-surface" href="https://t.me" target="_blank">
+<span class="material-symbols-outlined text-sky-600 text-[18px]" data-icon="send">send</span>
+<span>Telegram Бот</span>
+</a>
+<button class="inline-flex items-center gap-space-xs px-3.5 py-2 bg-secondary text-on-secondary hover:bg-on-secondary-container transition-all active:scale-[0.98] rounded-xl font-label-md text-label-md font-semibold shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="add_circle">add_circle</span>
+<span>Подать объявление</span>
+</button>
+<div class="flex items-center gap-1 border-l border-outline-variant pl-space-sm ml-1">
+<button class="p-2 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" title="Уведомления" type="button">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 rounded-lg text-on-surface-variant hover:text-error hover:bg-surface-container-low transition-colors" title="Избранное" type="button">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+<button class="p-2 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" title="Профиль" type="button">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Showcase Canvas -->
+<main class="flex-1 w-full max-w-[1280px] mx-auto px-space-md lg:px-margin-desktop py-space-xl">
+<!-- Hero / Header Section -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/60 p-space-lg lg:p-space-xl shadow-sm mb-space-xl relative overflow-hidden">
+<div class="max-w-3xl relative z-10">
+<div class="inline-flex items-center gap-space-xs px-3 py-1 bg-surface-container rounded-full text-primary font-label-sm text-label-sm mb-space-sm">
+<span class="material-symbols-outlined text-[16px]" data-icon="widgets">widgets</span>
+<span>UI KIT SPECIFICATION v2.4 • TASHKENT REAL ESTATE</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mb-space-sm">
+          Locus Design System — Кнопки и Интерактивные элементы управления
+        </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+          Полная спецификация компонентов действий, состояний отклика (State Matrix), токенов типографики, радиусов скругления и адаптивных кнопок для столичной экосистемы Locus.
+        </p>
+<!-- System Token Quick Chips -->
+<div class="flex flex-wrap gap-space-sm mt-space-lg pt-space-md border-t border-outline-variant/40">
+<div class="flex items-center gap-1.5 px-2.5 py-1 bg-surface-container-low rounded-lg text-body-sm font-body-sm text-on-surface-variant">
+<span class="w-3 h-3 rounded-full bg-primary inline-block"></span>
+<span class="font-semibold text-on-surface">Primary:</span> #004ac6 / #2563eb
+          </div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 bg-surface-container-low rounded-lg text-body-sm font-body-sm text-on-surface-variant">
+<span class="w-3 h-3 rounded-full bg-secondary inline-block"></span>
+<span class="font-semibold text-on-surface">CTA Conversion:</span> #006c49 / #10b981
+          </div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 bg-surface-container-low rounded-lg text-body-sm font-body-sm text-on-surface-variant">
+<span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
+<span class="font-semibold text-on-surface">Amber Special:</span> #f59e0b
+          </div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 bg-surface-container-low rounded-lg text-body-sm font-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px]" data-icon="rounded_corner">rounded_corner</span>
+<span class="font-semibold text-on-surface">Radius:</span> lg (8px) • xl (12px) • Full (Pill)
+          </div>
+</div>
+</div>
+<!-- Subtle Decorative Accent -->
+<div class="absolute -right-12 -bottom-16 w-64 h-64 bg-primary/5 rounded-full blur-2xl pointer-events-none"></div>
+</div>
+<!-- Section 1: Button Variants & State Matrix -->
+<section class="mb-space-xl">
+<div class="flex items-center justify-between mb-space-md">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">1. Основные варианты кнопок и матрица состояний</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Все функциональные варианты во всех ключевых UI-состояниях (Default, Hover, Active, Disabled, Loading)</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/60 shadow-sm overflow-x-auto custom-scroll">
+<table class="w-full text-left border-collapse min-w-[840px]">
+<thead>
+<tr class="bg-surface-container-low/70 border-b border-outline-variant/60 text-on-surface-variant font-label-md text-label-md">
+<th class="py-3 px-space-md font-semibold">Вариант / Категория</th>
+<th class="py-3 px-space-md font-semibold">Default</th>
+<th class="py-3 px-space-md font-semibold">Hover Effect</th>
+<th class="py-3 px-space-md font-semibold">Active / Focus</th>
+<th class="py-3 px-space-md font-semibold">Loading Spinner</th>
+<th class="py-3 px-space-md font-semibold">Disabled</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30 text-body-md">
+<!-- Row: Primary Sapphire -->
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="py-4 px-space-md">
+<div class="font-semibold text-on-surface">Primary Action</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Сапфировый (#2563eb / #004ac6)</div>
+</td>
+<td class="py-4 px-space-md">
+<button class="px-4 py-2 bg-primary text-on-primary rounded-xl font-label-md text-label-md font-semibold shadow-sm transition-all" type="button">
+                  Найти жилье
+                </button>
+</td>
+<td class="py-4 px-space-md">
+<button class="px-4 py-2 bg-primary-container text-on-primary rounded-xl font-label-md text-label-md font-semibold shadow-md" type="button">
+                  Применить фильтры
+                </button>
+</td>
+<td class="py-4 px-space-md">
+<button class="px-4 py-2 bg-primary text-on-primary rounded-xl font-label-md text-label-md font-semibold ring-4 ring-primary/20 scale-[0.98]" type="button">
+                  Подать заявку
+                </button>
+</td>
+<td class="py-4 px-space-md">
+<button class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-xl font-label-md text-label-md font-semibold opacity-90 cursor-wait" type="button">
+<svg class="animate-spin h-4 w-4 text-white" fill="none" viewbox="0 0 24 24">
+<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+<path class="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"></path>
+</svg>
+<span>Поиск...</span>
+</button>
+</td>
+<td class="py-4 px-space-md">
+<button class="px-4 py-2 bg-surface-dim text-outline rounded-xl font-label-md text-label-md font-semibold cursor-not-allowed opacity-60" disabled="" type="button">
+                  Подробнее
+                </button>
+</td>
+</tr>
+<!-- Row: Conversion Emerald -->
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="py-4 px-space-md">
+<div class="font-semibold text-on-surface">Accent / Conversion</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Изумрудно-зеленый (#006c49)</div>
+</td>
+<td class="py-4 px-space-md">
+<button class="inline-flex items-center gap-1.5 px-4 py-2 bg-secondary text-on-secondary rounded-xl font-label-md text-label-md font-semibold shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+<span>Подать объявление</span>
+</button>
+</td>
+<td class="py-4 px-space-md">
+<button class="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-600 text-on-secondary rounded-xl font-label-md text-label-md font-semibold shadow-md" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="call">call</span>
+<span>Позвонить</span>
+</button>
+</td>
+<td class="py-4 px-space-md">
+<button class="inline-flex items-center gap-1.5 px-4 py-2 bg-secondary text-on-secondary rounded-xl font-label-md text-label-md font-semibold ring-4 ring-secondary/20 scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="verified_user">verified_user</span>
+<span>Объект OneID</span>
+</button>
+</td>
+<td class="py-4 px-space-md">
+<button class="inline-flex items-center gap-2 px-4 py-2 bg-secondary text-on-secondary rounded-xl font-label-md text-label-md font-semibold opacity-90 cursor-wait" type="button">
+<svg class="animate-spin h-4 w-4 text-white" fill="none" viewbox="0 0 24 24">
+<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+<path class="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"></path>
+</svg>
+<span>Публикация...</span>
+</button>
+</td>
+<td class="py-4 px-space-md">
+<button class="px-4 py-2 bg-surface-dim text-outline rounded-xl font-label-md text-label-md font-semibold cursor-not-allowed opacity-60" disabled="" type="button">
+                  Подать объявление
+                </button>
+</td>
+</tr>
+<!-- Row: Owner Special / Amber -->
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="py-4 px-space-md">
+<div class="font-semibold text-on-surface">Owner Special</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Янтарный (#f59e0b / #784b00)</div>
+</td>
+<td class="py-4 px-space-md">
+<button class="inline-flex items-center gap-1.5 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-label-md text-label-md font-semibold shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] fill" data-icon="star">star</span>
+<span>Ваше объявление</span>
+</button>
+</td>
+<td class="py-4 px-space-md">
+<button class="inline-flex items-center gap-1.5 px-4 py-2 bg-amber-600 text-white rounded-xl font-label-md text-label-md font-semibold shadow-md" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="edit">edit</span>
+<span>Редактировать</span>
+</button>
+</td>
+<td class="py-4 px-space-md">
+<button class="inline-flex items-center gap-1.5 px-4 py-2 bg-amber-500 text-white rounded-xl font-label-md text-label-md font-semibold ring-4 ring-amber-500/20 scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="bolt">bolt</span>
+<span>Поднять в топ</span>
+</button>
+</td>
+<td class="py-4 px-space-md">
+<button class="inline-flex items-center gap-2 px-4 py-2 bg-amber-500 text-white rounded-xl font-label-md text-label-md font-semibold opacity-90 cursor-wait" type="button">
+<svg class="animate-spin h-4 w-4 text-white" fill="none" viewbox="0 0 24 24">
+<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+<path class="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"></path>
+</svg>
+<span>Обновление...</span>
+</button>
+</td>
+<td class="py-4 px-space-md">
+<button class="px-4 py-2 bg-surface-dim text-outline rounded-xl font-label-md text-label-md font-semibold cursor-not-allowed opacity-60" disabled="" type="button">
+                  Поднять в топ
+                </button>
+</td>
+</tr>
+<!-- Row: Secondary Ghost Outline -->
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="py-4 px-space-md">
+<div class="font-semibold text-on-surface">Secondary &amp; Ghost</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Контурные / Нейтральные</div>
+</td>
+<td class="py-4 px-space-md">
+<button class="px-4 py-2 border border-outline-variant text-on-surface hover:bg-surface-container-low rounded-xl font-label-md text-label-md font-semibold transition-all" type="button">
+                  Сбросить фильтры
+                </button>
+</td>
+<td class="py-4 px-space-md">
+<button class="px-4 py-2 bg-surface-container-low border border-primary/40 text-primary rounded-xl font-label-md text-label-md font-semibold" type="button">
+                  Показать все (184)
+                </button>
+</td>
+<td class="py-4 px-space-md">
+<button class="px-4 py-2 bg-surface-container border border-outline-variant text-on-surface rounded-xl font-label-md text-label-md font-semibold ring-2 ring-primary/20 scale-[0.98]" type="button">
+                  Настройки профиля
+                </button>
+</td>
+<td class="py-4 px-space-md">
+<button class="inline-flex items-center gap-2 px-4 py-2 border border-outline-variant text-on-surface rounded-xl font-label-md text-label-md font-semibold cursor-wait" type="button">
+<svg class="animate-spin h-4 w-4 text-primary" fill="none" viewbox="0 0 24 24">
+<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+<path class="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"></path>
+</svg>
+<span>Сброс...</span>
+</button>
+</td>
+<td class="py-4 px-space-md">
+<button class="px-4 py-2 border border-outline-variant/40 text-outline rounded-xl font-label-md text-label-md font-semibold cursor-not-allowed opacity-50" disabled="" type="button">
+                  Отмена
+                </button>
+</td>
+</tr>
+<!-- Row: Destructive Red -->
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="py-4 px-space-md">
+<div class="font-semibold text-error">Destructive / Danger</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Красный (#ba1a1a / #ef4444)</div>
+</td>
+<td class="py-4 px-space-md">
+<button class="inline-flex items-center gap-1.5 px-4 py-2 bg-error text-on-error rounded-xl font-label-md text-label-md font-semibold shadow-sm transition-all hover:bg-red-700" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span>
+<span>Удалить объявление</span>
+</button>
+</td>
+<td class="py-4 px-space-md">
+<button class="inline-flex items-center gap-1.5 px-4 py-2 bg-red-700 text-on-error rounded-xl font-label-md text-label-md font-semibold shadow-md" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="unpublished">unpublished</span>
+<span>Снять с публикации</span>
+</button>
+</td>
+<td class="py-4 px-space-md">
+<button class="inline-flex items-center gap-1.5 px-4 py-2 bg-error text-on-error rounded-xl font-label-md text-label-md font-semibold ring-4 ring-error/20 scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="block">block</span>
+<span>Заблокировать</span>
+</button>
+</td>
+<td class="py-4 px-space-md">
+<button class="inline-flex items-center gap-2 px-4 py-2 bg-error text-on-error rounded-xl font-label-md text-label-md font-semibold opacity-90 cursor-wait" type="button">
+<svg class="animate-spin h-4 w-4 text-white" fill="none" viewbox="0 0 24 24">
+<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+<path class="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"></path>
+</svg>
+<span>Удаление...</span>
+</button>
+</td>
+<td class="py-4 px-space-md">
+<button class="px-4 py-2 bg-surface-dim text-outline rounded-xl font-label-md text-label-md font-semibold cursor-not-allowed opacity-60" disabled="" type="button">
+                  Удалить
+                </button>
+</td>
+</tr>
+<!-- Row: Telegram Branded -->
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="py-4 px-space-md">
+<div class="font-semibold text-sky-700">Telegram Branded</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Интеграция (#0284c7)</div>
+</td>
+<td class="py-4 px-space-md">
+<button class="inline-flex items-center gap-1.5 px-4 py-2 bg-sky-600 text-white rounded-xl font-label-md text-label-md font-semibold shadow-sm transition-all hover:bg-sky-700" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="send">send</span>
+<span>Написать в Telegram</span>
+</button>
+</td>
+<td class="py-4 px-space-md">
+<button class="inline-flex items-center gap-1.5 px-4 py-2 bg-sky-700 text-white rounded-xl font-label-md text-label-md font-semibold shadow-md" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="smart_toy">smart_toy</span>
+<span>@LocusTashkent_bot</span>
+</button>
+</td>
+<td class="py-4 px-space-md">
+<button class="inline-flex items-center gap-1.5 px-4 py-2 bg-sky-600 text-white rounded-xl font-label-md text-label-md font-semibold ring-4 ring-sky-400/20 scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="send">send</span>
+<span>Чат с риелтором</span>
+</button>
+</td>
+<td class="py-4 px-space-md">
+<button class="inline-flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-xl font-label-md text-label-md font-semibold opacity-90 cursor-wait" type="button">
+<svg class="animate-spin h-4 w-4 text-white" fill="none" viewbox="0 0 24 24">
+<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+<path class="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"></path>
+</svg>
+<span>Связка...</span>
+</button>
+</td>
+<td class="py-4 px-space-md">
+<button class="px-4 py-2 bg-surface-dim text-outline rounded-xl font-label-md text-label-md font-semibold cursor-not-allowed opacity-60" disabled="" type="button">
+                  Telegram Бот
+                </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Section 2: Button Sizes (Bento Grid) -->
+<section class="mb-space-xl">
+<div class="mb-space-md">
+<h2 class="font-headline-md text-headline-md text-on-surface">2. Шкала размеров (Button Sizes Hierarchy)</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Четыре стандартизированных размера по высоте и отступам для обеспечения консистентного тач-таргета</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Size XL: 56px -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl border border-outline-variant/60 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface">Extra Large (XL)</span>
+<span class="px-2 py-0.5 bg-surface-container text-primary font-label-sm text-label-sm rounded">56px height</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
+              Главные формы на главной странице, Hero CTA и завершение сделок.
+            </p>
+</div>
+<div class="pt-space-md border-t border-outline-variant/30 flex flex-col gap-space-sm items-start">
+<button class="w-full h-14 px-6 bg-primary text-on-primary rounded-xl font-price-lg text-price-lg font-bold shadow-md hover:bg-primary-container transition-all flex items-center justify-center gap-space-sm active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span>Найти квартиру</span>
+</button>
+<span class="text-xs text-outline font-mono">h-14 • px-6 • text-price-lg</span>
+</div>
+</div>
+<!-- Size LG: 48px -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl border border-outline-variant/60 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface">Large (LG)</span>
+<span class="px-2 py-0.5 bg-surface-container text-primary font-label-sm text-label-sm rounded">48px height</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
+              Модальные окна, карточки объектов недвижимости, подача заявки на просмотр.
+            </p>
+</div>
+<div class="pt-space-md border-t border-outline-variant/30 flex flex-col gap-space-sm items-start">
+<button class="w-full h-12 px-5 bg-secondary text-on-secondary rounded-xl font-label-md text-label-md font-semibold shadow-sm hover:bg-emerald-600 transition-all flex items-center justify-center gap-space-sm active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="add_home">add_home</span>
+<span>Подать объявление</span>
+</button>
+<span class="text-xs text-outline font-mono">h-12 • px-5 • text-label-md</span>
+</div>
+</div>
+<!-- Size MD: 40px -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl border border-outline-variant/60 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface">Medium (MD)</span>
+<span class="px-2 py-0.5 bg-surface-container text-primary font-label-sm text-label-sm rounded">40px height</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
+              Стандартный дефолтный размер для списков, панелей фильтрации и карточек.
+            </p>
+</div>
+<div class="pt-space-md border-t border-outline-variant/30 flex flex-col gap-space-sm items-start">
+<button class="w-full h-10 px-4 bg-primary text-on-primary rounded-lg font-label-md text-label-md font-semibold shadow-sm hover:bg-primary-container transition-all flex items-center justify-center gap-space-xs active:scale-[0.98]" type="button">
+<span>Подробнее о ЖК</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<span class="text-xs text-outline font-mono">h-10 • px-4 • text-label-md</span>
+</div>
+</div>
+<!-- Size SM: 32px -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl border border-outline-variant/60 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface">Small (SM)</span>
+<span class="px-2 py-0.5 bg-surface-container text-primary font-label-sm text-label-sm rounded">32px height</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
+              Компактные чипы фильтров, бейджи в таблицах и микро-действия в строках.
+            </p>
+</div>
+<div class="pt-space-md border-t border-outline-variant/30 flex flex-col gap-space-sm items-start">
+<button class="w-full h-8 px-3 border border-outline-variant text-on-surface rounded-lg font-label-sm text-label-sm font-semibold hover:bg-surface-container-low transition-all flex items-center justify-center gap-1 active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[16px] text-amber-500 fill" data-icon="grade">grade</span>
+<span>В топ (1 день)</span>
+</button>
+<span class="text-xs text-outline font-mono">h-8 • px-3 • text-label-sm</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Icon Buttons & Icon Placement -->
+<section class="mb-space-xl">
+<div class="mb-space-md">
+<h2 class="font-headline-md text-headline-md text-on-surface">3. Кнопки с иконками и пиктограммы (Icon Controls)</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Размещение иконок (Leading/Trailing), квадратные и круглые контролы для быстрых действий</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-md">
+<!-- Leading & Trailing Showcase -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl border border-outline-variant/60 shadow-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-sm">Позиционирование иконки в тексте</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">Leading (иконка слева для визуального якоря) и Trailing (иконка справа для направления/перехода).</p>
+<div class="flex flex-wrap gap-space-sm items-center">
+<!-- Leading -->
+<button class="inline-flex items-center gap-2 px-4 py-2.5 bg-primary text-on-primary rounded-xl font-label-md text-label-md font-semibold hover:bg-primary-container transition-all active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="phone_in_talk">phone_in_talk</span>
+<span>Связаться с агентом</span>
+</button>
+<!-- Trailing -->
+<button class="inline-flex items-center gap-2 px-4 py-2.5 border border-outline-variant text-on-surface hover:bg-surface-container-low rounded-xl font-label-md text-label-md font-semibold transition-all active:scale-[0.98]" type="button">
+<span>Смотреть на карте</span>
+<span class="material-symbols-outlined text-[20px] text-primary" data-icon="map">map</span>
+</button>
+<!-- Both / Dual -->
+<button class="inline-flex items-center gap-2 px-4 py-2.5 bg-surface-container-low text-primary border border-primary/20 rounded-xl font-label-md text-label-md font-semibold hover:bg-surface-container transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="tune">tune</span>
+<span>Все параметры</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="expand_more">expand_more</span>
+</button>
+</div>
+</div>
+<!-- Standalone Icon Buttons (Round & Square) -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl border border-outline-variant/60 shadow-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-sm">Автономные иконки (Circular &amp; Square Icon Buttons)</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">Для избранного на фото, закрытия модалок, шер-меню и навигации.</p>
+<div class="flex flex-wrap gap-space-md items-center">
+<!-- Circular Favorite (Frosted) -->
+<div class="flex flex-col items-center gap-1">
+<button class="w-10 h-10 rounded-full bg-white/90 backdrop-blur-md shadow border border-outline-variant/60 flex items-center justify-center text-error hover:scale-110 active:scale-95 transition-all" title="Добавить в избранное" type="button">
+<span class="material-symbols-outlined text-[22px] fill" data-icon="favorite">favorite</span>
+</button>
+<span class="text-xs text-outline">Избранное</span>
+</div>
+<!-- Circular Share -->
+<div class="flex flex-col items-center gap-1">
+<button class="w-10 h-10 rounded-full bg-surface-container-low border border-outline-variant hover:bg-surface-container flex items-center justify-center text-on-surface transition-all active:scale-95" title="Поделиться объектом" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="share">share</span>
+</button>
+<span class="text-xs text-outline">Поделиться</span>
+</div>
+<!-- Square Close -->
+<div class="flex flex-col items-center gap-1">
+<button class="w-10 h-10 rounded-xl bg-surface-container-low border border-outline-variant hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-all active:scale-95" title="Закрыть окно" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="close">close</span>
+</button>
+<span class="text-xs text-outline">Закрыть</span>
+</div>
+<!-- Round Notifications with badge -->
+<div class="flex flex-col items-center gap-1">
+<div class="relative">
+<button class="w-10 h-10 rounded-full bg-surface-container-low border border-outline-variant hover:bg-surface-container flex items-center justify-center text-on-surface transition-all" title="Уведомления" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="notifications">notifications</span>
+</button>
+<span class="absolute top-0 right-0 w-2.5 h-2.5 bg-error rounded-full ring-2 ring-surface-container-lowest"></span>
+</div>
+<span class="text-xs text-outline">Колокольчик</span>
+</div>
+<!-- Back Arrow Navigation -->
+<div class="flex flex-col items-center gap-1">
+<button class="w-10 h-10 rounded-xl bg-surface-container-low border border-outline-variant hover:bg-surface-container flex items-center justify-center text-on-surface transition-all" title="Вернуться назад" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_back">arrow_back</span>
+</button>
+<span class="text-xs text-outline">Назад</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: Specialized Real Estate Controls -->
+<section class="mb-space-xl">
+<div class="mb-space-md">
+<h2 class="font-headline-md text-headline-md text-on-surface">4. Специальные интерактивные контролы и паттерны Locus</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Сегментированные фильтры, кнопки в связках модальных окон, FAB и Telegram интеграция</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-md">
+<!-- Pattern 1: Segmented Property Filters -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl border border-outline-variant/60 shadow-sm flex flex-col justify-between">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Табы категорий и фильтры</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">Сегментированный переключатель типов сделок</p>
+<!-- Segmented Pill -->
+<div class="p-1 bg-surface-container rounded-xl flex items-center gap-1 mb-space-md">
+<button class="flex-1 py-1.5 px-3 bg-surface-container-lowest text-primary font-label-md text-label-md font-bold rounded-lg shadow-sm text-center transition-all" type="button">
+                Купить
+              </button>
+<button class="flex-1 py-1.5 px-3 text-on-surface-variant hover:text-on-surface font-label-md text-label-md font-medium text-center transition-all" type="button">
+                Аренда
+              </button>
+<button class="flex-1 py-1.5 px-3 text-on-surface-variant hover:text-on-surface font-label-md text-label-md font-medium text-center transition-all" type="button">
+                Новостройки
+              </button>
+</div>
+<!-- District Chips -->
+<div class="flex flex-wrap gap-1.5">
+<span class="px-3 py-1 bg-primary text-on-primary rounded-full font-label-sm text-label-sm cursor-pointer shadow-sm">Все районы</span>
+<span class="px-3 py-1 bg-surface-container-low text-on-surface border border-outline-variant/50 hover:border-primary rounded-full font-label-sm text-label-sm cursor-pointer transition-colors">Мирабад</span>
+<span class="px-3 py-1 bg-surface-container-low text-on-surface border border-outline-variant/50 hover:border-primary rounded-full font-label-sm text-label-sm cursor-pointer transition-colors">Чиланзар</span>
+<span class="px-3 py-1 bg-surface-container-low text-on-surface border border-outline-variant/50 hover:border-primary rounded-full font-label-sm text-label-sm cursor-pointer transition-colors">Юнусабад</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm border-t border-outline-variant/30 text-xs text-outline font-mono">
+            Segmented Switcher • Pill Chips
+          </div>
+</div>
+<!-- Pattern 2: Dialog Modal Button Pairs -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl border border-outline-variant/60 shadow-sm flex flex-col justify-between">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Модальные пары кнопок</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">Стандартные связки подтверждения и отмены действий</p>
+<!-- Save pair -->
+<div class="p-3 bg-surface-container-low rounded-xl border border-outline-variant/40 mb-space-sm">
+<div class="text-xs font-semibold text-on-surface-variant mb-2">Форма редактирования объекта:</div>
+<div class="flex items-center justify-end gap-2">
+<button class="px-3 py-1.5 text-on-surface-variant hover:text-on-surface font-label-md text-label-md font-semibold rounded-lg hover:bg-surface-container transition-colors" type="button">
+                  Отмена
+                </button>
+<button class="inline-flex items-center gap-1.5 px-4 py-1.5 bg-primary text-on-primary font-label-md text-label-md font-semibold rounded-lg shadow-sm hover:bg-primary-container transition-all active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="save">save</span>
+<span>Сохранить</span>
+</button>
+</div>
+</div>
+<!-- Delete confirmation pair -->
+<div class="p-3 bg-red-50/60 rounded-xl border border-red-100">
+<div class="text-xs font-semibold text-red-900 mb-2">Подтверждение удаления объявления:</div>
+<div class="flex items-center justify-end gap-2">
+<button class="px-3 py-1.5 text-on-surface font-label-md text-label-md font-semibold rounded-lg hover:bg-red-100/50 transition-colors" type="button">
+                  Оставить
+                </button>
+<button class="inline-flex items-center gap-1 px-3 py-1.5 bg-error text-on-error font-label-md text-label-md font-semibold rounded-lg shadow-sm hover:bg-red-700 transition-all active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="delete_forever">delete_forever</span>
+<span>Удалить</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm border-t border-outline-variant/30 text-xs text-outline font-mono">
+            Modal Dialog Actions (Primary &amp; Destructive)
+          </div>
+</div>
+<!-- Pattern 3: Floating Action Buttons (FAB) & Mobile Integration -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl border border-outline-variant/60 shadow-sm flex flex-col justify-between">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Floating Action Buttons (FAB)</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">Плавающие мобильные кнопки быстрого добавления</p>
+<div class="flex flex-col gap-space-sm items-center py-2">
+<!-- Extended FAB -->
+<button class="inline-flex items-center gap-2 px-5 py-3.5 bg-secondary text-on-secondary rounded-full font-label-md text-label-md font-bold shadow-lg hover:shadow-xl hover:bg-emerald-600 active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[22px]" data-icon="add">add</span>
+<span>Подать объявление</span>
+</button>
+<!-- Circle FAB -->
+<button class="w-14 h-14 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-lg hover:shadow-xl hover:bg-primary-container active:scale-95 transition-all" title="Начать поиск" type="button">
+<span class="material-symbols-outlined text-[26px]" data-icon="filter_alt">filter_alt</span>
+</button>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm border-t border-outline-variant/30 text-xs text-outline font-mono">
+            Fixed Bottom FAB • Shadow Depth Tier 3
+          </div>
+</div>
+</div>
+</section>
+<!-- Section 5: Real-world Contextual Preview (Mock Card) -->
+<section class="mb-space-xl">
+<div class="mb-space-md">
+<h2 class="font-headline-md text-headline-md text-on-surface">5. Контекстная карточка объекта (Интеграция кнопок в карточке)</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Как различные типы кнопок сосуществуют в одном компоненте объекта недвижимости в Ташкенте</p>
+</div>
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/60 shadow-sm p-space-lg max-w-xl mx-auto">
+<!-- User listing badge header -->
+<div class="flex items-center justify-between mb-space-sm pb-space-xs border-b border-outline-variant/30">
+<div class="inline-flex items-center gap-1 text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
+<span class="material-symbols-outlined text-[14px] fill" data-icon="star">star</span>
+<span>Ваше объявление #48291</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="px-2 py-1 text-xs font-semibold text-primary hover:bg-surface-container-low rounded transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[14px]" data-icon="edit">edit</span>
+<span>Редактировать</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-space-md">
+<!-- Property image representation -->
+<div class="relative w-full sm:w-48 h-36 bg-surface-container rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center text-outline">
+<img class="w-full h-full object-cover" data-alt="A brightly lit, contemporary residential apartment building in the Mirabad district of Tashkent, featuring sleek floor-to-ceiling glass balconies, warm sandstone facade accents, manicured inner courtyard greenery, and clear blue summer sky, professional architectural photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyGSoeweEB3KgrlMPN95jXxk2a6j8684DB_mT-t-DI0pZesWHVR3wJEkpG8TvM_vvztCJUNm44ItQKLCj74NaspbkWv2mydd87nN8-XI2dOdtxMyuRwZz-otx7Ab-qYj6MabhEpR024nvGgbhegYYWqdLTt0A8nw40DRkr8gOQZIhz-7f3t90Dz480WTbs3RbWs1Mv2BYAdJX0cFDhdpq-Xc_57lCFtRkblIuKQ_GZew5EjhuF5FJp"/>
+<button class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-error shadow" title="В избранное" type="button">
+<span class="material-symbols-outlined text-[18px] fill" data-icon="favorite">favorite</span>
+</button>
+<span class="absolute bottom-2 left-2 px-2 py-0.5 bg-primary text-on-primary text-[10px] font-bold rounded">Новостройка</span>
+</div>
+<!-- Property info -->
+<div class="flex-1 flex flex-col justify-between">
+<div>
+<div class="font-price-xl text-price-xl text-primary font-bold tracking-tight mb-1">
+                $118,000 <span class="text-xs text-outline font-normal">/ 1,480,000,000 сум</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface font-semibold mb-1">
+                ЖК «Mirabad Avenue», Блок C
+              </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Мирабадский р-н • 68 м² • 2 комн. • 7/12 эт.
+              </p>
+</div>
+<!-- Card Action Button Cluster -->
+<div class="flex flex-wrap items-center gap-2 mt-space-md">
+<button class="flex-1 py-2 px-3 bg-secondary text-on-secondary rounded-lg font-label-md text-label-md font-semibold hover:bg-emerald-600 transition-all active:scale-[0.98] flex items-center justify-center gap-1 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="call">call</span>
+<span>Позвонить</span>
+</button>
+<button class="py-2 px-3 bg-sky-600 text-white rounded-lg font-label-md text-label-md font-semibold hover:bg-sky-700 transition-all active:scale-[0.98] flex items-center justify-center gap-1 shadow-sm" title="Написать в Telegram" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="send">send</span>
+<span>Telegram</span>
+</button>
+<button class="p-2 border border-outline-variant text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded-lg transition-colors" title="Дополнительные опции" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="w-full bg-surface-container-low dark:bg-inverse-surface border-t border-outline-variant dark:border-outline">
+<div class="max-w-[1280px] mx-auto px-space-md lg:px-margin-desktop py-space-xl flex flex-col md:flex-row justify-between items-center gap-space-md">
+<!-- Logo & Copyright -->
+<div class="flex flex-col items-center md:items-start gap-1">
+<a class="text-headline-sm font-headline-sm font-bold text-primary dark:text-inverse-primary flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-primary fill" data-icon="location_city">location_city</span>
+<span>Locus Tashkent</span>
+</a>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-center md:text-left">
+          © 2025 Locus Real Estate Platform. Ташкент, Узбекистан. Все права защищены.
+        </p>
+</div>
+<!-- Links Cluster -->
+<nav class="flex flex-wrap justify-center md:justify-end gap-x-space-md gap-y-2 text-on-surface-variant dark:text-surface-variant font-label-sm text-label-sm">
+<a class="hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#">О платформе</a>
+<a class="hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#">Новостройки Ташкента</a>
+<a class="hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#">Правила размещения</a>
+<a class="hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#">Калькулятор ипотеки</a>
+<a class="hover:text-primary dark:hover:text-inverse-primary transition-colors flex items-center gap-1" href="https://t.me">
+<span class="material-symbols-outlined text-[14px]" data-icon="send">send</span>
+<span>Telegram канал</span>
+</a>
+<a class="hover:text-primary dark:hover:text-inverse-primary transition-colors" href="#">Служба поддержки</a>
+</nav>
+</div>
+</footer>
+</body></html>

@@ -10,9 +10,9 @@
 | `ListingsApi/Models/` | Доменные модели (`Listing`) с валидацией обязательных полей (включая `Address`) | `Models/Listing.cs` |
 | `ListingsApi/Services/` | In-memory хранилище данных объявлений с потокобезопасной синхронизацией (`lock`) | `Services/ListingStore.cs` |
 | `ListingsApi/Contracts/` | DTO контракты запросов и ответов (`CreateListingRequest`, `ListingResponse`, etc.) | `Contracts/ListingContracts.cs` |
-| `ListingsApi/wwwroot/` | Встроенный веб-портал Locus, каталог, админка и страница практики CSS (Урок 2) | `wwwroot/index.html`, `wwwroot/css-practice.html` (http://localhost:5000/css-practice.html) |
+| `ListingsApi/wwwroot/` | Встроенный веб-портал Locus, каталог, Stitch галерея (1-9), админка и практикумы | `wwwroot/index.html`, `wwwroot/stitch-gallery.html`, `wwwroot/catalog.html` |
 | `listings-web/` | Фронтенд-приложение на Angular с реактивным управлением состоянием через Signals | `src/main.ts` -> `src/app/app.ts`, `src/app/listing.ts` |
-| `stitch_locus_real_estate_platform/` | Дизайн-макеты, HTML-прототипы экранов платформы и дизайн-система | `tashkent_modern_marketplace/DESIGN.md`, `locus_1/code.html`..`locus_4/code.html` |
+| `stitch_locus_real_estate_platform/` | Дизайн-система и HTML-прототипы экранов платформы (1-9 & UI Kit) | `tashkent_modern_marketplace/DESIGN.md`, `locus_1/code.html`..`locus_9/code.html`, `locus_ui_kit` |
 | `kvartira/` | Автономный веб-интерфейс на чистом HTML5/CSS3/JavaScript для каталога квартир | `kvartira/index.html`, `kvartira/script.js` |
 | `.agents/` | Конфигурация поведения агента, локальные правила и установленные навыки | `.agents/AGENTS.md`, `.agents/skills/` |
 

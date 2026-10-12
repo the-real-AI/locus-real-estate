@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Locus Design System — Stitch Галерея Прототипов (1-9 & UI Kit)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#004ac6",
+            "on-primary": "#ffffff",
+            "primary-container": "#2563eb",
+            "secondary": "#006c49",
+            "secondary-container": "#6cf8bb",
+            "surface": "#faf8ff",
+            "surface-container": "#ebedfc",
+            "surface-container-low": "#f2f3ff",
+            "surface-container-lowest": "#ffffff",
+            "on-surface": "#171b26",
+            "on-surface-variant": "#434655",
+            "outline-variant": "#c3c6d7"
+          },
+          fontFamily: {
+            "display": ["Plus Jakarta Sans", "sans-serif"],
+            "body": ["Inter", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface text-on-surface antialiased font-body min-h-screen pb-20">
+
+  <!-- ШАПКА -->
+  <header class="bg-surface-container-lowest/90 backdrop-blur-md sticky top-0 z-50 border-b border-outline-variant/40 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2">
+          <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-on-primary shadow-sm shadow-primary/30">
+            <span class="material-symbols-outlined text-[20px]">apartment</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-xl font-extrabold font-display text-primary leading-tight">Locus</span>
+            <span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">Design System</span>
+          </div>
+        </a>
+        <span class="hidden sm:inline-block px-2.5 py-0.5 rounded-full bg-secondary-container text-[#00714d] text-xs font-bold">
+          Stitch Platform v2.0
+        </span>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-5 text-sm font-display font-medium">
+        <a href="index.html" class="text-on-surface-variant hover:text-primary transition-colors">Главная</a>
+        <a href="catalog.html" class="text-on-surface-variant hover:text-primary transition-colors">Каталог</a>
+        <a href="stitch-gallery.html" class="text-primary font-bold border-b-2 border-primary py-1">Stitch Экраны</a>
+        <a href="hub.html" class="text-on-surface-variant hover:text-primary transition-colors">Учебный Хаб</a>
+        <a href="/swagger" target="_blank" class="text-on-surface-variant hover:text-primary transition-colors">API Docs</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="stitch/locus_ui_kit/code.html" target="_blank" class="bg-primary text-white text-xs sm:text-sm font-bold px-3.5 py-2 rounded-xl flex items-center gap-1.5 shadow-sm hover:bg-blue-700 transition">
+          <span class="material-symbols-outlined text-base">palette</span>
+          <span>Открыть UI Kit</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ОСНОВНОЙ КОНТЕНТ -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 mt-8 space-y-10">
+
+    <!-- HERO БАННЕР ГАЛЕРЕИ -->
+    <section class="bg-gradient-to-br from-blue-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-6 sm:p-10 shadow-lg relative overflow-hidden">
+      <div class="relative z-10 max-w-3xl space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-xs font-semibold text-blue-200">
+          <span class="material-symbols-outlined text-sm">auto_awesome</span>
+          Импортирован архив: stitch_locus_real_estate_platform (1).zip
+        </div>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display leading-tight tracking-tight">
+          Дизайн-система и макеты экранов Locus Tashkent
+        </h1>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+          Комплексный набор интерфейсов маркетплейса недвижимости: 9 готовых экранов с проработанной адаптивной сеткой Tailwind CSS, токены дизайн-системы Tashkent Modern Marketplace и компонентный UI Kit.
+        </p>
+        <div class="flex flex-wrap gap-3 pt-2">
+          <a href="stitch/locus_9/code.html" target="_blank" class="bg-white text-slate-900 hover:bg-slate-100 font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm flex items-center gap-1.5 transition">
+            <span class="material-symbols-outlined text-base">devices</span>
+            <span>Живой просмотр Экрана 9 (Флагман)</span>
+          </a>
+          <a href="stitch/locus_ui_kit/code.html" target="_blank" class="bg-blue-600/60 hover:bg-blue-600 text-white border border-blue-400/40 font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm flex items-center gap-1.5 transition">
+            <span class="material-symbols-outlined text-base">widgets</span>
+            <span>Компонентный UI Kit</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- СЕТКА ЭКРАНОВ STITCH -->
+    <section class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-outline-variant/30 pb-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-primary">Интерактивные прототипы</span>
+          <h2 class="text-2xl sm:text-3xl font-bold font-display text-on-surface">10 Модулей платформы Stitch</h2>
+        </div>
+        <span class="text-xs text-on-surface-variant bg-surface-container px-3 py-1.5 rounded-full self-start sm:self-auto font-medium">
+          Все экраны доступны по клику
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- КАРТОЧКА: LOCUS 1 -->
+        <div class="bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group">
+          <div>
+            <div class="aspect-[16/10] overflow-hidden bg-surface-container relative">
+              <img src="stitch/locus_1/screen.png" alt="Locus 1" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"/>
+              <span class="absolute top-3 left-3 bg-primary text-white text-[11px] font-bold px-2 py-0.5 rounded-md shadow-xs">Экран 1</span>
+            </div>
+            <div class="p-5 space-y-2">
+              <h3 class="text-base font-bold font-display text-on-surface">Каталог и поиск недвижимости</h3>
+              <p class="text-xs text-on-surface-variant leading-relaxed">
+                Сетка объектов с быстрым фильтром по районам, комнатности и цене, переключение списком и картой Ташкента.
+              </p>
+            </div>
+          </div>
+          <div class="p-5 pt-0">
+            <a href="stitch/locus_1/code.html" target="_blank" class="w-full bg-surface-container hover:bg-primary hover:text-white text-primary font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+              <span>Открыть интерактивный прототип</span>
+              <span class="material-symbols-outlined text-sm">open_in_new</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- КАРТОЧКА: LOCUS 2 -->
+        <div class="bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group">
+          <div>
+            <div class="aspect-[16/10] overflow-hidden bg-surface-container relative">
+              <img src="stitch/locus_2/screen.png" alt="Locus 2" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"/>
+              <span class="absolute top-3 left-3 bg-secondary text-white text-[11px] font-bold px-2 py-0.5 rounded-md shadow-xs">Экран 2</span>
+            </div>
+            <div class="p-5 space-y-2">
+              <h3 class="text-base font-bold font-display text-on-surface">Личный кабинет собственника</h3>
+              <p class="text-xs text-on-surface-variant leading-relaxed">
+                Панель управления объявлениями владельца (Сардор Мухамедов), статистика просмотров, OneID верификация и баланс.
+              </p>
+            </div>
+          </div>
+          <div class="p-5 pt-0">
+            <a href="stitch/locus_2/code.html" target="_blank" class="w-full bg-surface-container hover:bg-secondary hover:text-white text-secondary font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+              <span>Открыть интерактивный прототип</span>
+              <span class="material-symbols-outlined text-sm">open_in_new</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- КАРТОЧКА: LOCUS 3 -->
+        <div class="bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group">
+          <div>
+            <div class="aspect-[16/10] overflow-hidden bg-surface-container relative">
+              <img src="stitch/locus_3/screen.png" alt="Locus 3" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"/>
+              <span class="absolute top-3 left-3 bg-amber-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-md shadow-xs">Экран 3</span>
+            </div>
+            <div class="p-5 space-y-2">
+              <h3 class="text-base font-bold font-display text-on-surface">Редактирование объявления</h3>
+              <p class="text-xs text-on-surface-variant leading-relaxed">
+                Модальное окно редактирования объекта недвижимости: быстрая смена цены в у.е., обновление адреса и параметров.
+              </p>
+            </div>
+          </div>
+          <div class="p-5 pt-0">
+            <a href="stitch/locus_3/code.html" target="_blank" class="w-full bg-surface-container hover:bg-amber-600 hover:text-white text-amber-700 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+              <span>Открыть интерактивный прототип</span>
+              <span class="material-symbols-outlined text-sm">open_in_new</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- КАРТОЧКА: LOCUS 4 -->
+        <div class="bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group">
+          <div>
+            <div class="aspect-[16/10] overflow-hidden bg-surface-container relative">
+              <img src="stitch/locus_4/screen.png" alt="Locus 4" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"/>
+              <span class="absolute top-3 left-3 bg-indigo-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-md shadow-xs">Экран 4</span>
+            </div>
+            <div class="p-5 space-y-2">
+              <h3 class="text-base font-bold font-display text-on-surface">Уведомления и Активность</h3>
+              <p class="text-xs text-on-surface-variant leading-relaxed">
+                Экран центра уведомлений: входящие заявки от покупателей, изменение статуса объявлений и динамика цен.
+              </p>
+            </div>
+          </div>
+          <div class="p-5 pt-0">
+            <a href="stitch/locus_4/code.html" target="_blank" class="w-full bg-surface-container hover:bg-indigo-600 hover:text-white text-indigo-700 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+              <span>Открыть интерактивный прототип</span>
+              <span class="material-symbols-outlined text-sm">open_in_new</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- КАРТОЧКА: LOCUS 5 -->
+        <div class="bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group">
+          <div>
+            <div class="aspect-[16/10] overflow-hidden bg-surface-container relative">
+              <img src="stitch/locus_5/screen.png" alt="Locus 5" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"/>
+              <span class="absolute top-3 left-3 bg-teal-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-md shadow-xs">Экран 5 ⭐</span>
+            </div>
+            <div class="p-5 space-y-2">
+              <h3 class="text-base font-bold font-display text-on-surface">Управление недвижимостью</h3>
+              <p class="text-xs text-on-surface-variant leading-relaxed">
+                Новый экран из архива: расширенный дашборд собственника с детальным управлением списками и модальным редактором.
+              </p>
+            </div>
+          </div>
+          <div class="p-5 pt-0">
+            <a href="stitch/locus_5/code.html" target="_blank" class="w-full bg-surface-container hover:bg-teal-600 hover:text-white text-teal-700 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+              <span>Открыть интерактивный прототип</span>
+              <span class="material-symbols-outlined text-sm">open_in_new</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- КАРТОЧКА: LOCUS 6 -->
+        <div class="bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group">
+          <div>
+            <div class="aspect-[16/10] overflow-hidden bg-surface-container relative">
+              <img src="stitch/locus_6/screen.png" alt="Locus 6" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"/>
+              <span class="absolute top-3 left-3 bg-blue-700 text-white text-[11px] font-bold px-2 py-0.5 rounded-md shadow-xs">Экран 6 ⭐</span>
+            </div>
+            <div class="p-5 space-y-2">
+              <h3 class="text-base font-bold font-display text-on-surface">Locus Недвижимость — Ташкент</h3>
+              <p class="text-xs text-on-surface-variant leading-relaxed">
+                Новый экран из архива: современная витрина «Предложение дня», подборки по Чиланзару, Мирабаду и Юнусабаду.
+              </p>
+            </div>
+          </div>
+          <div class="p-5 pt-0">
+            <a href="stitch/locus_6/code.html" target="_blank" class="w-full bg-surface-container hover:bg-blue-700 hover:text-white text-blue-700 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+              <span>Открыть интерактивный прототип</span>
+              <span class="material-symbols-outlined text-sm">open_in_new</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- КАРТОЧКА: LOCUS 7 -->
+        <div class="bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group">
+          <div>
+            <div class="aspect-[16/10] overflow-hidden bg-surface-container relative">
+              <img src="stitch/locus_7/screen.png" alt="Locus 7" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"/>
+              <span class="absolute top-3 left-3 bg-emerald-700 text-white text-[11px] font-bold px-2 py-0.5 rounded-md shadow-xs">Экран 7 ⭐</span>
+            </div>
+            <div class="p-5 space-y-2">
+              <h3 class="text-base font-bold font-display text-on-surface">Детали объекта недвижимости</h3>
+              <p class="text-xs text-on-surface-variant leading-relaxed">
+                Новый экран из архива: галерея фото, бейдж 0% комиссии, проверка OneID, калькулятор ипотеки и форма связи.
+              </p>
+            </div>
+          </div>
+          <div class="p-5 pt-0">
+            <a href="stitch/locus_7/code.html" target="_blank" class="w-full bg-surface-container hover:bg-emerald-700 hover:text-white text-emerald-800 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+              <span>Открыть интерактивный прототип</span>
+              <span class="material-symbols-outlined text-sm">open_in_new</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- КАРТОЧКА: LOCUS 8 -->
+        <div class="bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group">
+          <div>
+            <div class="aspect-[16/10] overflow-hidden bg-surface-container relative">
+              <img src="stitch/locus_8/screen.png" alt="Locus 8" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"/>
+              <span class="absolute top-3 left-3 bg-violet-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-md shadow-xs">Экран 8 ⭐</span>
+            </div>
+            <div class="p-5 space-y-2">
+              <h3 class="text-base font-bold font-display text-on-surface">Мастер подачи объявления</h3>
+              <p class="text-xs text-on-surface-variant leading-relaxed">
+                Новый экран из архива: стильное модальное окно добавления квартиры с выбором района, комнат, загрузкой фото и ценой.
+              </p>
+            </div>
+          </div>
+          <div class="p-5 pt-0">
+            <a href="stitch/locus_8/code.html" target="_blank" class="w-full bg-surface-container hover:bg-violet-600 hover:text-white text-violet-700 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+              <span>Открыть интерактивный прототип</span>
+              <span class="material-symbols-outlined text-sm">open_in_new</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- КАРТОЧКА: LOCUS 9 -->
+        <div class="bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group">
+          <div>
+            <div class="aspect-[16/10] overflow-hidden bg-surface-container relative">
+              <img src="stitch/locus_9/screen.png" alt="Locus 9" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"/>
+              <span class="absolute top-3 left-3 bg-rose-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-md shadow-xs">Экран 9 (Флагман) ⭐</span>
+            </div>
+            <div class="p-5 space-y-2">
+              <h3 class="text-base font-bold font-display text-on-surface">Платформа Узбекистана (Комплексный)</h3>
+              <p class="text-xs text-on-surface-variant leading-relaxed">
+                Флагманский экран: интерактивный бар уведомлений, мультивалютный переключатель (USD/UZS), OneID и полный каталог.
+              </p>
+            </div>
+          </div>
+          <div class="p-5 pt-0">
+            <a href="stitch/locus_9/code.html" target="_blank" class="w-full bg-surface-container hover:bg-rose-600 hover:text-white text-rose-700 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+              <span>Открыть интерактивный прототип</span>
+              <span class="material-symbols-outlined text-sm">open_in_new</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- КАРТОЧКА: UI KIT -->
+        <div class="bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group">
+          <div>
+            <div class="aspect-[16/10] overflow-hidden bg-surface-container relative">
+              <img src="stitch/locus_ui_kit/screen.png" alt="UI Kit" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"/>
+              <span class="absolute top-3 left-3 bg-amber-500 text-white text-[11px] font-bold px-2 py-0.5 rounded-md shadow-xs">UI Kit ⭐</span>
+            </div>
+            <div class="p-5 space-y-2">
+              <h3 class="text-base font-bold font-display text-on-surface">UI Kit: Кнопки и Интерактивные элементы</h3>
+              <p class="text-xs text-on-surface-variant leading-relaxed">
+                Библиотека компонентов: все варианты кнопок (Primary, Secondary Emerald, Ghost), чипсы фильтров, инпуты, бейджи.
+              </p>
+            </div>
+          </div>
+          <div class="p-5 pt-0">
+            <a href="stitch/locus_ui_kit/code.html" target="_blank" class="w-full bg-surface-container hover:bg-amber-600 hover:text-white text-amber-700 font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition">
+              <span>Открыть UI Kit</span>
+              <span class="material-symbols-outlined text-sm">palette</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ ДИЗАЙН-ТОКЕНОВ ИЗ DESIGN.MD -->
+    <section class="bg-surface-container-lowest rounded-3xl p-6 sm:p-8 border border-outline-variant/40 shadow-sm space-y-6">
+      <div class="border-b border-outline-variant/30 pb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-primary">Спецификация токенов</span>
+        <h2 class="text-xl sm:text-2xl font-bold font-display text-on-surface">Палитра Tashkent Modern Marketplace</h2>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+        <div class="p-3 rounded-xl bg-[#004ac6] text-white flex flex-col justify-between h-24 shadow-xs">
+          <span class="text-xs font-bold">Primary</span>
+          <span class="text-[11px] font-mono">#004ac6</span>
+        </div>
+        <div class="p-3 rounded-xl bg-[#006c49] text-white flex flex-col justify-between h-24 shadow-xs">
+          <span class="text-xs font-bold">Secondary</span>
+          <span class="text-[11px] font-mono">#006c49</span>
+        </div>
+        <div class="p-3 rounded-xl bg-[#2563eb] text-white flex flex-col justify-between h-24 shadow-xs">
+          <span class="text-xs font-bold">Primary Cont</span>
+          <span class="text-[11px] font-mono">#2563eb</span>
+        </div>
+        <div class="p-3 rounded-xl bg-[#6cf8bb] text-[#00714d] flex flex-col justify-between h-24 shadow-xs">
+          <span class="text-xs font-bold">Secondary Cont</span>
+          <span class="text-[11px] font-mono">#6cf8bb</span>
+        </div>
+        <div class="p-3 rounded-xl bg-[#faf8ff] text-[#171b26] border border-outline-variant/50 flex flex-col justify-between h-24 shadow-xs">
+          <span class="text-xs font-bold">Background</span>
+          <span class="text-[11px] font-mono">#faf8ff</span>
+        </div>
+        <div class="p-3 rounded-xl bg-[#171b26] text-white flex flex-col justify-between h-24 shadow-xs">
+          <span class="text-xs font-bold">On-Surface</span>
+          <span class="text-[11px] font-mono">#171b26</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

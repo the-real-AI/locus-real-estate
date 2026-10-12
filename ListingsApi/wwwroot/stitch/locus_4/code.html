@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Locus — Уведомления и Активность</title>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-secondary-fixed": "#002113",
+            "on-background": "#171b26",
+            "secondary-fixed-dim": "#4edea3",
+            "secondary-container": "#6cf8bb",
+            "on-primary": "#ffffff",
+            "on-tertiary": "#ffffff",
+            "tertiary-fixed": "#ffddb8",
+            "primary": "#004ac6",
+            "on-secondary-fixed-variant": "#005236",
+            "on-tertiary-container": "#ffeedd",
+            "surface-container-highest": "#dfe2f1",
+            "outline": "#737686",
+            "surface-container-low": "#f2f3ff",
+            "on-primary-fixed-variant": "#003ea8",
+            "surface-container-high": "#e5e7f6",
+            "tertiary-fixed-dim": "#ffb95f",
+            "on-error": "#ffffff",
+            "primary-fixed": "#dbe1ff",
+            "surface-container": "#ebedfc",
+            "on-surface-variant": "#434655",
+            "inverse-primary": "#b4c5ff",
+            "on-primary-container": "#eeefff",
+            "on-tertiary-fixed-variant": "#653e00",
+            "inverse-on-surface": "#eef0ff",
+            "tertiary-container": "#996100",
+            "on-secondary-container": "#00714d",
+            "on-secondary": "#ffffff",
+            "secondary": "#006c49",
+            "primary-container": "#2563eb",
+            "tertiary": "#784b00",
+            "surface-bright": "#faf8ff",
+            "on-tertiary-fixed": "#2a1700",
+            "surface": "#faf8ff",
+            "inverse-surface": "#2c303b",
+            "on-error-container": "#93000a",
+            "outline-variant": "#c3c6d7",
+            "surface-tint": "#0053db",
+            "on-primary-fixed": "#00174b",
+            "secondary-fixed": "#6ffbbe",
+            "primary-fixed-dim": "#b4c5ff",
+            "surface-container-lowest": "#ffffff",
+            "error": "#ba1a1a",
+            "surface-variant": "#dfe2f1",
+            "error-container": "#ffdad6",
+            "on-surface": "#171b26",
+            "surface-dim": "#d7d9e8",
+            "background": "#faf8ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin": "1rem",
+            "space-lg": "1.5rem",
+            "gutter": "1rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "margin-tablet": "1.5rem",
+            "space-xl": "2rem",
+            "space-sm": "0.5rem",
+            "gutter-desktop": "1.5rem",
+            "margin-desktop": "2rem"
+          },
+          "fontFamily": {
+            "price-lg": ["Plus Jakarta Sans"],
+            "display": ["Plus Jakarta Sans"],
+            "price-xl": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "body-lg": ["Inter"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "label-md": ["Inter"],
+            "label-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "display-mobile": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "price-lg": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "display": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+            "price-xl": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "display-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "800" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-outlined.fill {
+      font-variation-settings: 'FILL' 1, 'wght' 500;
+    }
+    /* Hide scrollbars for pill tabs */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col font-body-md text-body-md pb-24 selection:bg-primary-fixed selection:text-primary">
+<!-- ==================== TOP BAR ==================== -->
+<header class="sticky top-0 z-40 bg-surface-container-lowest/90 backdrop-blur-md shadow-sm">
+<div class="max-w-md mx-auto px-margin h-14 flex items-center justify-between">
+<!-- Back Action & Title -->
+<div class="flex items-center gap-space-sm">
+<button aria-label="Назад" class="w-9 h-9 rounded-full flex items-center justify-center text-on-surface hover:bg-surface-container active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[22px]">arrow_back</span>
+</button>
+<div class="flex items-center gap-1.5">
+<h1 class="text-headline-sm font-headline-sm tracking-tight text-on-surface">Уведомления</h1>
+<span class="inline-flex items-center justify-center bg-error text-on-error text-label-sm font-label-sm px-1.5 py-0.5 rounded-full min-w-[18px] h-[18px]">
+            4
+          </span>
+</div>
+</div>
+<!-- Trailing Action: Filter & Read All -->
+<div class="flex items-center gap-space-xs">
+<button aria-label="Настройки фильтра" class="w-9 h-9 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+<button class="text-primary font-label-md text-label-md px-space-xs py-1.5 rounded hover:bg-surface-container active:scale-95 transition-all" type="button">
+          Прочитать все
+        </button>
+</div>
+</div>
+</header>
+<!-- ==================== MAIN CONTENT ==================== -->
+<main class="w-full max-w-md mx-auto px-margin pt-space-sm flex flex-col gap-space-md">
+<!-- 1. Category Filter Tabs (Pills snap-scroll) -->
+<nav aria-label="Фильтры уведомлений" class="flex items-center gap-space-xs overflow-x-auto no-scrollbar py-1 -mx-margin px-margin">
+<!-- Active Pill -->
+<button class="shrink-0 bg-primary-container text-on-primary text-label-md font-label-md px-3.5 py-1.5 rounded-full shadow-sm active:scale-95 transition-transform flex items-center gap-1.5">
+<span>Все</span>
+<span class="bg-on-primary/20 text-on-primary text-[10px] font-bold px-1.5 py-0.2 rounded-full">5</span>
+</button>
+<button class="shrink-0 bg-surface-container text-on-surface-variant hover:text-on-surface text-label-md font-label-md px-3.5 py-1.5 rounded-full border border-outline-variant/30 active:scale-95 transition-all flex items-center gap-1">
+<span>Мои объекты</span>
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span>
+</button>
+<button class="shrink-0 bg-surface-container text-on-surface-variant hover:text-on-surface text-label-md font-label-md px-3.5 py-1.5 rounded-full border border-outline-variant/30 active:scale-95 transition-all">
+        Избранное
+      </button>
+<button class="shrink-0 bg-surface-container text-on-surface-variant hover:text-on-surface text-label-md font-label-md px-3.5 py-1.5 rounded-full border border-outline-variant/30 active:scale-95 transition-all">
+        Сообщения
+      </button>
+<button class="shrink-0 bg-surface-container text-on-surface-variant hover:text-on-surface text-label-md font-label-md px-3.5 py-1.5 rounded-full border border-outline-variant/30 active:scale-95 transition-all">
+        Системные
+      </button>
+</nav>
+<!-- 2. TELEGRAM NOTIFICATION BRIDGE CARD (Pinned Smart Utility) -->
+<section class="relative overflow-hidden rounded-xl bg-gradient-to-r from-primary-container to-[#0053db] text-on-primary p-space-md shadow-md">
+<div class="absolute -right-6 -bottom-6 w-28 h-28 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+<div class="relative flex items-start gap-space-sm z-10">
+<div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center shrink-0 shadow-inner">
+<span class="material-symbols-outlined text-[24px] text-on-primary">send</span>
+</div>
+<div class="flex-1 flex flex-col gap-1">
+<div class="flex items-center gap-1.5">
+<span class="text-label-sm font-label-sm tracking-wider uppercase text-inverse-primary bg-white/10 px-2 py-0.5 rounded-full">
+              Locus Bot
+            </span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-fixed-dim animate-pulse"></span>
+</div>
+<p class="font-headline-sm text-headline-sm font-bold leading-tight">
+            Получайте мгновенные пуши в Telegram-бот @LocusTashkent_bot
+          </p>
+<p class="font-body-sm text-body-sm text-primary-fixed-dim pt-0.5">
+            Звонки покупателей и изменения цен без задержек мобильной связи
+          </p>
+<button class="mt-2 inline-flex items-center justify-center gap-2 bg-surface-container-lowest text-primary font-label-md text-label-md py-2 px-4 rounded-lg shadow-sm hover:bg-surface-container-low active:scale-98 transition-all w-fit" type="button">
+<span>Подключить Telegram за 5 сек</span>
+<span class="material-symbols-outlined text-[16px]">bolt</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 3. FEED TIMELINE DIVIDER -->
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Сегодня</span>
+<span class="font-body-sm text-body-sm text-outline">Ташкент (UTC+5)</span>
+</div>
+<!-- NOTIFICATION ITEMS FEED -->
+<!-- ITEM 1: Highlighted Personal Listing Action (Tier 1 + Ambient Amber Glow) -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md border border-[#f59e0b]/80 shadow-[0_0_0_1px_rgba(245,158,11,0.35),0_4px_16px_rgba(245,158,11,0.12)] flex flex-col gap-3 relative transition-all hover:shadow-[0_0_0_1px_rgba(245,158,11,0.5),0_8px_20px_rgba(245,158,11,0.18)]">
+<!-- Amber Header Banner Badge -->
+<div class="flex items-center justify-between border-b border-surface-container pb-2">
+<span class="inline-flex items-center gap-1 text-label-sm font-label-sm text-tertiary font-bold bg-tertiary-fixed/60 px-2.5 py-0.5 rounded-full">
+<span>⭐ Ваше объявление</span>
+</span>
+<div class="flex items-center gap-1 text-body-sm font-body-sm text-outline">
+<span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+<span>5 минут назад</span>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed/50 flex items-center justify-center shrink-0 text-on-secondary-fixed">
+<span class="material-symbols-outlined text-[20px] text-secondary">phone_in_talk</span>
+</div>
+<div class="flex-1 flex flex-col gap-1">
+<div class="flex items-baseline justify-between">
+<span class="font-label-sm text-label-sm text-secondary font-bold">Звонок / Запрос контакта</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface leading-snug">
+            Новый контакт по вашей 2-комн. на Чиланзаре
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Покупатель <strong class="text-on-surface font-semibold">Джамшид</strong> запросил прямой звонок через Locus
+          </p>
+</div>
+</div>
+<!-- Quick Action Buttons for Owner -->
+<div class="grid grid-cols-2 gap-space-xs pt-1">
+<button class="flex items-center justify-center gap-1.5 bg-primary-container text-on-primary py-2.5 px-3 rounded-lg font-label-md text-label-md active:scale-95 transition-transform shadow-sm" type="button">
+<span>📱 Позвонить</span>
+</button>
+<button class="flex items-center justify-center gap-1.5 bg-surface-container text-on-surface-variant hover:text-on-surface border border-outline-variant/40 py-2.5 px-3 rounded-lg font-label-md text-label-md active:scale-95 transition-transform" type="button">
+<span>✈️ Написать в Telegram</span>
+</button>
+</div>
+</article>
+<!-- ITEM 2: Price Alert on Saved Home (Tier 1 Resting Card with Thumbnail) -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/30 shadow-sm flex flex-col gap-3 transition-all hover:border-primary-container/40">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-lg bg-error-container/60 text-error flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">trending_down</span>
+</span>
+<span class="font-label-sm text-label-sm text-error font-bold">Изменение цены</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">1 час назад</span>
+</div>
+<div class="flex gap-space-sm items-start">
+<div class="w-20 h-20 rounded-lg overflow-hidden shrink-0 border border-outline-variant/30 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Modern renovated 3-room apartment living room in Tashkent Mirabad district with floor-to-ceiling windows, high-key clean natural sunlight, hardwood floors, and elegant slate blue interior styling with neutral warm beige accents in modern architectural aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgHjz9b2B4JYxamaIQgntdKXAO3q0FHpJ6wQ5hlrGfe09pi8z1dHGMfVKShEXAvkTgcXMxUfDxEg0qZd_r2xx3bhNRFHBTeGefR56RTJc6iZj0rNL1mJzYHIzxvm7gFQbOT9hU7jvP-NdKMMWptws90XhA5TrCI3UoDRhCTcYR7-R4GR0Ojk3SdY8l0__2EwCVPxI7dF6aWhDuRLu01Ftop0-onztI1DEJkPRViHV2sQEf57Qp8su9"/>
+</div>
+<div class="flex-1 flex flex-col gap-0.5">
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface leading-snug flex items-center gap-1">
+<span>🔥 Цена снижена на $3,500</span>
+</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            3-комнатная квартира в Мирабаде (ул. Нукусская) теперь стоит <span class="font-price-lg text-price-lg text-primary">$91,500</span> <span class="line-through text-outline font-body-sm text-body-sm">$95,000</span>
+</p>
+</div>
+</div>
+<div class="pt-1 flex justify-end">
+<button class="inline-flex items-center gap-1 text-primary hover:text-on-primary-fixed font-label-md text-label-md py-1.5 px-3 rounded-lg hover:bg-surface-container active:scale-95 transition-all" type="button">
+<span>Перейти к объекту</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</article>
+<!-- SECTION DIVIDER: Вчера -->
+<div class="flex items-center justify-between pt-2">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Ранее</span>
+</div>
+<!-- ITEM 3: Verification & Security (OneID) -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/30 shadow-sm flex flex-col gap-2 transition-all hover:border-secondary/40">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-lg bg-secondary-fixed/50 text-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold">OneID Верификация</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">Вчера</span>
+</div>
+<div class="pl-10 flex flex-col gap-1">
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface leading-snug flex items-center gap-1.5">
+<span>Аккаунт верифицирован через OneID</span>
+<span class="material-symbols-outlined text-secondary text-[18px] fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+          Ваш статус <strong class="text-on-surface font-semibold">«Собственник»</strong> подтвержден. Ваши объявления получили приоритет в поисковой выдаче по Ташкенту.
+        </p>
+</div>
+</article>
+<!-- ITEM 4: Saved Search Match -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant/30 shadow-sm flex flex-col gap-2 transition-all hover:border-primary-container/40">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-lg bg-primary-fixed text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">travel_explore</span>
+</span>
+<span class="font-label-sm text-label-sm text-primary font-bold">Новое предложение по поисковому фильтру</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">2 дня назад</span>
+</div>
+<div class="pl-10 flex flex-col gap-1">
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface leading-snug">
+          Новая квартира в Юнусабадском р-не
+        </h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+          Появился объект по вашим фильтрам: 2 комнаты, до $60,000, возле метро Шахристан.
+        </p>
+<div class="flex items-center gap-2 pt-2">
+<span class="bg-surface-container text-on-surface-variant font-label-sm text-label-sm px-2.5 py-1 rounded">
+            Юнусабад
+          </span>
+<span class="bg-surface-container text-on-surface-variant font-label-sm text-label-sm px-2.5 py-1 rounded">
+            до $60k
+          </span>
+<span class="bg-surface-container text-on-surface-variant font-label-sm text-label-sm px-2.5 py-1 rounded">
+            Метро 5 мин
+          </span>
+</div>
+</div>
+</article>
+</main>
+<!-- ==================== BOTTOM NAVIGATION BAR (Shared Component Anchor) ==================== -->
+<!--
+    Labels: ['Главная', 'Каталог', 'Избранное', 'Профиль']
+    Active state chosen: 'Профиль' (Context: Activity & Notification Center inside user's personal hub)
+    With explicit activity notification dot indicator.
+  -->
+<nav aria-label="Основная навигация" class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-space-sm bg-surface-container-lowest/95 backdrop-blur-md shadow-lg">
+<!-- Tab 1: Главная -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors active:scale-95 duration-150 group" href="#">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="mt-0.5">Главная</span>
+</a>
+<!-- Tab 2: Каталог -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors active:scale-95 duration-150 group" href="#">
+<span class="material-symbols-outlined text-[24px]">search</span>
+<span class="mt-0.5">Каталог</span>
+</a>
+<!-- Highlighted Center Action: Подать объявление (High prominence CTA as specified in guidance) -->
+<div class="relative -top-3">
+<button aria-label="Подать объявление" class="w-12 h-12 rounded-full bg-secondary text-on-secondary shadow-lg flex items-center justify-center active:scale-95 transition-transform hover:opacity-95" type="button">
+<span class="material-symbols-outlined text-[26px]">add</span>
+</button>
+</div>
+<!-- Tab 3: Избранное -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors active:scale-95 duration-150 group" href="#">
+<span class="material-symbols-outlined text-[24px]">favorite</span>
+<span class="mt-0.5">Избранное</span>
+</a>
+<!-- Tab 4: Профиль (ACTIVE - Notification & User center mapped to Profile) -->
+<a class="flex flex-col items-center justify-center text-primary font-label-md text-label-md active:scale-95 duration-150 relative" href="#">
+<div class="relative">
+<span class="material-symbols-outlined text-[24px] fill" style="font-variation-settings: 'FILL' 1;">person</span>
+<!-- Active notification indicator badge -->
+<span class="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface-container-lowest"></span>
+</div>
+<span class="mt-0.5 font-bold">Профиль</span>
+</a>
+</nav>
+</body></html>

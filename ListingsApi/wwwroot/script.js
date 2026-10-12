@@ -32,7 +32,53 @@ if (themeBtn) {
 } else {
   // Применить тему без кнопки (страница без кнопки, но тема нужна)
   applyTheme(localStorage.getItem("theme") === "dark");
+// ===== 1.1 Валюта и Уведомления (Stitch 9) =====
+let currentCurrency = localStorage.getItem("locus_currency") || "USD";
+
+function setCurrency(curr) {
+  currentCurrency = curr;
+  localStorage.setItem("locus_currency", curr);
+  updateCurrencyButtons();
+  if (typeof renderCatalog === "function" && document.querySelector("#listingsGrid")) renderCatalog();
+  if (typeof renderFeatured === "function" && document.querySelector("#featuredGrid")) renderFeatured();
 }
+
+function updateCurrencyButtons() {
+  const usdBtn = document.getElementById("currUsd");
+  const uzsBtn = document.getElementById("currUzs");
+  if (usdBtn && uzsBtn) {
+    if (currentCurrency === "USD") {
+      usdBtn.className = "px-2.5 py-1 rounded-lg bg-surface-container-lowest text-primary font-bold shadow-xs transition-all";
+      uzsBtn.className = "px-2.5 py-1 rounded-lg text-on-surface-variant hover:text-on-surface transition-all";
+    } else {
+      uzsBtn.className = "px-2.5 py-1 rounded-lg bg-surface-container-lowest text-primary font-bold shadow-xs transition-all";
+      usdBtn.className = "px-2.5 py-1 rounded-lg text-on-surface-variant hover:text-on-surface transition-all";
+    }
+  }
+}
+
+function formatPriceDisplay(usdPrice) {
+  if (currentCurrency === "UZS") {
+    const uzs = Math.round(usdPrice * 12800).toLocaleString("ru-RU");
+    return `<span class="text-xl font-extrabold text-primary font-display">${uzs} сум</span>
+            <span class="block text-[11px] text-on-surface-variant font-medium">${usdPrice.toLocaleString("ru-RU")} $</span>`;
+  } else {
+    const uzs = Math.round(usdPrice * 12800).toLocaleString("ru-RU");
+    return `<span class="text-xl font-extrabold text-primary font-display">${usdPrice.toLocaleString("ru-RU")} $</span>
+            <span class="block text-[11px] text-on-surface-variant font-medium">${uzs} сум</span>`;
+  }
+}
+
+function toggleNotifications() {
+  const popup = document.getElementById("notificationCenter");
+  if (popup) {
+    popup.classList.toggle("hidden");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateCurrencyButtons();
+});
 
 
 // ===== 2. Показать / скрыть телефон =====
@@ -447,8 +493,7 @@ function renderCard(item) {
         <div class="p-4 space-y-2">
           <div class="flex items-baseline justify-between">
             <div>
-              <span class="text-xl font-extrabold text-primary font-display">${item.price.toLocaleString("ru-RU")} у.е.</span>
-              <span class="block text-[11px] text-on-surface-variant font-medium">${priceUzs}</span>
+              ${formatPriceDisplay(item.price)}
             </div>
             <span class="text-[11px] font-bold text-on-surface-variant bg-surface-container px-2 py-0.5 rounded">
               ~${Math.round(item.price / (item.rooms * 26 + 10))} $/м²

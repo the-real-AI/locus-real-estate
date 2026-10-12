@@ -104,41 +104,123 @@
 </head>
 <body class="bg-background text-on-surface antialiased font-body-md text-body-md pb-24 md:pb-12">
 
-  <!-- TOP APP BAR (STITCH HEADER) -->
-  <header class="bg-surface-container-lowest/90 dark:bg-inverse-surface/90 backdrop-blur-md full-width top-0 sticky z-40 shadow-sm border-b border-outline-variant/30">
+  <!-- TOP APP BAR (STITCH 9 HEADER) -->
+  <header class="bg-surface-container-lowest/95 dark:bg-inverse-surface/95 backdrop-blur-md full-width top-0 sticky z-40 shadow-sm border-b border-outline-variant/40">
     <div class="flex justify-between items-center w-full px-4 sm:px-6 max-w-7xl mx-auto h-16">
       <!-- Логотип -->
-      <a href="index.html" class="flex items-center space-x-2 text-decoration-none">
-        <span class="material-symbols-outlined text-primary text-3xl">real_estate_agent</span>
+      <a href="index.html" class="flex items-center gap-2 group">
+        <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-on-primary shadow-sm shadow-primary/30 group-hover:scale-105 transition-transform">
+          <span class="material-symbols-outlined text-[20px]">apartment</span>
+        </div>
         <div class="flex flex-col">
           <span class="text-xl font-extrabold tracking-tight text-primary font-display leading-tight">Locus</span>
-          <span class="text-[11px] font-bold text-on-surface-variant leading-none">Недвижимость Ташкента</span>
+          <span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">Ташкент</span>
         </div>
       </a>
 
       <!-- Меню (Десктоп) -->
-      <nav class="hidden md:flex items-center space-x-5">
+      <nav class="hidden lg:flex items-center space-x-5">
         <a class="text-primary font-bold hover:text-primary transition-colors text-sm font-display border-b-2 border-primary py-1" href="index.html">Главная</a>
         <a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-display py-1" href="catalog.html">Каталог</a>
-        <a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-display py-1" href="efcore-practice.html">База EF Core (Урок 3)</a>
-        <a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-display py-1" href="angular-practice.html">Angular Signals (Урок 4)</a>
-        <a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-display py-1" href="solid-practice.html">SOLID Практикум</a>
-        <a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-display py-1" href="hub.html">Учебный Хаб</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-display py-1 flex items-center gap-1" href="stitch-gallery.html">
+          <span>Stitch Экраны</span>
+          <span class="px-1.5 py-0.2 rounded-full bg-secondary-container text-[#00714d] text-[10px] font-bold">10 шт</span>
+        </a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-display py-1" href="efcore-practice.html">EF Core (Урок 3)</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-display py-1" href="angular-practice.html">Angular Signals</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-display py-1" href="solid-practice.html">SOLID</a>
+        <a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-display py-1" href="hub.html">Хаб</a>
         <a class="text-on-surface-variant hover:text-primary transition-colors text-sm font-display py-1" href="/swagger" target="_blank">API</a>
       </nav>
 
-      <!-- Действия -->
+      <!-- Трейлинг контролы (Stitch 9) -->
       <div class="flex items-center space-x-2 sm:space-x-3">
-        <button class="p-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors" id="theme" title="Сменить тему">
-          <span class="material-symbols-outlined text-xl">dark_mode</span>
+        <!-- Валюта (USD / UZS) -->
+        <div class="hidden sm:flex items-center p-0.5 rounded-xl bg-surface-container-low border border-outline-variant/60 text-xs font-bold">
+          <button class="px-2.5 py-1 rounded-lg bg-surface-container-lowest text-primary shadow-xs transition-all" id="currUsd" onclick="setCurrency('USD')">USD $</button>
+          <button class="px-2.5 py-1 rounded-lg text-on-surface-variant hover:text-on-surface transition-all" id="currUzs" onclick="setCurrency('UZS')">UZS сум</button>
+        </div>
+
+        <!-- Кнопка уведомлений с бейджем -->
+        <div class="relative">
+          <button aria-label="Уведомления" class="relative w-9 h-9 rounded-xl bg-surface-container-low hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-95" id="notifButton" onclick="toggleNotifications()">
+            <span class="material-symbols-outlined text-[20px]">notifications</span>
+            <span class="absolute top-1 right-1 w-3.5 h-3.5 bg-red-600 text-white rounded-full text-[9px] font-bold flex items-center justify-center shadow-xs">3</span>
+          </button>
+        </div>
+
+        <!-- Тёмная тема -->
+        <button class="w-9 h-9 rounded-xl bg-surface-container-low hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors" id="theme" title="Сменить тему">
+          <span class="material-symbols-outlined text-lg">dark_mode</span>
         </button>
-        <button onclick="openCreateModal()" class="bg-secondary text-on-secondary px-3.5 py-2 rounded-xl text-sm font-bold flex items-center space-x-1.5 shadow-sm hover:opacity-95 active:scale-95 transition-transform duration-150">
-          <span class="material-symbols-outlined text-lg">add</span>
-          <span>Подать объявление</span>
+
+        <!-- Кнопка подачи объявления (Secondary Emerald из Stitch) -->
+        <button onclick="openCreateModal()" class="bg-secondary text-on-secondary px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center space-x-1.5 shadow-sm hover:opacity-95 active:scale-95 transition-transform duration-150">
+          <span class="material-symbols-outlined text-base">add_circle</span>
+          <span class="hidden sm:inline">Подать объявление</span>
+          <span class="sm:hidden">Подать</span>
         </button>
+
+        <!-- Профиль OneID -->
+        <div class="hidden xl:flex items-center gap-2 pl-2 border-l border-outline-variant/40">
+          <div class="w-8 h-8 rounded-xl bg-blue-100 text-primary font-bold flex items-center justify-center text-xs">
+            СМ
+          </div>
+          <div class="flex flex-col text-left">
+            <span class="text-xs font-bold text-on-surface leading-tight">Сардор М.</span>
+            <span class="text-[10px] text-secondary font-semibold flex items-center gap-0.5">
+              <span class="material-symbols-outlined text-[11px]" style="font-variation-settings: 'FILL' 1;">verified</span> OneID
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   </header>
+
+  <!-- ВСПЛЫВАЮЩИЙ ЦЕНТР УВЕДОМЛЕНИЙ (STITCH 9) -->
+  <div class="fixed right-4 sm:right-8 top-16 w-80 sm:w-96 z-50 bg-surface-container-lowest rounded-2xl border border-outline-variant shadow-2xl transition-all duration-300 hidden" id="notificationCenter">
+    <div class="p-4 border-b border-outline-variant/40 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary text-[20px]">notifications_active</span>
+        <h3 class="font-headline-sm text-sm font-bold text-on-surface">Центр уведомлений</h3>
+        <span class="px-2 py-0.5 rounded-full bg-blue-100 text-primary text-[10px] font-bold">3 новых</span>
+      </div>
+      <button class="text-on-surface-variant hover:text-on-surface p-1 rounded-lg" onclick="toggleNotifications()">
+        <span class="material-symbols-outlined text-[18px]">close</span>
+      </button>
+    </div>
+    <div class="p-3 divide-y divide-outline-variant/30 space-y-2 text-xs">
+      <div class="pt-2 flex items-start gap-2">
+        <span class="w-2 h-2 rounded-full bg-secondary mt-1 shrink-0"></span>
+        <div>
+          <p class="font-bold text-on-surface">Новый отклик на Чиланзаре</p>
+          <p class="text-on-surface-variant text-[11px] mt-0.5">Покупатель запросил номер телефона по квартире 2-комн., 62 м².</p>
+          <span class="text-[10px] text-outline mt-1 block">2 мин назад</span>
+        </div>
+      </div>
+      <div class="pt-2 flex items-start gap-2">
+        <span class="w-2 h-2 rounded-full bg-primary mt-1 shrink-0"></span>
+        <div>
+          <p class="font-bold text-on-surface">Изменение цены в Юнусабаде</p>
+          <p class="text-on-surface-variant text-[11px] mt-0.5">Цена на 3-комн. снижена на 2 000 у.е. по объекту из избранного.</p>
+          <span class="text-[10px] text-outline mt-1 block">1 час назад</span>
+        </div>
+      </div>
+      <div class="pt-2 flex items-start gap-2">
+        <span class="w-2 h-2 rounded-full bg-amber-500 mt-1 shrink-0"></span>
+        <div>
+          <p class="font-bold text-on-surface">Верификация через OneID</p>
+          <p class="text-on-surface-variant text-[11px] mt-0.5">Ваш профиль собственника успешно подтвержден Минюстом РУз.</p>
+          <span class="text-[10px] text-outline mt-1 block">Вчера</span>
+        </div>
+      </div>
+    </div>
+    <div class="p-3 border-t border-outline-variant/30 bg-surface-container-low/50 rounded-b-2xl">
+      <a href="stitch/locus_4/code.html" target="_blank" class="w-full text-center block text-xs font-bold text-primary hover:underline">
+        Открыть полный экран уведомлений (Экран 4) →
+      </a>
+    </div>
+  </div>
 
 
   <!-- ОСНОВНОЙ КОНТЕНТ -->
