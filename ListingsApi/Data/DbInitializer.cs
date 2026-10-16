@@ -10,27 +10,10 @@ public static class DbInitializer
         using var scope = app.ApplicationServices.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<ListingsDbContext>();
 
-        // Гарантируем создание базы данных SQLite (listings.db)
-        context.Database.EnsureCreated();
-
-        // Безопасное обновление схемы для существующей БД
-        try
-        {
-            context.Database.ExecuteSqlRaw("ALTER TABLE Listings ADD COLUMN ImageUrl TEXT DEFAULT ''");
-        }
-        catch
-        {
-            // Колонка уже существует
-        }
-
-        try
-        {
-            context.Database.ExecuteSqlRaw("ALTER TABLE Listings ADD COLUMN OwnerId TEXT DEFAULT ''");
-        }
-        catch
-        {
-            // Колонка уже существует
-        }
+        // Применяем все pending-миграции (вместо EnsureCreated).
+        // EnsureCreated создаёт таблицы без записи в __EFMigrationsHistory,
+        // из-за чего dotnet ef database update падает с "table already exists".
+        context.Database.Migrate();
 
         // Инициализация районов (Урок 3 EF Core)
         if (!context.Districts.Any())
@@ -86,3 +69,4 @@ public static class DbInitializer
         }
     }
 }
+
